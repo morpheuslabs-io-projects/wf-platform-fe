@@ -1,2 +1,3 @@
-# sc-dev-app-fe
-This repo is for Smart Contract Development and Management Application frontend
+## wf-platform-fe
+
+This repo is for the Web3 workflow platform UI

@@ -10,6 +10,7 @@ import AppJourney from '@/components/molecules/AppJourney';
 import { SignInWithOtherMethod } from './SignInWithOtherMethod';
 import { SignInWithEmailPassword } from './SignInWithEmailPassword';
 import SvgIcon from '@/components/atoms/SvgIcon';
+import { Link } from 'react-router-dom';
 
 const SignIn = () => {
   const theme = useTheme();
@@ -18,7 +19,7 @@ const SignIn = () => {
     <Container maxWidth="xl">
       <Stack direction="row" p="32px">
         <Box sx={{ maxWidth: '493px', px: '80px', flexGrow: 1 }}>
-          <SvgIcon iconName="logo-full" />
+        <Link to="/"><SvgIcon iconName="logo-full" /></Link>
           <Typography variant="header_2" component="h2" mt="71px">
             Get Start Now
           </Typography>

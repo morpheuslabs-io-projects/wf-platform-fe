@@ -131,7 +131,7 @@ export const SignUpWithEmailPassword = () => {
 				</Button>
 				<Stack direction="row" spacing="12px" mt="16px">
 					<Typography>Have an account?</Typography>
-					<Link to="/sign-up">Login</Link>
+					<Link to="/sign-in">Login</Link>
 				</Stack>
 			</div>
 		</form>

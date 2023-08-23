@@ -52,10 +52,10 @@ const HeaderComponent: React.FC = () => {
 					</Toolbar>
 
 					<Box>
-						<Button variant="secondary" sx={{ mx: 1 }}>
+						<Button href="/sign-up" variant="secondary" sx={{ mx: 1 }}>
 							Sign up
 						</Button>
-						<Button variant="ghost">Login</Button>
+						<Button href="/sign-in" variant="ghost">Login</Button>
 					</Box>
 				</Toolbar>
 			</Container>

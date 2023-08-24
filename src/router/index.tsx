@@ -3,6 +3,8 @@ import SignIn from '../pages/SignIn';
 import NotFound from '../pages/NotFound';
 import SignUp from '@/pages/SignUp';
 import MorpheusLandingPage from '@/pages/MorpheusLandingPage';
+import Inside from '@/pages/Inside';
+import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
 	{
@@ -16,6 +18,11 @@ const router = createBrowserRouter([
 	{
 		path: '/sign-up',
 		element: <SignUp />,
+	},
+	{
+		path: '/inside',
+		element: <Inside />,
+		
 	},
 	{
 		path: '*',

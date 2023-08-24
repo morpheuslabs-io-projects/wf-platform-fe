@@ -6,10 +6,12 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { signGoogleFn } from '@/services/googleAuth.service';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { useKeycloak } from "@react-keycloak/web";
 
 
 export const SignUpWithOtherMethod = () => {
   const navigate = useNavigate()
+  const { keycloak } = useKeycloak();
 
   // API Sign With GG: Mutation
   const {
@@ -37,13 +39,13 @@ export const SignUpWithOtherMethod = () => {
   });
 
   const handleSignUpWithSeed = () => {
-    console.log('Signing up with Seed');
+    keycloak.login()
   };
 
   const handleSignUpWithMetamask = () => {
     console.log('Signing up with Metamask');
   };
-
+  
   return (
     <div>
       <Typography variant="body" color="primary.contrastText">

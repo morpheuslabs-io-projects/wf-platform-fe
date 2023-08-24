@@ -1,1 +1,6 @@
-export const { VITE_GOOGLE_CLIENT_ID } = import.meta.env
+export const {
+  VITE_GOOGLE_CLIENT_ID,
+  VITE_SEED_AUTH_URL,
+  VITE_SEED_CLIENT_ID,
+  VITE_SEED_CLIENT_RESOURCE,
+} = import.meta.env;

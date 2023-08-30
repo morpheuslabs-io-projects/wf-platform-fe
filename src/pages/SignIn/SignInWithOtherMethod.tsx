@@ -6,9 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { signGoogleFn } from '@/services/googleAuth.service';
 import { useMutation } from '@tanstack/react-query';
 import { useGoogleLogin } from '@react-oauth/google';
+import { useKeycloak } from '@react-keycloak/web';
 
 export const SignInWithOtherMethod = () => {
   const navigate = useNavigate()
+  const { keycloak } = useKeycloak();
 
   // API Sign With GG: Mutation
   const {
@@ -24,7 +26,7 @@ export const SignInWithOtherMethod = () => {
   })
 
   // ACTION: Sign With GG
-  const handleSignInWithGoogle = useGoogleLogin({
+  const handleSignUpWithGoogle = useGoogleLogin({
     flow: "implicit",
     onSuccess: async (res) => {
       
@@ -35,8 +37,8 @@ export const SignInWithOtherMethod = () => {
     onError: () => console.log("Login Failed"),
   });
 
-  const handleSignInWithSeed = () => {
-    console.log('Signing in with Seed');
+  const handleSignUpWithSeed = () => {
+    keycloak.login()
   };
 
   const handleSignInWithMetamask = () => {
@@ -49,8 +51,8 @@ export const SignInWithOtherMethod = () => {
         Continue with
       </Typography>
       <Stack direction="row" spacing="16px" mt="12px">
-        <SeedButton onClick={handleSignInWithSeed} />
-        <GoogleButton onClick={handleSignInWithGoogle} />
+      <SeedButton onClick={handleSignUpWithSeed} />
+        <GoogleButton onClick={handleSignUpWithGoogle} />
         <MetamaskButton onClick={handleSignInWithMetamask} />
       </Stack>
     </div>

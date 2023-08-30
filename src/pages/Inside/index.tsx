@@ -7,7 +7,9 @@ const Inside = () => {
 
   const onLogout = async () => {
     await Cookies.remove("accessToken");
-    keycloak.logout({ redirectUri: window.location.host });
+    keycloak.logout({
+      redirectUri: window.location.protocol + "//" + window.location.host,
+    });
   };
 
   return (

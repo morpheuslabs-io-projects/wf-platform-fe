@@ -1,33 +1,50 @@
-import { createBrowserRouter } from 'react-router-dom';
-import SignIn from '../pages/SignIn';
-import NotFound from '../pages/NotFound';
-import SignUp from '@/pages/SignUp';
-import MorpheusLandingPage from '@/pages/MorpheusLandingPage';
-import Inside from '@/pages/Inside';
-import PrivateRoute from './PrivateRoute';
+import { createBrowserRouter } from "react-router-dom";
+import SignIn from "../pages/SignIn";
+import NotFound from "../pages/NotFound";
+import SignUp from "@/pages/SignUp";
+import MorpheusLandingPage from "@/pages/MorpheusLandingPage";
+import Cookies from "js-cookie";
+import AuthRouter from "./PrivateRoutes";
+import PublicGuard from "./PublicGuard";
+
+const authLoader = (_: unknown) => {
+  // Temporay
+  const accessToken = Cookies.get("accessToken");
+  // console.log(accessToken)
+
+  if (!accessToken) document.location.href = "/sign-in";
+  return true;
+};
 
 const router = createBrowserRouter([
-	{
-		path: '/',
-		element: <MorpheusLandingPage />,
-	},
-	{
-		path: '/sign-in',
-		element: <SignIn />,
-	},
-	{
-		path: '/sign-up',
-		element: <SignUp />,
-	},
-	{
-		path: '/inside',
-		element: <Inside />,
-		
-	},
-	{
-		path: '*',
-		element: <NotFound />,
-	},
+  {
+    path: "/",
+    element: <MorpheusLandingPage />,
+  },
+  {
+    path: "/",
+    element: <PublicGuard />,
+    children: [
+      {
+        path: "/sign-in",
+        element: <SignIn />,
+      },
+      {
+        path: "/sign-up",
+        element: <SignUp />,
+      },
+    ],
+  },
+
+  {
+    path: "/",
+    loader: authLoader,
+    children: [...AuthRouter],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
+  },
 ]);
 
 export default router;

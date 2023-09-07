@@ -18,3 +18,9 @@ export interface IAccessData {
   tokenExpires: number;
   user?: User
 }
+
+export interface IUserToken {
+	email: string;
+	name: string;
+	exp: number;
+}

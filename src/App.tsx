@@ -27,7 +27,7 @@ function App() {
         <ReactKeycloakProvider
             authClient={keycloak}
             initOptions={{
-              // onLoad: 'check-sso',
+              onLoad: 'check-sso',
               checkLoginIframe: false,
             }}
             onTokens={tokenLogger}

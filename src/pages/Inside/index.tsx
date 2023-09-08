@@ -11,18 +11,22 @@ const Inside = () => {
   const [user, setUser] = useState<IUserToken>();
 	useEffect(() => {
 		const _token = Cookies.get('accessToken')
+		const _userInfo = Cookies.get('userInfo') 
 		if (_token) {
 			const user = jwt(_token);
 			setUser(user as IUserToken);
+		} else if (_userInfo) {
+			setUser(JSON.parse(_userInfo) as IUserToken);
 		}
 	}, []);
   
   const onLogout = async () => {
-    await Cookies.remove("accessToken");
-    keycloak.logout({
-      redirectUri: window.location.protocol + "//" + window.location.host,
-    });
-  };
+		await Cookies.remove('accessToken');
+		await Cookies.remove('userInfo');
+		keycloak.logout({
+			redirectUri: window.location.protocol + '//' + window.location.host,
+		});
+	};
 
   return (
     <div>

@@ -7,13 +7,15 @@ import Cookies from "js-cookie";
 import AuthRouter from "./PrivateRoutes";
 import PublicGuard from "./PublicGuard";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const authLoader = (_: unknown) => {
-  // Temporay
-  const accessToken = Cookies.get("accessToken");
-  // console.log(accessToken)
+	// Temporay
+	const accessToken = Cookies.get('accessToken');
+	const userInfo = Cookies.get('userInfo');
+	// console.log(accessToken)
 
-  if (!accessToken) document.location.href = "/sign-in";
-  return true;
+	if (!accessToken && !userInfo) document.location.href = '/sign-in';
+	return true;
 };
 
 const router = createBrowserRouter([

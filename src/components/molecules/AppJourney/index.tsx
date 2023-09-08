@@ -17,13 +17,12 @@ const AppJourney = () => {
         color="common.white"
         component="h2"
         mb="32px"
+        lineHeight={'52px'}
       >
         Start your Journey with us.
       </Typography>
-      <Typography color="common.white" variant="body" mb="100px" component="p">
-        Lorem ipsum dolor sit amet consectetur. Aliquam nulla sit eget ac a
-        risus faucibus id. Maecenas feugiat id nunc massa. Amet tristique a eget
-        lorem non aliquet mattis suscipit cras.
+      <Typography color="common.white" variant="sub_title" mb="100px" component="p">
+      Enable you digital transformation with our AI-Powered Low Code Platform
       </Typography>
       <img src={BubbleImage} alt="bubble" width="100%" />
     </Box>

@@ -44,6 +44,10 @@ export const getRequest = async (url: string) => {
   return axiosClient.get(`/${url}`).then((response) => response);
 };
 
+export const getExternal = async (url: string) => {
+	return axiosClient.get(`${url}`).then((response) => response);
+};
+
 export const postRequest = async (url: string, payload: unknown) => {
   return axiosClient.post(`/${url}`, payload).then((response) => response);
 };

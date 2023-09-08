@@ -3,42 +3,27 @@ import GoogleButton from '@/components/atoms/GoogleButton';
 import SeedButton from '@/components/atoms/SeedButton';
 import MetamaskButton from '@/components/atoms/MetamaskButton';
 import { useNavigate } from 'react-router-dom';
-// import { signGoogleFn } from '@/services/googleAuth.service';
-// import { useMutation } from '@tanstack/react-query';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useKeycloak } from '@react-keycloak/web';
-import Cookies from 'js-cookie';
+import useGoogleToken from '@/hooks/useGoogleToken';
 
 export const SignInWithOtherMethod = () => {
-  const navigate = useNavigate()
-  const { keycloak } = useKeycloak();
+  const navigate = useNavigate();
+	const { getGGTokenId } = useGoogleToken()
+	const { keycloak } = useKeycloak();
 
-  // API Sign With GG: Mutation
-  // const {
-  //   mutate: signGoogle,
-  //   isLoading: ggLoading,
-  //   error: ggError
-  // } = useMutation((accessToken: string) => signGoogleFn(accessToken), {
-  //   onSuccess: data => {
-  //     console.log(data)
-  //     // Redirect HERE
-  //     navigate('/inside')
-  //   }
-  // })
-
-  // ACTION: Sign With GG
-  const handleSignUpWithGoogle = useGoogleLogin({
-    flow: "implicit",
-    onSuccess: async (res) => {
-      
-      if (res && res.access_token) {
-        // signGoogle(res.access_token.toString());
-        Cookies.set('accessToken', res.access_token.toString());
-        navigate('/inside')
-      }
-    },
-    onError: () => console.log("Login Failed"),
-  });
+	// ACTION: Sign With GG
+	const handleSignUpWithGoogle = useGoogleLogin({
+		flow: 'implicit',
+		onSuccess: async (res) => {
+			if (res && res.access_token) {
+				getGGTokenId(res.access_token.toString())
+        setTimeout(() => navigate('/inside'), 1000);
+				
+			}
+		},
+		onError: () => console.log('Login Failed'),
+	});
 
   const handleSignUpWithSeed = () => {
     keycloak.login()

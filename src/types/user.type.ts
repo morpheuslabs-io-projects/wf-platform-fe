@@ -22,5 +22,5 @@ export interface IAccessData {
 export interface IUserToken {
 	email: string;
 	name: string;
-	exp: number;
+	exp?: number;
 }

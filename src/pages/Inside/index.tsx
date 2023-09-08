@@ -32,6 +32,7 @@ const Inside = () => {
     <div>
       <Box sx={{ maxWidth: "493px", px: "80px", flexGrow: 1 }}>
         <h3>Inside PAGE</h3>
+        {JSON.stringify(user)}
         {user && <p>USER: {user?.name} / {user?.email}</p>}
         <pre>{Cookies.get("accessToken")}</pre>
 

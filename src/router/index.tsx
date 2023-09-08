@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import AuthRouter from "./PrivateRoutes";
 import PublicGuard from "./PublicGuard";
 
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const authLoader = (_: unknown) => {
 	// Temporay

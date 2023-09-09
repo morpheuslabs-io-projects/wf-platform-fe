@@ -154,10 +154,7 @@ const Introduction: FC = () => {
 									display: 'flex',
 								}}
 							>
-								Sed ut perspiciatis unde omnis iste natus error
-								sit voluptatem accusantium doloremque
-								laudantium, totam rem aperiam, eaque ipsa quae
-								ab illo inventore veritatis
+								Find out more info from the product demo video
 							</Box>
 						</Grid>
 					</Grid>

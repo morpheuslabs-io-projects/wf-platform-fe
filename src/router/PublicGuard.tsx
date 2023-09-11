@@ -7,7 +7,7 @@ const PublicGuard = () => {
   const userInfo = Cookies.get('userInfo');
 
 	if ((keycloak && keycloak.token) || userInfo) {
-		document.location.href = '/inside';
+		document.location.href = '/';
 	}
 
 	return <Outlet />;

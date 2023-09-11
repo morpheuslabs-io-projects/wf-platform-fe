@@ -16,10 +16,11 @@ export const SignInWithOtherMethod = () => {
 	const handleSignUpWithGoogle = useGoogleLogin({
 		flow: 'implicit',
 		onSuccess: async (res) => {
+      const wfBase = process.env.REACT_APP_WF_URL
+      const redirectUrl = wfBase + '/workflows'
 			if (res && res.access_token) {
 				getGGTokenId(res.access_token.toString())
-        setTimeout(() => navigate('/inside'), 1000);
-				
+        setTimeout(() => document.location.href = redirectUrl, 1000);
 			}
 		},
 		onError: () => console.log('Login Failed'),

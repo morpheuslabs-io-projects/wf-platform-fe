@@ -3,12 +3,10 @@ import GoogleButton from '@/components/atoms/GoogleButton';
 import SeedButton from '@/components/atoms/SeedButton';
 import MetamaskButton from '@/components/atoms/MetamaskButton';
 import { useGoogleLogin } from '@react-oauth/google';
-import { useNavigate } from 'react-router-dom';
 import { useKeycloak } from "@react-keycloak/web";
 import useGoogleToken from '@/hooks/useGoogleToken';
 
 export const SignUpWithOtherMethod = () => {
-  const navigate = useNavigate();
 	const { getGGTokenId } = useGoogleToken()
 	const { keycloak } = useKeycloak();
 

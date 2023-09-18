@@ -6,14 +6,10 @@ COPY . .
 
 RUN yarn install
 
-RUN yarn build
-
-RUN yarn
-
 FROM node:18-alpine
 
 WORKDIR /app
 
 COPY --from=builder /app .
 
-CMD ["yarn","dev"]
+CMD ["yarn", "dev:3003"]

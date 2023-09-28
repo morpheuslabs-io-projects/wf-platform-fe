@@ -8,12 +8,25 @@ import { useKeycloakStore } from "@/store/keycloak";
 import { Alert, Box, Stack, Typography } from "@mui/material";
 import { CodeResponse, useGoogleLogin } from "@react-oauth/google";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export const SignUpWithOtherMethod = () => {
   const navigate = useNavigate();
   const { login: keycloakLogin, token: keycloakToken } = useKeycloakStore();
   const { initAuthentication } = useAuthentication();
+
+  const [searchParams] = useSearchParams();
+  const redirectUrl = searchParams.get("redirect_url");
+
+  const redirectBack = () => {
+    setTimeout(() => {
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      } else {
+        navigate("/");
+      }
+    });
+  };
 
   const [error, setError] = useState<string>("");
 
@@ -30,8 +43,7 @@ export const SignUpWithOtherMethod = () => {
       CookiesHelper.set("accessToken", access_token);
       CookiesHelper.set("refreshToken", refresh_token);
       initAuthentication();
-
-      setTimeout(() => navigate("/"));
+      redirectBack();
     },
     onError: (errorResponse) => console.log(errorResponse),
   });
@@ -61,7 +73,7 @@ export const SignUpWithOtherMethod = () => {
     CookiesHelper.set("accessToken", access_token);
     CookiesHelper.set("refreshToken", refresh_token);
     initAuthentication();
-    setTimeout(() => navigate("/"));
+    redirectBack();
   };
 
   return (

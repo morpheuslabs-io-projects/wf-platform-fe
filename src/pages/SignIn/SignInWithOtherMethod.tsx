@@ -13,10 +13,6 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 export const SignInWithOtherMethod = () => {
   const navigate = useNavigate();
 
-  const [searchParams] = useSearchParams();
-
-  const redirectUrl = searchParams.get("redirectUrl");
-
   const { login: keycloakLogin, token: keycloakToken } = useKeycloakStore();
   const { initAuthentication } = useAuthentication();
   const [error, setError] = useState<string>("");
@@ -25,8 +21,17 @@ export const SignInWithOtherMethod = () => {
     await keycloakLogin();
   };
 
+  const [searchParams] = useSearchParams();
+  const redirectUrl = searchParams.get("redirect_url");
+
   const redirectBack = () => {
-    setTimeout(() => navigate(redirectUrl || "/"));
+    setTimeout(() => {
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      } else {
+        navigate("/");
+      }
+    });
   };
 
   const hanleSignInWithGoogle = useGoogleLogin({

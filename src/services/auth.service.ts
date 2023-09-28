@@ -54,7 +54,7 @@ const postRequest = async <T>(url: string, payload?: unknown): Promise<T> => {
   return axiosAuthClient.post(`/${url}`, JSON.stringify(payload));
 };
 
-export const signIn = async (data: SignInData) => {
+export const signIn = async (data: SignInData): Promise<any> => {
   const resp = await postRequest("auth/login", data);
   return resp;
 };
@@ -79,7 +79,7 @@ export const signInKeycloak = async (
   return resp;
 };
 
-export const signUp = async (data: SignInData) => {
+export const signUp = async (data: SignInData): Promise<any> => {
   const resp = await postRequest("auth/sign-up", data);
   return resp;
 };

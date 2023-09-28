@@ -1,8 +1,9 @@
+import { ROUTE_PATH, VITE_API_ENDPOINT } from "@/constants/AppConfig";
+import { CookiesHelper } from "@/helper/cookies";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { redirect } from "react-router-dom";
 
-const API_ENDPOINT = process.env.API_ENDPOINT as string;
+const API_ENDPOINT: string = VITE_API_ENDPOINT;
 
 const axiosClient = axios.create({
   baseURL: API_ENDPOINT,
@@ -16,7 +17,7 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
   (config) => {
-    const accessToken = Cookies.get("accessToken");
+    const accessToken = CookiesHelper.get("accessToken");
     if (accessToken) {
       config.headers.Authorization = "Bearer " + accessToken;
     }
@@ -33,8 +34,8 @@ axiosClient.interceptors.response.use(
   },
   (error) => {
     if (error.response.status === 401) {
-      Cookies.remove("accessToken");
-      redirect("/sign-in");
+      CookiesHelper.remove("accessToken");
+      redirect(ROUTE_PATH.SIGN_IN);
     }
     return Promise.reject(error);
   }
@@ -45,7 +46,7 @@ export const getRequest = async (url: string) => {
 };
 
 export const getExternal = async (url: string) => {
-	return axiosClient.get(`${url}`).then((response) => response);
+  return axiosClient.get(`${url}`).then((response) => response);
 };
 
 export const postRequest = async (url: string, payload: unknown) => {

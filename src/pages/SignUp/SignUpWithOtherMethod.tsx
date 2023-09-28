@@ -1,37 +1,67 @@
-import { Stack, Typography } from "@mui/material";
 import GoogleButton from "@/components/atoms/GoogleButton";
-import SeedButton from "@/components/atoms/SeedButton";
 import MetamaskButton from "@/components/atoms/MetamaskButton";
-import { useGoogleLogin } from "@react-oauth/google";
-import { useKeycloak } from "@react-keycloak/web";
-import useGoogleToken from "@/hooks/useGoogleToken";
+import SeedButton from "@/components/atoms/SeedButton";
+import { CookiesHelper } from "@/helper/cookies";
+import { signUpGoogle, signUpKeycloak } from "@/services/auth.service";
+import { useAuthentication } from "@/store/authentication";
+import { useKeycloakStore } from "@/store/keycloak";
+import { Alert, Box, Stack, Typography } from "@mui/material";
+import { CodeResponse, useGoogleLogin } from "@react-oauth/google";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const SignUpWithOtherMethod = () => {
-  const { getGGTokenId } = useGoogleToken();
-  const { keycloak } = useKeycloak();
   const navigate = useNavigate();
+  const { login: keycloakLogin, token: keycloakToken } = useKeycloakStore();
+  const { initAuthentication } = useAuthentication();
 
-  // ACTION: Sign With GG
+  const [error, setError] = useState<string>("");
+
   const handleSignUpWithGoogle = useGoogleLogin({
-    flow: "implicit",
-    onSuccess: async (res) => {
-      // const wfBase = process.env.REACT_APP_WF_URL
-      // const redirectUrl = wfBase + '/workflows'
-      if (res && res.access_token) {
-        getGGTokenId(res.access_token.toString());
-        setTimeout(() => navigate("/"), 1000);
-      }
+    flow: "auth-code",
+    onSuccess: async (codeResponse: CodeResponse) => {
+      setError("");
+      const { access_token, refresh_token }: any = await signUpGoogle({
+        code: codeResponse.code,
+      }).catch((error: string) => {
+        setError(error);
+      });
+
+      CookiesHelper.set("accessToken", access_token);
+      CookiesHelper.set("refreshToken", refresh_token);
+      initAuthentication();
+
+      setTimeout(() => navigate("/"));
     },
-    onError: () => console.log("Login Failed"),
+    onError: (errorResponse) => console.log(errorResponse),
   });
 
-  const handleSignUpWithSeed = () => {
-    keycloak.login();
+  const signUpWithSeed = async () => {
+    setError("");
+    await keycloakLogin();
   };
 
   const handleSignUpWithMetamask = () => {
     console.log("Signing up with Metamask");
+  };
+
+  useEffect(() => {
+    if (keycloakToken) {
+      handleSignInWithKeycloak(keycloakToken);
+    }
+  }, [keycloakToken]);
+
+  const handleSignInWithKeycloak = async (token: string) => {
+    const { access_token, refresh_token }: any = await signUpKeycloak({
+      token,
+    }).catch((error: string) => {
+      setError(error);
+    });
+
+    CookiesHelper.set("accessToken", access_token);
+    CookiesHelper.set("refreshToken", refresh_token);
+    initAuthentication();
+    setTimeout(() => navigate("/"));
   };
 
   return (
@@ -40,10 +70,16 @@ export const SignUpWithOtherMethod = () => {
         Continue with
       </Typography>
       <Stack direction="row" spacing="16px" mt="12px">
-        <SeedButton onClick={handleSignUpWithSeed} />
+        <SeedButton onClick={signUpWithSeed} />
         <GoogleButton onClick={handleSignUpWithGoogle} />
         <MetamaskButton onClick={handleSignUpWithMetamask} />
       </Stack>
+
+      {error && (
+        <Box sx={{ mt: "20px" }}>
+          <Alert severity="error">{error}</Alert>
+        </Box>
+      )}
     </div>
   );
 };

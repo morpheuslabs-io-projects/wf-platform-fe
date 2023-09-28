@@ -1,22 +1,22 @@
-import { createBrowserRouter } from "react-router-dom";
-import SignIn from "../pages/SignIn";
-import NotFound from "../pages/NotFound";
-import SignUp from "@/pages/SignUp";
+import { CookiesHelper } from "@/helper/cookies";
 import MorpheusLandingPage from "@/pages/MorpheusLandingPage";
-import Cookies from "js-cookie";
+import SignUp from "@/pages/SignUp";
+import { createBrowserRouter } from "react-router-dom";
+import NotFound from "../pages/NotFound";
+import SignIn from "../pages/SignIn";
 import AuthRouter from "./PrivateRoutes";
 import PublicGuard from "./PublicGuard";
-
+import { ROUTE_PATH } from "@/constants/AppConfig";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const authLoader = (_: unknown) => {
-	// Temporay
-	const accessToken = Cookies.get('accessToken');
-	const userInfo = Cookies.get('userInfo');
-	// console.log(accessToken)
+  // Temporay
+  const accessToken = CookiesHelper.get("accessToken");
+  const userInfo = CookiesHelper.get("userInfo");
+  // console.log(accessToken)
 
-	if (!accessToken && !userInfo) document.location.href = '/sign-in';
-	return true;
+  if (!accessToken && !userInfo) document.location.href = ROUTE_PATH.SIGN_IN;
+  return true;
 };
 
 const router = createBrowserRouter([

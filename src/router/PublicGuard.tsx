@@ -1,16 +1,13 @@
-import { useKeycloak } from '@react-keycloak/web';
-import { Outlet } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import { useAuthentication } from "@/store/authentication";
+import { Outlet } from "react-router-dom";
 
 const PublicGuard = () => {
-	const { keycloak } = useKeycloak();
-  const userInfo = Cookies.get('userInfo');
+  const { user } = useAuthentication();
 
-	if ((keycloak && keycloak.token) || userInfo) {
-		document.location.href = '/';
-	}
-
-	return <Outlet />;
+  if (user) {
+    document.location.href = "/";
+  }
+  return <Outlet />;
 };
 
 export default PublicGuard;

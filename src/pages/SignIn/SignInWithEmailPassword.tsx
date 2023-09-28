@@ -1,16 +1,17 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { signIn } from '@/services/auth.service';
-import { useNavigate } from 'react-router-dom';
-import { AxiosResponse } from 'axios';
-import { useMutation } from '@tanstack/react-query';
-import { ErrorResponse, SignInData, User } from '@/types';
-import Cookies from 'js-cookie';
-import { emailExpression } from '@/helper';
-import { Input } from '@/components/atoms/Input';
-import { Button, Stack, Typography } from '@mui/material';
-import { PasswordInput } from '@/components/atoms/PasswordInput';
-import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
-import Link from '@/components/atoms/Link';
+import { Input } from "@/components/atoms/Input";
+import Link from "@/components/atoms/Link";
+import { PasswordInput } from "@/components/atoms/PasswordInput";
+import { ROUTE_PATH } from "@/constants/AppConfig";
+import { emailExpression } from "@/helper";
+import { CookiesHelper } from "@/helper/cookies";
+import { signIn } from "@/services/auth.service";
+import { ErrorResponse, SignInData, User } from "@/types";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import { Button, Stack, Typography } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const SignInWithEmailPassword = () => {
   const navigate = useNavigate();
@@ -19,18 +20,21 @@ export const SignInWithEmailPassword = () => {
     {
       onSuccess: ({ data }) => {
         const { token } = data;
-        Cookies.set('accessToken', token);
-        navigate('/');
+        if (!token) {
+          return;
+        }
+        CookiesHelper.set("accessToken", token);
+        navigate("/");
       },
     }
   );
 
   const [formValue, setFormValue] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const { email, password } = formValue;
 
@@ -39,16 +43,16 @@ export const SignInWithEmailPassword = () => {
     setFormValue({ ...formValue, email: value });
 
     const isValid = emailExpression.test(value);
-    setEmailError(isValid ? '' : 'Invalid email');
+    setEmailError(isValid ? "" : "Invalid email");
   };
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setFormValue({ ...formValue, password: value });
     if (value.length < 8) {
-      setPasswordError('Password must be at least 8 characters');
+      setPasswordError("Password must be at least 8 characters");
     } else {
-      setPasswordError('');
+      setPasswordError("");
     }
   };
 
@@ -86,7 +90,7 @@ export const SignInWithEmailPassword = () => {
         <Button
           type="submit"
           variant="primary"
-          sx={{ marginTop: '32px', width: '192px' }}
+          sx={{ marginTop: "32px", width: "192px" }}
           disabled={isDisabled}
           endIcon={<ArrowCircleRightIcon />}
         >
@@ -94,7 +98,7 @@ export const SignInWithEmailPassword = () => {
         </Button>
         <Stack direction="row" spacing="12px" mt="16px">
           <Typography>New to Workflow?</Typography>
-          <Link to="/sign-up">Sign up</Link>
+          <Link to={ROUTE_PATH.SIGN_UP}>Sign up</Link>
         </Stack>
       </div>
     </form>

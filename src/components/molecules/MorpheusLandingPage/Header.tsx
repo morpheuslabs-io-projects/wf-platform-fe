@@ -1,45 +1,32 @@
-import * as React from "react";
-import { useEffect, useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import AvatarIcon from "@/assets/icons/avatar.svg";
 import MorpheusLogoFull from "@/assets/icons/morpheus-logo-full.svg";
 import SCLogo from "@/assets/icons/sc-logo.svg";
-import { useKeycloak } from "@react-keycloak/web";
-import { IUserToken } from "@/types";
-import { Avatar, Typography } from "@mui/material";
-import AvatarIcon from "@/assets/icons/avatar.svg";
-import jwt from "jwt-decode";
 import SettingIcon from "@/assets/icons/setting-blue.svg";
+import { ROUTE_PATH } from "@/constants/AppConfig";
+import { CookiesHelper } from "@/helper/cookies";
+import { useAuthentication } from "@/store/authentication";
+import { useKeycloakStore } from "@/store/keycloak";
+import { Avatar, Typography } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import Toolbar from "@mui/material/Toolbar";
+import * as React from "react";
+import { useNavigate } from "react-router-dom";
 
 const HeaderComponent: React.FC = () => {
   const navigate = useNavigate();
+  const { logout: keycloakLogout } = useKeycloakStore();
 
-  const { keycloak } = useKeycloak();
-
-  const [user, setUser] = useState<IUserToken>();
-  useEffect(() => {
-    const _token = Cookies.get("accessToken");
-    const _userInfo = Cookies.get("userInfo");
-    if (_token) {
-      const user = jwt(_token);
-      setUser(user as IUserToken);
-    } else if (_userInfo) {
-      setUser(JSON.parse(_userInfo) as IUserToken);
-    }
-  }, []);
+  const { user } = useAuthentication();
 
   const onLogout = async () => {
-    await Cookies.remove("accessToken");
-    await Cookies.remove("userInfo");
-    keycloak.logout({
-      redirectUri: window.location.protocol + "//" + window.location.host,
-    });
+    await CookiesHelper.remove("accessToken");
+    await CookiesHelper.remove("refreshToken");
+    await CookiesHelper.remove("userInfo");
+    await keycloakLogout(window.location.origin);
   };
 
   return (
@@ -90,10 +77,14 @@ const HeaderComponent: React.FC = () => {
           >
             {!user && (
               <Box>
-                <Button href="/sign-up" variant="secondary" sx={{ mx: 1 }}>
+                <Button
+                  href={ROUTE_PATH.SIGN_UP}
+                  variant="secondary"
+                  sx={{ mx: 1 }}
+                >
                   Sign up
                 </Button>
-                <Button href="/sign-in" variant="ghost">
+                <Button href={ROUTE_PATH.SIGN_IN} variant="ghost">
                   Login
                 </Button>
               </Box>
@@ -101,15 +92,21 @@ const HeaderComponent: React.FC = () => {
             {user && (
               <Avatar
                 alt="avatar"
-                src={AvatarIcon}
+                src={user.avatar || AvatarIcon}
                 sx={{ backgroundColor: "colors.black.50" }}
               />
             )}
             {user && (
               <Box sx={{ display: { xs: "none", md: "block" } }}>
                 <Box>
-                  {user.name && (
-                    <Typography variant="body_bold">{user.name}</Typography>
+                  {user.first_name && user.last_name ? (
+                    <Typography variant="body_bold">
+                      {`${user.first_name} ${user.last_name}`}
+                    </Typography>
+                  ) : (
+                    <Typography variant="body_bold">
+                      {`${user.email} `}
+                    </Typography>
                   )}
                   <IconButton aria-label="settings">
                     <img src={SettingIcon} alt="" />

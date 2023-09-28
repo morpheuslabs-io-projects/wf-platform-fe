@@ -1,37 +1,74 @@
-import { Stack, Typography } from '@mui/material';
-import GoogleButton from '@/components/atoms/GoogleButton';
-import SeedButton from '@/components/atoms/SeedButton';
-import MetamaskButton from '@/components/atoms/MetamaskButton';
-import { useGoogleLogin } from '@react-oauth/google';
-import { useKeycloak } from '@react-keycloak/web';
-import useGoogleToken from '@/hooks/useGoogleToken';
-import { useNavigate } from 'react-router-dom';
+import GoogleButton from "@/components/atoms/GoogleButton";
+import MetamaskButton from "@/components/atoms/MetamaskButton";
+import SeedButton from "@/components/atoms/SeedButton";
+import { CookiesHelper } from "@/helper/cookies";
+import { signInGoogle, signInKeycloak } from "@/services/auth.service";
+import { useAuthentication } from "@/store/authentication";
+import { useKeycloakStore } from "@/store/keycloak";
+import { Alert, Box, Stack, Typography } from "@mui/material";
+import { CodeResponse, useGoogleLogin } from "@react-oauth/google";
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export const SignInWithOtherMethod = () => {
-	const { getGGTokenId } = useGoogleToken()
-	const { keycloak } = useKeycloak();
   const navigate = useNavigate();
 
-	// ACTION: Sign With GG
-	const handleSignUpWithGoogle = useGoogleLogin({
-		flow: 'implicit',
-		onSuccess: async (res) => {
-      // const wfBase = process.env.REACT_APP_WF_URL
-      // const redirectUrl = wfBase + '/workflows'
-			if (res && res.access_token) {
-				getGGTokenId(res.access_token.toString())
-        setTimeout(() => navigate('/'), 1000);
-			}
-		},
-		onError: () => console.log('Login Failed'),
-	});
+  const [searchParams] = useSearchParams();
 
-  const handleSignUpWithSeed = () => {
-    keycloak.login()
+  const redirectUrl = searchParams.get("redirectUrl");
+
+  const { login: keycloakLogin, token: keycloakToken } = useKeycloakStore();
+  const { initAuthentication } = useAuthentication();
+  const [error, setError] = useState<string>("");
+
+  const handleSignInWithSeed = async () => {
+    await keycloakLogin();
+  };
+
+  const redirectBack = () => {
+    setTimeout(() => navigate(redirectUrl || "/"));
+  };
+
+  const hanleSignInWithGoogle = useGoogleLogin({
+    flow: "auth-code",
+    onSuccess: async (codeResponse: CodeResponse) => {
+      setError("");
+      const { access_token, refresh_token }: any = await signInGoogle({
+        code: codeResponse.code,
+      }).catch((error: string) => {
+        setError(error);
+      });
+
+      CookiesHelper.set("accessToken", access_token);
+      CookiesHelper.set("refreshToken", refresh_token);
+      initAuthentication();
+      redirectBack();
+    },
+    onError: (errorResponse) => console.log(errorResponse),
+  });
+
+  useEffect(() => {
+    if (keycloakToken) {
+      handleSignInWithKeycloak(keycloakToken);
+    }
+  }, [keycloakToken]);
+
+  const handleSignInWithKeycloak = async (token: string) => {
+    setError("");
+    const { access_token, refresh_token }: any = await signInKeycloak({
+      token,
+    }).catch((error: string) => {
+      setError(error);
+    });
+
+    CookiesHelper.set("accessToken", access_token);
+    CookiesHelper.set("refreshToken", refresh_token);
+    initAuthentication();
+    redirectBack();
   };
 
   const handleSignInWithMetamask = () => {
-    console.log('Signing in with Metamask');
+    console.log("Signing in with Metamask");
   };
 
   return (
@@ -40,10 +77,16 @@ export const SignInWithOtherMethod = () => {
         Continue with
       </Typography>
       <Stack direction="row" spacing="16px" mt="12px">
-      <SeedButton onClick={handleSignUpWithSeed} />
-        <GoogleButton onClick={handleSignUpWithGoogle} />
+        <SeedButton onClick={handleSignInWithSeed} />
+        <GoogleButton onClick={hanleSignInWithGoogle} />
         <MetamaskButton onClick={handleSignInWithMetamask} />
       </Stack>
+
+      {error && (
+        <Box sx={{ mt: "20px" }}>
+          <Alert severity="error">{error}</Alert>
+        </Box>
+      )}
     </div>
   );
 };

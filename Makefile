@@ -1,2 +1,2 @@
 start:
-	yarn build && pm2 serve dist --spa --port 8080
+	yarn build && pm2 start ecosystem.config.cjs

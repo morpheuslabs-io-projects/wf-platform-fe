@@ -84,6 +84,7 @@ const Introduction: FC = () => {
                 cursor: "pointer",
               },
             }}
+            onClick={() => window.open(`${VITE_APP_WF_URL}`)}
           >
             <Typography variant="sub_title">
               Start Integration

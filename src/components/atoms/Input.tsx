@@ -22,7 +22,7 @@ export const Input = ({
 }: InputProps) => {
   return (
     <div>
-      <Typography variant="button_S" mb="8px">
+      <Typography variant="button_S_no_opacity" mb="8px">
         {label}
       </Typography>
       <InputBase

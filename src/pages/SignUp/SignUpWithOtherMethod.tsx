@@ -78,9 +78,9 @@ export const SignUpWithOtherMethod = () => {
 
   return (
     <div>
-      <Typography variant="body" color="primary.contrastText">
+      {/* <Typography variant="body" color="primary.contrastText">
         Continue with
-      </Typography>
+      </Typography> */}
       <Stack direction="row" spacing="16px" mt="12px">
         <SeedButton onClick={signUpWithSeed} />
         <GoogleButton onClick={handleSignUpWithGoogle} />

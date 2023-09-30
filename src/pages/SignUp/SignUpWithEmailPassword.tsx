@@ -91,14 +91,14 @@ export const SignUpWithEmailPassword = () => {
           value={password}
           onChange={handlePasswordChange}
           label="Password"
-          placeholder="Enter your password"
+          placeholder="********"
           errorMessage={passwordError}
         />
         <PasswordInput
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
           label="Re-enter password"
-          placeholder="Enter confirm password"
+          placeholder="********"
           errorMessage={confirmPasswordError}
         />
         <Stack direction="row" alignItems="center">

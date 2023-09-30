@@ -2,9 +2,7 @@ import {
   Box,
   Container,
   Divider,
-  Stack,
-  Typography,
-  useTheme,
+  Stack, useTheme
 } from '@mui/material';
 import AppJourney from '@/components/molecules/AppJourney';
 import { SignUpWithOtherMethod } from './SignUpWithOtherMethod';

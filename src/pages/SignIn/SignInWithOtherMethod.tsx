@@ -5,7 +5,7 @@ import { CookiesHelper } from "@/helper/cookies";
 import { signInGoogle, signInKeycloak } from "@/services/auth.service";
 import { useAuthentication } from "@/store/authentication";
 import { useKeycloakStore } from "@/store/keycloak";
-import { Alert, Box, Stack, Typography } from "@mui/material";
+import { Alert, Box, Stack } from "@mui/material";
 import { CodeResponse, useGoogleLogin } from "@react-oauth/google";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";

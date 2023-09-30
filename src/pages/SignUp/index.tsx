@@ -2,18 +2,19 @@ import {
   Box,
   Container,
   Divider,
-  Stack,
-  Typography,
-  useTheme,
+  Stack, useTheme
 } from '@mui/material';
 import AppJourney from '@/components/molecules/AppJourney';
 import { SignUpWithOtherMethod } from './SignUpWithOtherMethod';
 import { SignUpWithEmailPassword } from './SignUpWithEmailPassword';
 import SvgIcon from '@/components/atoms/SvgIcon';
 import { Link } from 'react-router-dom';
+import useStyles from "./style";
 
 const SignUp = () => {
   const theme = useTheme();
+  const classes = useStyles();
+
 
   return (
     <Container maxWidth="xl">
@@ -21,15 +22,15 @@ const SignUp = () => {
         <Box sx={{ maxWidth: '493px', px: '80px', flexGrow: 1 }}>
           <Link to="/">
           <SvgIcon iconName="logo-full" /></Link>
-
-          <Typography variant="header_2" component="h2" mt="71px">
-            Sign up
-          </Typography>
-          <Stack spacing="32px" mt="40px">
+          <div className={classes.textSignUp}>
+            Sign up with
+          </div>
+          <Stack spacing="32px">
             <SignUpWithOtherMethod />
             <Divider
               color="primary.contrastText"
               sx={{
+                opacity: 0.6,
                 color: 'primary.contrastText',
                 fontSize: '12px',
                 fontWeight: 700,

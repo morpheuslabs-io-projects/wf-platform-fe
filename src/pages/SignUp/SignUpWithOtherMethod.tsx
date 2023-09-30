@@ -5,7 +5,7 @@ import { CookiesHelper } from "@/helper/cookies";
 import { signUpGoogle, signUpKeycloak } from "@/services/auth.service";
 import { useAuthentication } from "@/store/authentication";
 import { useKeycloakStore } from "@/store/keycloak";
-import { Alert, Box, Stack, Typography } from "@mui/material";
+import { Alert, Box, Stack } from "@mui/material";
 import { CodeResponse, useGoogleLogin } from "@react-oauth/google";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -78,9 +78,9 @@ export const SignUpWithOtherMethod = () => {
 
   return (
     <div>
-      <Typography variant="body" color="primary.contrastText">
+      {/* <Typography variant="body" color="primary.contrastText">
         Continue with
-      </Typography>
+      </Typography> */}
       <Stack direction="row" spacing="16px" mt="12px">
         <SeedButton onClick={signUpWithSeed} />
         <GoogleButton onClick={handleSignUpWithGoogle} />

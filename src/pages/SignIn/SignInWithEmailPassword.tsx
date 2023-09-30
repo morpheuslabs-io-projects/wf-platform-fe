@@ -79,12 +79,14 @@ export const SignInWithEmailPassword = () => {
           value={password}
           onChange={handlePasswordChange}
           label="Password"
-          placeholder="Enter your password"
+          placeholder="********"
           errorMessage={passwordError}
         />
       </Stack>
 
-      <Link to="/">Forgot password?</Link>
+      <Link isDivType={true} to="/">
+        <div style={{ marginTop: "10px" }}>Forgot password?</div>
+      </Link>
 
       <div>
         <Button
@@ -97,7 +99,7 @@ export const SignInWithEmailPassword = () => {
           LOGIN
         </Button>
         <Stack direction="row" spacing="12px" mt="16px">
-          <Typography>New to Workflow?</Typography>
+          <Typography>New to Our Platform?</Typography>
           <Link to={ROUTE_PATH.SIGN_UP}>Sign up</Link>
         </Stack>
       </div>

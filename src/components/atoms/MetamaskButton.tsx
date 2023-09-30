@@ -6,7 +6,7 @@ const MetamaskButton = ({ onClick }: { onClick: () => void }) => {
   return (
     <SignInMethodButton onClick={onClick}>
       <SvgIcon iconName="metamask" />
-      <Typography variant="body_bold">Metamask</Typography>
+      <Typography variant="body_bold">METAMASK</Typography>
     </SignInMethodButton>
   );
 };

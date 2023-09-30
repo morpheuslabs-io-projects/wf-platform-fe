@@ -6,7 +6,7 @@ const GoogleButton = ({ onClick }: { onClick: () => void }) => {
   return (
     <SignInMethodButton onClick={onClick}>
       <SvgIcon iconName="google" />
-      <Typography variant="body_bold">Google</Typography>
+      <Typography variant="body_bold">GOOGLE</Typography>
     </SignInMethodButton>
   );
 };

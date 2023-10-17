@@ -1,7 +1,7 @@
 FROM node:18-alpine as builder
 WORKDIR /app
 COPY . .
-
+RUN mv .env.test .env
 RUN yarn
 
 RUN yarn build

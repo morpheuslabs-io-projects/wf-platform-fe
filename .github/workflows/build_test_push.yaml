@@ -33,15 +33,15 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t wf-platform-fe:${{ github.run_number }} -f Dockerfile .
+          docker build -t ${{ github.event.repository.name }}:${{ github.run_number }} -f Dockerfile .
 
       - name: Tag Docker image to a common repository used for both Prod and Test env
         run: |
-          docker tag wf-platform-fe:${{ github.run_number }} 757923541688.dkr.ecr.ap-southeast-1.amazonaws.com/wf-platform-fe:${{ github.run_number }}
+          docker tag ${{ github.event.repository.name }}:${{ github.run_number }} ${{ env.AWS_REPO }}/${{ github.event.repository.name }}:${{ github.run_number }}
 
       - name: Push to ECR
         run: |
-          docker push 757923541688.dkr.ecr.ap-southeast-1.amazonaws.com/wf-platform-fe:${{ github.run_number }}
+          docker push ${{ env.AWS_REPO }}/${{ github.event.repository.name }}:${{ github.run_number }}
           
       - run: |
           echo "🍏 This job's status is ${{ job.status }}."

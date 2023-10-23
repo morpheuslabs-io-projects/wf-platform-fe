@@ -9,17 +9,11 @@ on:
         - main
 
 jobs:
-  build_and_test:
-    runs-on: ubuntu-latest
+  build_test_push_deploy:
+    if: github.ref == 'refs/heads/develop'
     env:
       NODE_OPTIONS: --max_old_space_size=4096
-      AWS_DEFAULT_REGION: ap-southeast-1    
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-  push:
-    needs: build_and_test
+      AWS_DEFAULT_REGION: ap-southeast-1
     runs-on: ubuntu-latest
 
     steps:
@@ -56,3 +50,26 @@ jobs:
           echo "🍏 This job's status is ${{ job.status }}."
           echo "Run number - ${{ github.run_number }} "
           docker image ls
+      
+      - name: Prepare values for dispatch
+        id: prepare
+        run: |
+          echo "repo=${GITHUB_REPOSITORY#*/}" >> $GITHUB_OUTPUT
+          echo "service=${GITHUB_REPOSITORY#*/}" >> $GITHUB_OUTPUT
+          echo "image_tag=${{ github.run_number }}" >> $GITHUB_OUTPUT
+          echo "repository=morpheuslabs-io/argocd-apps" >> $GITHUB_OUTPUT
+          echo "event-type=deploy-dev" >> $GITHUB_OUTPUT
+          # trigger
+
+      - name: Deploy dispatch
+        uses: peter-evans/repository-dispatch@v2.1.2
+        with:
+          token: ${{ secrets.ORG_CI_TOKEN }}
+          repository: ${{ steps.prepare.outputs.repository }}
+          event-type: ${{ steps.prepare.outputs.event-type }}
+          client-payload: |-
+            {
+            "repo": "${{ steps.prepare.outputs.repo }}",
+            "service": "${{ steps.prepare.outputs.service }}",
+            "image_tag": "${{ steps.prepare.outputs.image_tag }}"
+            }

@@ -5,12 +5,14 @@ on:
     branches-ignore:
       - experiment
 
+env:
+  AWS_REPO: 757923541688.dkr.ecr.ap-southeast-1.amazonaws.com
+  NODE_OPTIONS: --max_old_space_size=4096
+  AWS_DEFAULT_REGION: ap-southeast-1
+
 jobs:
   build_test_push_deploy:
     if: github.ref == 'refs/heads/develop'
-    env:
-      NODE_OPTIONS: --max_old_space_size=4096
-      AWS_DEFAULT_REGION: ap-southeast-1
     runs-on: ubuntu-latest
 
     steps:

@@ -1,33 +1,42 @@
-import { VITE_GOOGLE_CLIENT_ID } from "@/constants/AppConfig";
+import { ReactKeycloakProvider } from "@/providers/KeycloakProvider";
+import { useAuthentication } from "@/store/authentication";
 import { ThemeProvider } from "@emotion/react";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import { WagmiConfig } from "wagmi";
 import router from "./router";
 import { chains, wagmiConfig } from "./services/web3Setup";
 import theme from "./theme";
-import { useAuthentication } from "@/store/authentication";
-import { useKeycloakStore } from "@/store/keycloak";
-import { useEffect } from "react";
+import {
+  VITE_SEED_AUTH_URL,
+  VITE_SEED_CLIENT_ID,
+  VITE_SEED_REALM,
+} from "@/constants/AppConfig";
 
 const queryClient = new QueryClient();
 
-function App() {
-  const { initKeycloak } = useKeycloakStore();
-  const { initAuthentication } = useAuthentication();
+const KEYCLOACK_CONFIG = {
+  url: VITE_SEED_AUTH_URL,
+  realm: VITE_SEED_REALM,
+  clientId: VITE_SEED_CLIENT_ID,
+};
 
-  useEffect(() => {
-    initKeycloak();
-  }, []);
+function App() {
+  const { initAuthentication } = useAuthentication();
 
   useEffect(() => {
     initAuthentication();
   }, []);
   return (
     <>
-      <GoogleOAuthProvider clientId={VITE_GOOGLE_CLIENT_ID}>
+      <ReactKeycloakProvider
+        init={KEYCLOACK_CONFIG}
+        initOptions={{
+          onLoad: "check-sso",
+        }}
+      >
         <QueryClientProvider client={queryClient}>
           <WagmiConfig config={wagmiConfig}>
             <RainbowKitProvider chains={chains}>
@@ -37,7 +46,7 @@ function App() {
             </RainbowKitProvider>
           </WagmiConfig>
         </QueryClientProvider>
-      </GoogleOAuthProvider>
+      </ReactKeycloakProvider>
     </>
   );
 }

@@ -17,9 +17,12 @@ const SampleComponent: FC = () => {
     initialPage: 1,
     initialPerPage: 4,
   });
+
+  const [showModalDetails, setShowModalDetails] = useState("");
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const samples: ISCItemLading[] = [
     {
+      id: "1",
       image: SCImg1,
       title: (
         <>
@@ -28,26 +31,11 @@ const SampleComponent: FC = () => {
         </>
       ),
     },
-    {
-      image: SCImg2,
-      title: "NFT Marketplace",
-    },
-    {
-      image: SCImg3,
-      title: "Automate Workflow",
-    },
-    {
-      image: SCImg4,
-      title: "Smart Contracts Development1",
-    },
-    {
-      image: SCImg4,
-      title: "Smart Contracts Development2",
-    },
-    {
-      image: SCImg4,
-      title: "Smart Contracts Development3",
-    },
+    { id: "2", image: SCImg2, title: "NFT Marketplace" },
+    { id: "3", image: SCImg3, title: "Automate Workflow" },
+    { id: "4", image: SCImg4, title: "Smart Contracts Development1" },
+    { id: "5", image: SCImg4, title: "Smart Contracts Development2" },
+    { id: "6", image: SCImg4, title: "Smart Contracts Development3" },
   ];
 
   const [listDataLanding, setListDataLanding] = useState<ISCItemLading[]>([]);
@@ -65,6 +53,11 @@ const SampleComponent: FC = () => {
       setListDataLanding(listDataDisplay as ISCItemLading[]);
     }
   }, [pagination.page]);
+
+  const handleShowDetails = (id: string) => {
+    setShowModalDetails(id);
+  };
+
   return (
     <Box
       sx={{
@@ -92,7 +85,11 @@ const SampleComponent: FC = () => {
             listDataLanding.map((sample, idx) => {
               return (
                 <Stack key={idx} sx={{ width: "25%" }}>
-                  <SCItemLanding title={sample.title} image={sample.image} />
+                  <SCItemLanding
+                    title={sample.title}
+                    image={sample.image}
+                    handleShowDetails={handleShowDetails}
+                  />
                 </Stack>
               );
             })}

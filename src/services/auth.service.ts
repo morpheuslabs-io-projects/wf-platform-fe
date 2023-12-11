@@ -1,17 +1,8 @@
-import {
-  GoogleSignInData,
-  GoogleSignInResponse,
-  GoogleSignUpData,
-  GoogleSignUpResponse,
-  KeycloakSignInData,
-  KeycloakSignInResponse,
-  KeycloakSignUpResponse,
-  SignInData,
-} from "@/types";
+import { KeycloakSignInData, KeycloakSignInResponse } from "@/types";
 
-import axios from "axios";
 import { ROUTE_PATH, VITE_AUTH_API_ENDPOINT } from "@/constants/AppConfig";
 import { CookiesHelper } from "@/helper/cookies";
+import axios from "axios";
 import { redirect } from "react-router-dom";
 
 const axiosAuthClient = axios.create({
@@ -54,51 +45,11 @@ const postRequest = async <T>(url: string, payload?: unknown): Promise<T> => {
   return axiosAuthClient.post(`/${url}`, JSON.stringify(payload));
 };
 
-export const signIn = async (data: SignInData): Promise<any> => {
-  const resp = await postRequest("auth/login", data);
-  return resp;
-};
-
-export const signInGoogle = async (
-  data: GoogleSignInData
-): Promise<GoogleSignInResponse> => {
-  const resp = await postRequest<GoogleSignInResponse>(
-    "auth/google/login",
-    data
-  );
-  return resp;
-};
-
-export const signInKeycloak = async (
+export const getTokensByKeycloakToken = async (
   data: KeycloakSignInData
 ): Promise<KeycloakSignInResponse> => {
   const resp = await postRequest<KeycloakSignInResponse>(
-    "auth/keycloak/login",
-    data
-  );
-  return resp;
-};
-
-export const signUp = async (data: SignInData): Promise<any> => {
-  const resp = await postRequest("auth/sign-up", data);
-  return resp;
-};
-
-export const signUpGoogle = async (
-  data: GoogleSignUpData
-): Promise<GoogleSignUpResponse> => {
-  const resp = await postRequest<GoogleSignUpResponse>(
-    "auth/google/register",
-    data
-  );
-  return resp;
-};
-
-export const signUpKeycloak = async (
-  data: KeycloakSignInData
-): Promise<KeycloakSignUpResponse> => {
-  const resp = await postRequest<KeycloakSignUpResponse>(
-    "auth/keycloak/register",
+    "auth/keycloak/get-tokens",
     data
   );
   return resp;

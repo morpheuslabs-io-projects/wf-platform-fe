@@ -3,10 +3,8 @@ import MorpheusLogoFull from "@/assets/icons/morpheus-logo-full.svg";
 import SCLogo from "@/assets/icons/sc-logo.svg";
 import SettingIcon from "@/assets/icons/setting-blue.svg";
 import { ROUTE_PATH } from "@/constants/AppConfig";
-import { CookiesHelper } from "@/helper/cookies";
 import { useAuthentication } from "@/store/authentication";
-import { useKeycloakStore } from "@/store/keycloak";
-import { Avatar, Typography } from "@mui/material";
+import { Avatar, Link, Typography } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -18,15 +16,15 @@ import { useNavigate } from "react-router-dom";
 
 const HeaderComponent: React.FC = () => {
   const navigate = useNavigate();
-  const { logout: keycloakLogout } = useKeycloakStore();
 
   const { user } = useAuthentication();
 
-  const onLogout = async () => {
-    await CookiesHelper.remove("accessToken");
-    await CookiesHelper.remove("refreshToken");
-    await CookiesHelper.remove("userInfo");
-    await keycloakLogout(window.location.origin);
+  const onGoToSignIn = async () => {
+    navigate(ROUTE_PATH.SIGN_IN);
+  };
+
+  const onGoToLogout = async () => {
+    navigate(ROUTE_PATH.LOGOUT);
   };
 
   return (
@@ -77,14 +75,7 @@ const HeaderComponent: React.FC = () => {
           >
             {!user && (
               <Box>
-                <Button
-                  href={ROUTE_PATH.SIGN_UP}
-                  variant="secondary"
-                  sx={{ mx: 1 }}
-                >
-                  Sign up
-                </Button>
-                <Button href={ROUTE_PATH.SIGN_IN} variant="ghost">
+                <Button onClick={onGoToSignIn} variant="ghost">
                   Login
                 </Button>
               </Box>
@@ -113,9 +104,18 @@ const HeaderComponent: React.FC = () => {
                   </IconButton>
                 </Box>
                 <Box>
-                  <Typography variant="body" onClick={onLogout}>
+                  <Link
+                    sx={{
+                      color: "black",
+                      textDecoration: "none",
+                      "&:hover": {
+                        textDecoration: "underline",
+                      },
+                    }}
+                    onClick={onGoToLogout}
+                  >
                     Log out
-                  </Typography>
+                  </Link>
                 </Box>
               </Box>
             )}

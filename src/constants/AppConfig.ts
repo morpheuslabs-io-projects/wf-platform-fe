@@ -15,4 +15,5 @@ export const {
 export const ROUTE_PATH = {
   SIGN_IN: "/sign-in",
   SIGN_UP: "/sign-up",
+  LOGOUT: "/logout",
 };

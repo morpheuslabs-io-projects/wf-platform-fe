@@ -11,6 +11,7 @@ import SCImg4 from "@/assets/images/sc-image4.png";
 import { ISCItemLading, SCItemLanding } from "@/components/atoms/SCItemLanding";
 import { usePaginationState } from "@/hooks/use-pagination-state";
 import { Pagination } from "./Pagination";
+import { DialogModal } from "./DialogModal";
 
 const SampleComponent: FC = () => {
   const pagination = usePaginationState({
@@ -88,6 +89,7 @@ const SampleComponent: FC = () => {
                   <SCItemLanding
                     title={sample.title}
                     image={sample.image}
+                    id={sample.id}
                     handleShowDetails={handleShowDetails}
                   />
                 </Stack>
@@ -115,6 +117,14 @@ const SampleComponent: FC = () => {
             }}
           />
         </Stack>
+        {showModalDetails && (
+          <DialogModal
+            showModalDetails={showModalDetails}
+            handleClose={() => {
+              setShowModalDetails("");
+            }}
+          />
+        )}
       </Box>
     </Box>
   );

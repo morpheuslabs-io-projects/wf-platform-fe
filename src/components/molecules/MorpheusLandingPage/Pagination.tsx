@@ -1,6 +1,6 @@
 /** @format */
 
-import { IconButton } from "@mui/material";
+import { IconButton, Stack } from "@mui/material";
 import SliderRight from "@/assets/icons/slider-right.svg";
 import SliderLeft from "@/assets/icons/slider-left.svg";
 import DotBlack from "@/assets/icons/dot-black.svg";

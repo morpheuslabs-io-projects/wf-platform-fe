@@ -1,3 +1,5 @@
+/** @format */
+
 import { FC } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -114,7 +116,12 @@ const Introduction: FC = () => {
           </Box>
         </Box>
         <Box sx={{ display: "flex", px: "8%", pt: "120px" }}>
-          <Grid container columnSpacing={6} rowSpacing={3}>
+          <Grid
+            container
+            columnSpacing={3}
+            rowSpacing={3}
+            style={{ overflow: "hidden" }}
+          >
             <Grid item xs={12} md={6}>
               <Box>
                 <iframe

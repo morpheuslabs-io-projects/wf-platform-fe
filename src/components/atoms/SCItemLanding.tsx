@@ -4,8 +4,8 @@ import { Box } from "@mui/material";
 export interface ISCItemLading {
   image: string;
   title: any;
-  id?: string;
-  handleShowDetails?: (id: string) => void;
+  slug: string;
+  handleShowDetails?: (slug: string) => void;
 }
 export const SCItemLanding = (params: ISCItemLading) => {
   return (
@@ -17,13 +17,17 @@ export const SCItemLanding = (params: ISCItemLading) => {
         cursor: "pointer",
       }}
       onClick={() => {
-        if (params.handleShowDetails && params.id) {
-          params.handleShowDetails(params.id);
+        if (params.handleShowDetails && params.slug) {
+          params.handleShowDetails(params.slug);
         }
       }}
     >
-      <Box>
-        <img src={params.image} alt="bubble" width="100%" style={{}} />
+      <Box style={{ textAlign: "center", height: "200px" }}>
+        <img
+          src={params.image}
+          alt="bubble"
+          style={{ maxHeight: "200px", maxWidth: "100%" }}
+        />
       </Box>
       <Box
         style={{

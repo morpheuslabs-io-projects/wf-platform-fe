@@ -4,14 +4,11 @@ import { FC, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import SCImg1 from "@/assets/images/sc-image1.png";
-import SCImg2 from "@/assets/images/sc-image2.png";
-import SCImg3 from "@/assets/images/sc-image3.png";
-import SCImg4 from "@/assets/images/sc-image4.png";
 import { ISCItemLading, SCItemLanding } from "@/components/atoms/SCItemLanding";
 import { usePaginationState } from "@/hooks/use-pagination-state";
 import { Pagination } from "./Pagination";
 import { DialogModal } from "./DialogModal";
+import { getListSampleSolution } from "@/services/sampleSolution.service";
 
 const SampleComponent: FC = () => {
   const pagination = usePaginationState({
@@ -19,44 +16,43 @@ const SampleComponent: FC = () => {
     initialPerPage: 4,
   });
 
-  const [showModalDetails, setShowModalDetails] = useState("");
+  const [slugShowModalDetails, setShowModalDetails] = useState("");
+  const [dataFromApi, setDataFromApi] = useState<any>();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const samples: ISCItemLading[] = [
-    {
-      id: "1",
-      image: SCImg1,
-      title: (
-        <>
-          Sed ut perspiciatis unde
-          <br /> omnis iste natus error
-        </>
-      ),
-    },
-    { id: "2", image: SCImg2, title: "NFT Marketplace" },
-    { id: "3", image: SCImg3, title: "Automate Workflow" },
-    { id: "4", image: SCImg4, title: "Smart Contracts Development1" },
-    { id: "5", image: SCImg4, title: "Smart Contracts Development2" },
-    { id: "6", image: SCImg4, title: "Smart Contracts Development3" },
-  ];
 
   const [listDataLanding, setListDataLanding] = useState<ISCItemLading[]>([]);
 
   useEffect(() => {
-    if (samples.length) {
-      const listDataDisplay = samples.filter((item, idx) => {
+    if (dataFromApi && dataFromApi.total) {
+      const listDataDisplay: any[] = [];
+      dataFromApi.solutions.forEach((item: any, idx: number) => {
         if (
           idx >= (pagination.page - 1) * pagination.perPage &&
           idx <= pagination.page * pagination.perPage - 1
         ) {
-          return item;
+          listDataDisplay.push({
+            id: item.id,
+            image: item.photo,
+            title: item.title,
+            slug: item.slug,
+          });
         }
       });
       setListDataLanding(listDataDisplay as ISCItemLading[]);
     }
+  }, [dataFromApi]);
+
+  useEffect(() => {
+    // async () => {
+    getListSampleSolution().then((data) => {
+      setDataFromApi(data.data);
+    });
+
+    // };
   }, [pagination.page]);
 
-  const handleShowDetails = (id: string) => {
-    setShowModalDetails(id);
+  const handleShowDetails = (slug: string) => {
+    setShowModalDetails(slug);
   };
 
   return (
@@ -89,7 +85,7 @@ const SampleComponent: FC = () => {
                   <SCItemLanding
                     title={sample.title}
                     image={sample.image}
-                    id={sample.id}
+                    slug={sample.slug}
                     handleShowDetails={handleShowDetails}
                   />
                 </Stack>
@@ -103,23 +99,25 @@ const SampleComponent: FC = () => {
           flexWrap="wrap"
           sx={{ pb: "32px", justifyContent: "center" }}
         >
-          <Pagination
-            total={samples.length}
-            page={pagination.page}
-            perPage={pagination.perPage}
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onNextPage={() => {
-              pagination.setPage(pagination.page + 1);
-            }}
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onPreviousPage={() => {
-              pagination.setPage(pagination.page - 1);
-            }}
-          />
+          {dataFromApi && (
+            <Pagination
+              total={(dataFromApi && dataFromApi.total) || 0}
+              page={pagination.page}
+              perPage={pagination.perPage}
+              // eslint-disable-next-line @typescript-eslint/no-empty-function
+              onNextPage={() => {
+                pagination.setPage(pagination.page + 1);
+              }}
+              // eslint-disable-next-line @typescript-eslint/no-empty-function
+              onPreviousPage={() => {
+                pagination.setPage(pagination.page - 1);
+              }}
+            />
+          )}
         </Stack>
-        {showModalDetails && (
+        {slugShowModalDetails && (
           <DialogModal
-            showModalDetails={showModalDetails}
+            slugShowModalDetails={slugShowModalDetails}
             handleClose={() => {
               setShowModalDetails("");
             }}

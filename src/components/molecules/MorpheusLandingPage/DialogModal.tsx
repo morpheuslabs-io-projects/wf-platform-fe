@@ -12,8 +12,10 @@ import {
 } from "@mui/material";
 import SCImg3 from "@/assets/images/so-image.png";
 import CloseIcon from "@/assets/icons/close-icon.svg";
+import { useEffect, useState } from "react";
+import { getDetailsSampleSolution } from "@/services/sampleSolution.service";
 interface IDialogModal {
-  showModalDetails: string;
+  slugShowModalDetails: string;
   handleClose: () => void;
 }
 interface ISolution {
@@ -24,7 +26,7 @@ interface ISolution {
   useCaseScenariosDes: string[];
 }
 export const DialogModal = ({
-  showModalDetails,
+  slugShowModalDetails,
   handleClose,
 }: IDialogModal) => {
   const solutionDetails: ISolution = {
@@ -43,6 +45,16 @@ consectetur adipiscing elit, sed do eiusmod
 Abore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation`,
     ],
   };
+
+  const [dataSolutionDetails, setDataSolutionDetails] = useState<any>();
+
+  useEffect(() => {
+    if (slugShowModalDetails) {
+      getDetailsSampleSolution(slugShowModalDetails).then((data) => {
+        setDataSolutionDetails(data.data);
+      });
+    }
+  }, [slugShowModalDetails]);
   return (
     <>
       <Dialog
@@ -82,10 +94,9 @@ Abore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
               <img src={CloseIcon} alt="" />
             </IconButton>
             <img
-              src={solutionDetails.image}
+              src={dataSolutionDetails && dataSolutionDetails.photo}
               alt="bubble"
-              width="100%"
-              style={{}}
+              style={{ height: "400px", maxHeight: "400px", maxWidth: "100%" }}
             />
           </Box>
           <Box>
@@ -98,8 +109,20 @@ Abore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                 marginTop: "15px",
               }}
             >
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium
+              {dataSolutionDetails && dataSolutionDetails.title}
+            </Typography>
+            <Typography
+              variant="header_5"
+              style={{
+                width: "100%",
+                textAlign: "left",
+                display: "block",
+                fontSize: "14px",
+                fontWeight: "400",
+                lineHeight: "21px",
+              }}
+            >
+              {dataSolutionDetails && dataSolutionDetails.subtitle}
             </Typography>
           </Box>
 
@@ -117,32 +140,47 @@ Abore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
               gap: 6,
             }}
           >
-            <div
-              style={{
-                color: "#252525",
-                fontSize: 16,
-                fontFamily: "Poppins",
-                fontWeight: "700",
-                wordWrap: "break-word",
-              }}
-            >
-              Key Features:
-            </div>
-            <div
-              style={{
-                color: "#252525",
-                fontSize: 14,
-                fontFamily: "Poppins",
-                fontWeight: "400",
-                wordWrap: "break-word",
-              }}
-            >
-              Lorem ipsum dolor sit amet, <br />
-              consectetur adipiscing elit, sed do eiusmod
-              <br />
-              Tmpor incididunt ut labore et dolore magna aliqua. Ut enim ad
-              minim veniam
-            </div>
+            {dataSolutionDetails &&
+              dataSolutionDetails.keyFeatures.length > 0 && (
+                <>
+                  <div
+                    style={{
+                      color: "#252525",
+                      fontSize: 16,
+                      fontFamily: "Poppins",
+                      fontWeight: "700",
+                      wordWrap: "break-word",
+                    }}
+                  >
+                    Key Features:
+                  </div>
+                  <ul
+                    style={{
+                      color: "#252525",
+                      fontSize: 14,
+                      margin: 0,
+                      fontFamily: "Poppins",
+                      paddingLeft: "25px",
+                      fontWeight: "400",
+                      wordWrap: "break-word",
+                    }}
+                  >
+                    {dataSolutionDetails.keyFeatures.map(
+                      (item: any, idx: number) => {
+                        return (
+                          <>
+                            {item.item && (
+                              <li key={idx} style={{ listStyleType: "disc" }}>
+                                {item.item}
+                              </li>
+                            )}
+                          </>
+                        );
+                      }
+                    )}
+                  </ul>
+                </>
+              )}
           </Box>
           <Box
             style={{
@@ -158,83 +196,131 @@ Abore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
               gap: 6,
             }}
           >
-            <div
-              style={{
-                color: "#252525",
-                fontSize: 16,
-                fontFamily: "Poppins",
-                fontWeight: "700",
-                wordWrap: "break-word",
-              }}
-            >
-              Benefits:
-            </div>
-            <div
-              style={{
-                color: "#252525",
-                fontSize: 14,
-                fontFamily: "Poppins",
-                fontWeight: "400",
-                wordWrap: "break-word",
-              }}
-            >
-              Lorem ipsum dolor sit amet, <br />
-              consectetur adipiscing elit, sed do eiusmod
-              <br />
-              Tmpor incididunt ut labore et dolore magna aliqua. Ut enim ad
-              minim veniam
-            </div>
+            {dataSolutionDetails && dataSolutionDetails.benefits.length > 0 && (
+              <>
+                <div
+                  style={{
+                    color: "#252525",
+                    fontSize: 16,
+                    fontFamily: "Poppins",
+                    fontWeight: "700",
+                    wordWrap: "break-word",
+                  }}
+                >
+                  Benefits:
+                </div>
+                <ul
+                  style={{
+                    color: "#252525",
+                    fontSize: 14,
+                    margin: 0,
+                    fontFamily: "Poppins",
+                    paddingLeft: "25px",
+                    fontWeight: "400",
+                    wordWrap: "break-word",
+                  }}
+                >
+                  {dataSolutionDetails.benefits.map(
+                    (item: any, idx: number) => {
+                      return (
+                        <>
+                          {item.item && (
+                            <li key={idx} style={{ listStyleType: "disc" }}>
+                              {item.item}
+                            </li>
+                          )}
+                        </>
+                      );
+                    }
+                  )}
+                </ul>
+              </>
+            )}
           </Box>
-          <Box style={{ marginTop: "15px" }}>
-            <Typography
-              variant="header_5"
-              style={{
-                width: "100%",
-                textAlign: "left",
-                display: "block",
-                marginTop: "15px",
-              }}
-            >
-              Use Case Scenarios
-            </Typography>
-            <Grid
-              container
-              columnSpacing={2}
-              rowSpacing={2}
-              style={{ overflow: "hidden" }}
-            >
-              {Array.from(Array(12), (e, i) => {
-                return (
-                  <Grid
-                    item
-                    xs={4}
-                    md={4}
-                    // style={{
-                    //   width: "25%",
-                    // }}
+          {dataSolutionDetails &&
+            dataSolutionDetails.useCases.useCases.length > 0 && (
+              <>
+                <Box style={{ marginTop: "15px" }}>
+                  <Typography
+                    variant="header_5"
+                    style={{
+                      width: "100%",
+                      textAlign: "left",
+                      display: "block",
+                      marginTop: "15px",
+                    }}
                   >
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "100px",
-                        padding: "16px",
-                        boxSizing: "border-box",
-                        textAlign: "left",
-                        backgroundColor: "#FFFFF",
-                        background:
-                          "linear-gradient(169deg, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0.60) 100%)",
-                        borderRadius: 4,
-                        border: "1px rgba(255, 255, 255, 0.70) solid",
-                        backdropFilter: "blur(12px)",
-                      }}
-                    >
-                      dasdsadasdas
-                    </div>
+                    Use Case Scenarios
+                  </Typography>
+                  <Grid
+                    container
+                    columnSpacing={2}
+                    rowSpacing={2}
+                    style={{ overflow: "hidden", marginTop: "2px" }}
+                  >
+                    {dataSolutionDetails.useCases.useCases.map(
+                      (useCase: any, idx: number) => {
+                        return (
+                          <Grid
+                            item
+                            key={idx}
+                            xs={4}
+                            md={4}
+                            height={"auto"}
+                            // style={{
+                            //   width: "25%",
+                            // }}
+                          >
+                            <div
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                padding: "16px",
+                                boxSizing: "border-box",
+                                textAlign: "left",
+                                backgroundColor: "#FFFFF",
+                                background:
+                                  "linear-gradient(169deg, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0.60) 100%)",
+                                borderRadius: 4,
+                                border: "1px rgba(255, 255, 255, 0.70) solid",
+                                backdropFilter: "blur(12px)",
+                              }}
+                            >
+                              <ul
+                                style={{
+                                  color: "#252525",
+                                  fontSize: 14,
+                                  margin: 0,
+                                  fontFamily: "Poppins",
+                                  paddingLeft: "25px",
+                                  fontWeight: "400",
+                                  wordWrap: "break-word",
+                                }}
+                              >
+                                {useCase.map((item: any, idx2: number) => {
+                                  return (
+                                    <>
+                                      {item.item && (
+                                        <li
+                                          key={idx2}
+                                          style={{ listStyleType: "disc" }}
+                                        >
+                                          {item.item}
+                                        </li>
+                                      )}
+                                    </>
+                                  );
+                                })}
+                              </ul>
+                            </div>
+                          </Grid>
+                        );
+                      }
+                    )}
                   </Grid>
-                );
-              })}
-            </Grid>
-          </Box>
+                </Box>
+              </>
+            )}
         </DialogContent>
       </Dialog>
     </>

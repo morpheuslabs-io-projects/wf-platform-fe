@@ -1,3 +1,5 @@
+/** @format */
+
 import { createTheme } from "@mui/material";
 import { ColorPartial } from "@mui/material/styles/createPalette";
 import { CSSProperties } from "react";
@@ -70,6 +72,8 @@ declare module "@mui/material/Typography" {
     header_1: true;
     header_2: true;
     header_3: true;
+    header_4: true;
+    header_5: true;
     sub_title: true;
     body: true;
     body_bold: true;
@@ -167,6 +171,24 @@ const theme = createTheme(defaultTheme, {
           },
         },
         {
+          props: { variant: "header_4" },
+          style: {
+            fontSize: "24px",
+            fontWeight: 700,
+            lineHeight: "34px",
+            props: { variant: "header_4" },
+          },
+        },
+        {
+          props: { variant: "header_5" },
+          style: {
+            fontSize: "16px",
+            fontWeight: 700,
+            lineHeight: "34px",
+            props: { variant: "header_5" },
+          },
+        },
+        {
           props: { variant: "sub_title" },
           style: {
             fontSize: "24px",
@@ -204,7 +226,7 @@ const theme = createTheme(defaultTheme, {
             fontSize: "14px",
             fontWeight: 600,
             lineHeight: "16px",
-            textTransform: "uppercase"
+            textTransform: "uppercase",
           },
         },
         {

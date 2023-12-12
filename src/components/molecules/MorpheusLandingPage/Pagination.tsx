@@ -1,6 +1,6 @@
 /** @format */
 
-import { IconButton, Stack } from "@mui/material";
+import { IconButton } from "@mui/material";
 import SliderRight from "@/assets/icons/slider-right.svg";
 import SliderLeft from "@/assets/icons/slider-left.svg";
 import DotBlack from "@/assets/icons/dot-black.svg";
@@ -46,7 +46,7 @@ export const Pagination = ({
         <img src={SliderLeft} alt="" />
       </IconButton>
       <>
-        {Array.from(Array(pageDisplay), (e, i) => {
+        {Array.from(Array(pageDisplay), (_e, i) => {
           console.log(page);
           return i + 1 === page ? (
             <IconButton aria-label="settings">

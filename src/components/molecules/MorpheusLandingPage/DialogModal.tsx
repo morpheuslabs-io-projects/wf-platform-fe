@@ -2,15 +2,12 @@
 
 import {
   Box,
-  Card,
   Dialog,
   DialogContent,
   Grid,
   IconButton,
-  Stack,
   Typography,
 } from "@mui/material";
-import SCImg3 from "@/assets/images/so-image.png";
 import CloseIcon from "@/assets/icons/close-icon.svg";
 import { useEffect, useState } from "react";
 import { getDetailsSampleSolution } from "@/services/sampleSolution.service";
@@ -18,34 +15,10 @@ interface IDialogModal {
   slugShowModalDetails: string;
   handleClose: () => void;
 }
-interface ISolution {
-  image: string;
-  title: string;
-  keyFeaturesDes: string;
-  benefitsDes: string;
-  useCaseScenariosDes: string[];
-}
 export const DialogModal = ({
   slugShowModalDetails,
   handleClose,
 }: IDialogModal) => {
-  const solutionDetails: ISolution = {
-    image: SCImg3,
-    title:
-      "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium",
-    keyFeaturesDes: `Lorem ipsum dolor sit amet, 
-consectetur adipiscing elit, sed do eiusmod
-Tmpor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam`,
-    benefitsDes: `Lorem ipsum dolor sit amet, 
-consectetur adipiscing elit, sed do eiusmod
-Abore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation`,
-    useCaseScenariosDes: [
-      `Lorem ipsum dolor sit amet, 
-consectetur adipiscing elit, sed do eiusmod
-Abore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation`,
-    ],
-  };
-
   const [dataSolutionDetails, setDataSolutionDetails] = useState<any>();
 
   useEffect(() => {

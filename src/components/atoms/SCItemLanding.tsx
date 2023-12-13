@@ -1,6 +1,5 @@
 /** @format */
 
-import { Height } from "@mui/icons-material";
 import { Box } from "@mui/material";
 export interface ISCItemLading {
   image: string;

@@ -1,5 +1,6 @@
 /** @format */
 
+import { Height } from "@mui/icons-material";
 import { Box } from "@mui/material";
 export interface ISCItemLading {
   image: string;
@@ -12,8 +13,9 @@ export const SCItemLanding = (params: ISCItemLading) => {
     <Box
       style={{
         width: "100%",
+        height: "100%",
         backgroundColor: "#FFFFFF",
-        minHeight: "305px",
+        minHeight: "265px",
         cursor: "pointer",
       }}
       onClick={() => {
@@ -26,12 +28,18 @@ export const SCItemLanding = (params: ISCItemLading) => {
         <img
           src={params.image}
           alt="bubble"
-          style={{ maxHeight: "200px", maxWidth: "100%" }}
+          style={{
+            maxHeight: "200px",
+            maxWidth: "100%",
+            height: "100%",
+            width: "100%",
+          }}
         />
       </Box>
       <Box
         style={{
           width: "100%",
+          height: `calc(100% - 200px)`,
           textAlign: "center",
           display: "flex",
           alignItems: "center",
@@ -45,6 +53,7 @@ export const SCItemLanding = (params: ISCItemLading) => {
             fontSize: "16",
             fontFamily: "Poppins",
             fontWeight: "700",
+            padding: "0 10px",
           }}
         >
           {params.title}

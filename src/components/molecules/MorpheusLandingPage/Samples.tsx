@@ -81,7 +81,7 @@ const SampleComponent: FC = () => {
             listDataLanding.length &&
             listDataLanding.map((sample, idx) => {
               return (
-                <Stack key={idx} sx={{ width: "25%" }}>
+                <Stack key={idx} sx={{ width: "25%", height: "auto" }}>
                   <SCItemLanding
                     title={sample.title}
                     image={sample.image}

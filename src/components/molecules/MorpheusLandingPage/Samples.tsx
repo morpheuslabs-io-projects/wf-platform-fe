@@ -63,7 +63,7 @@ const SampleComponent: FC = () => {
         backgroundColor: "#F1F5FA ",
       }}
     >
-      <Box sx={{ maxWidth: "1600px" }}>
+      <Box sx={{ maxWidth: "1600px", marginLeft: "25px" }}>
         <Stack
           spacing={{ xs: 2 }}
           direction="row"

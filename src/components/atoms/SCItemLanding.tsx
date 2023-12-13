@@ -17,6 +17,7 @@ export const SCItemLanding = (params: ISCItemLading) => {
         backgroundColor: "#FFFFFF",
         minHeight: "265px",
         cursor: "pointer",
+        boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.15)",
       }}
       onClick={() => {
         if (params.handleShowDetails && params.slug) {

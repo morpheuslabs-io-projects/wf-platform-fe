@@ -227,79 +227,78 @@ export const DialogModal = ({
               </>
             )}
           </Box>
-          {dataSolutionDetails &&
-            dataSolutionDetails.useCases.useCases.length > 0 && (
-              <>
-                <Box style={{ marginTop: "15px" }}>
-                  <Typography
-                    variant="header_5"
-                    style={{
-                      width: "100%",
-                      textAlign: "left",
-                      display: "block",
-                      marginTop: "15px",
-                    }}
-                  >
-                    Use Case Scenarios
-                  </Typography>
-                  <Grid
-                    container
-                    columnSpacing={2}
-                    rowSpacing={2}
-                    style={{ overflow: "hidden", marginTop: "2px" }}
-                  >
-                    {dataSolutionDetails.useCases.useCases.map(
-                      (useCase: any, idx: number) => {
-                        return (
-                          <Grid
-                            item
-                            key={idx}
-                            xs={4}
-                            md={4}
-                            height={"auto"}
-                            // style={{
-                            //   width: "25%",
-                            // }}
+          {dataSolutionDetails && dataSolutionDetails.useCases.length > 0 && (
+            <>
+              <Box style={{ marginTop: "15px" }}>
+                <Typography
+                  variant="header_5"
+                  style={{
+                    width: "100%",
+                    textAlign: "left",
+                    display: "block",
+                    marginTop: "15px",
+                  }}
+                >
+                  Use Case Scenarios
+                </Typography>
+                <Grid
+                  container
+                  columnSpacing={2}
+                  rowSpacing={2}
+                  style={{ overflow: "hidden", marginTop: "2px" }}
+                >
+                  {dataSolutionDetails.useCases.map(
+                    (useCase: any, idx: number) => {
+                      return (
+                        <Grid
+                          item
+                          key={idx}
+                          xs={4}
+                          md={4}
+                          height={"auto"}
+                          // style={{
+                          //   width: "25%",
+                          // }}
+                        >
+                          <div
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              padding: "16px",
+                              boxSizing: "border-box",
+                              textAlign: "left",
+                              backgroundColor: "#FFFFF",
+                              background:
+                                "linear-gradient(169deg, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0.60) 100%)",
+                              borderRadius: 4,
+                              border: "1px rgba(255, 255, 255, 0.70) solid",
+                              backdropFilter: "blur(12px)",
+                            }}
                           >
-                            <div
+                            <img
+                              src={useCase.item}
                               style={{
-                                width: "100%",
+                                maxWidth: "100%",
+                                maxHeight: "100%",
                                 height: "100%",
-                                padding: "16px",
-                                boxSizing: "border-box",
-                                textAlign: "left",
-                                backgroundColor: "#FFFFF",
-                                background:
-                                  "linear-gradient(169deg, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0.60) 100%)",
-                                borderRadius: 4,
-                                border: "1px rgba(255, 255, 255, 0.70) solid",
-                                backdropFilter: "blur(12px)",
+                                width: "100%",
                               }}
-                            >
-                              <img
-                                src={
-                                  "https://icdn.24h.com.vn/upload/4-2023/images/2023-12-13/Toan-van-Tuyen-bo-chung-Viet-Nam---Trung-Quoc-a1-1702462905-849-width1148height768.jpg"
-                                }
-                                style={{
-                                  maxWidth: "100%",
-                                  maxHeight: "100%",
-                                  height: "100%",
-                                  width: "100%",
-                                }}
-                              />
-                            </div>
-                          </Grid>
-                        );
-                      }
-                    )}
-                  </Grid>
-                </Box>
-              </>
-            )}
+                            />
+                          </div>
+                        </Grid>
+                      );
+                    }
+                  )}
+                </Grid>
+              </Box>
+            </>
+          )}
           <Box sx={{ textAlign: "left" }}>
             <IconButton
               style={{ borderRadius: "0", padding: "20px 0 0" }}
-              // onClick={exportPDFWithComponent}
+              onClick={() =>
+                window.open(dataSolutionDetails.actionUrl, "_blank")
+              }
             >
               <GetStarted />
             </IconButton>

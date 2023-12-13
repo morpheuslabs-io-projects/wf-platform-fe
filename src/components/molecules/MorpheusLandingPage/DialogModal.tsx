@@ -11,6 +11,8 @@ import {
 import CloseIcon from "@/assets/icons/close-icon.svg";
 import { useEffect, useState } from "react";
 import { getDetailsSampleSolution } from "@/services/sampleSolution.service";
+
+import { ReactComponent as GetStarted } from "@/assets/icons/get-started.svg";
 interface IDialogModal {
   slugShowModalDetails: string;
   handleClose: () => void;
@@ -90,6 +92,7 @@ export const DialogModal = ({
                 width: "100%",
                 textAlign: "left",
                 display: "block",
+                margin: "9px 0 17px",
                 fontSize: "14px",
                 fontWeight: "400",
                 lineHeight: "21px",
@@ -143,7 +146,14 @@ export const DialogModal = ({
                         return (
                           <>
                             {item.item && (
-                              <li key={idx} style={{ listStyleType: "disc" }}>
+                              <li
+                                key={idx}
+                                style={{
+                                  listStyleType: "disc",
+                                  lineHeight: "23px",
+                                  marginTop: "5px",
+                                }}
+                              >
                                 {item.item}
                               </li>
                             )}
@@ -198,7 +208,14 @@ export const DialogModal = ({
                       return (
                         <>
                           {item.item && (
-                            <li key={idx} style={{ listStyleType: "disc" }}>
+                            <li
+                              key={idx}
+                              style={{
+                                listStyleType: "disc",
+                                lineHeight: "23px",
+                                marginTop: "5px",
+                              }}
+                            >
                               {item.item}
                             </li>
                           )}
@@ -259,32 +276,17 @@ export const DialogModal = ({
                                 backdropFilter: "blur(12px)",
                               }}
                             >
-                              <ul
+                              <img
+                                src={
+                                  "https://icdn.24h.com.vn/upload/4-2023/images/2023-12-13/Toan-van-Tuyen-bo-chung-Viet-Nam---Trung-Quoc-a1-1702462905-849-width1148height768.jpg"
+                                }
                                 style={{
-                                  color: "#252525",
-                                  fontSize: 14,
-                                  margin: 0,
-                                  fontFamily: "Poppins",
-                                  paddingLeft: "25px",
-                                  fontWeight: "400",
-                                  wordWrap: "break-word",
+                                  maxWidth: "100%",
+                                  maxHeight: "100%",
+                                  height: "100%",
+                                  width: "100%",
                                 }}
-                              >
-                                {useCase.map((item: any, idx2: number) => {
-                                  return (
-                                    <>
-                                      {item.item && (
-                                        <li
-                                          key={idx2}
-                                          style={{ listStyleType: "disc" }}
-                                        >
-                                          {item.item}
-                                        </li>
-                                      )}
-                                    </>
-                                  );
-                                })}
-                              </ul>
+                              />
                             </div>
                           </Grid>
                         );
@@ -294,6 +296,14 @@ export const DialogModal = ({
                 </Box>
               </>
             )}
+          <Box sx={{ textAlign: "left" }}>
+            <IconButton
+              style={{ borderRadius: "0", padding: "20px 0 0" }}
+              // onClick={exportPDFWithComponent}
+            >
+              <GetStarted />
+            </IconButton>
+          </Box>
         </DialogContent>
       </Dialog>
     </>

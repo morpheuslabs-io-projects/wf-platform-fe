@@ -9,12 +9,16 @@ import { usePaginationState } from "@/hooks/use-pagination-state";
 import { Pagination } from "./Pagination";
 import { DialogModal } from "./DialogModal";
 import { getListSampleSolution } from "@/services/sampleSolution.service";
+import { EWindowSize, useReSize } from "@/hooks/useSize";
 
 const SampleComponent: FC = () => {
+  const [perPageWindow, setPerPageWindow] = useState(4);
   const pagination = usePaginationState({
     initialPage: 1,
     initialPerPage: 4,
   });
+
+  const mode = useReSize();
 
   const [slugShowModalDetails, setShowModalDetails] = useState("");
   const [dataFromApi, setDataFromApi] = useState<any>();
@@ -40,7 +44,7 @@ const SampleComponent: FC = () => {
       });
       setListDataLanding(listDataDisplay as ISCItemLading[]);
     }
-  }, [dataFromApi]);
+  }, [dataFromApi, JSON.stringify(pagination)]);
 
   useEffect(() => {
     // async () => {
@@ -49,7 +53,23 @@ const SampleComponent: FC = () => {
     });
 
     // };
-  }, [pagination.page]);
+  }, []);
+
+  useEffect(() => {
+    if (mode === EWindowSize.MOBILE) {
+      setPerPageWindow(1);
+      pagination.setPage(1);
+    }
+
+    if (mode === EWindowSize.TABLET) {
+      pagination.setPerPage(2);
+      pagination.setPage(1);
+    }
+    if (mode === EWindowSize.PC) {
+      pagination.setPerPage(4);
+      pagination.setPage(1);
+    }
+  }, [mode]);
 
   const handleShowDetails = (slug: string) => {
     setShowModalDetails(slug);
@@ -63,7 +83,7 @@ const SampleComponent: FC = () => {
         backgroundColor: "#F1F5FA ",
       }}
     >
-      <Box sx={{ maxWidth: "1600px", marginLeft: "25px" }}>
+      <Box sx={{ maxWidth: "1600px", marginLeft: "25px", marginRight: "25px" }}>
         <Stack
           spacing={{ xs: 2 }}
           direction="row"

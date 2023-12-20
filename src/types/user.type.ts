@@ -16,5 +16,15 @@ export interface IAccessData {
   refreshToken: string;
   token: string;
   tokenExpires: number;
-  user?: User
+  user?: User;
+}
+
+export interface IUserToken {
+  id: number;
+  email: string;
+  first_name?: string;
+  last_name?: string;
+  avatar?: string;
+  gender?: string;
+  status: string;
 }

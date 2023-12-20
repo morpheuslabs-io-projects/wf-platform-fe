@@ -1,12 +1,56 @@
-import { SignInData } from "@/types";
-import { postRequest } from "./axiosSetup";
+import { KeycloakSignInData, KeycloakSignInResponse } from "@/types";
 
-export const signIn = async (data: SignInData) => {
-  const resp = await postRequest("auth/login", data);
-  return resp;
+import { ROUTE_PATH, VITE_AUTH_API_ENDPOINT } from "@/constants/AppConfig";
+import { CookiesHelper } from "@/helper/cookies";
+import axios from "axios";
+import { redirect } from "react-router-dom";
+
+const axiosAuthClient = axios.create({
+  baseURL: VITE_AUTH_API_ENDPOINT,
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+  timeout: 900000,
+});
+
+axiosAuthClient.interceptors.request.use(
+  (config) => {
+    const accessToken = CookiesHelper.get("accessToken");
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  async (error) => {
+    return Promise.reject(error);
+  }
+);
+
+axiosAuthClient.interceptors.response.use(
+  (response) => {
+    return response.data.data;
+  },
+  async (error) => {
+    if (error.response.status === 401) {
+      CookiesHelper.remove("accessToken");
+      redirect(ROUTE_PATH.SIGN_IN);
+    }
+    const message = error.response.data.message || error.message;
+    return Promise.reject(message);
+  }
+);
+
+const postRequest = async <T>(url: string, payload?: unknown): Promise<T> => {
+  return axiosAuthClient.post(`/${url}`, JSON.stringify(payload));
 };
 
-export const signUp = async (data: SignInData) => {
-  const resp = await postRequest("auth/sign-up", data);
+export const getTokensByKeycloakToken = async (
+  data: KeycloakSignInData
+): Promise<KeycloakSignInResponse> => {
+  const resp = await postRequest<KeycloakSignInResponse>(
+    "auth/keycloak/get-tokens",
+    data
+  );
   return resp;
 };

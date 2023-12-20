@@ -1,3 +1,4 @@
+import { VITE_SOCKET_API_ENDPOINT } from "@/constants/AppConfig";
 import { ReactNode, createContext, useContext, useMemo } from "react";
 import { Socket, io } from "socket.io-client";
 
@@ -7,7 +8,7 @@ const SocketContext = createContext(
   }
 );
 
-const SOCKET_URL = process.env.SOCKET_API_ENDPOINT;
+const SOCKET_URL = VITE_SOCKET_API_ENDPOINT;
 const socketOptions = {
   forceNew: true,
   autoConnect: false,

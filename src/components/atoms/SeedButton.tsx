@@ -6,7 +6,7 @@ const SeedButton = ({ onClick }: { onClick: () => void }) => {
   return (
     <SignInMethodButton onClick={onClick}>
       <SvgIcon iconName="seed" />
-      <Typography variant="body_bold">Seed</Typography>
+      <Typography variant="body_bold">SEED</Typography>
     </SignInMethodButton>
   );
 };

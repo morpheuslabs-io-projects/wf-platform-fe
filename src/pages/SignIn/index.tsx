@@ -1,57 +1,46 @@
-import {
-  Box,
-  Container,
-  Divider,
-  Stack,
-  Typography,
-  useTheme,
-} from '@mui/material';
-import AppJourney from '@/components/molecules/AppJourney';
-import { SignInWithOtherMethod } from './SignInWithOtherMethod';
-import { SignInWithEmailPassword } from './SignInWithEmailPassword';
-import SvgIcon from '@/components/atoms/SvgIcon';
-import { Link } from 'react-router-dom';
+import { CookiesHelper } from "@/helper/cookies";
+import { useReactKeycloak } from "@/providers/KeycloakProvider";
+import { getTokensByKeycloakToken } from "@/services/auth.service";
+import { useAuthentication } from "@/store/authentication";
+import { Container } from "@mui/material";
+import { useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const SignIn = () => {
-  const theme = useTheme();
+  const { authenticated, login, idToken } = useReactKeycloak();
+  const { initAuthentication } = useAuthentication();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectUrl = searchParams.get("redirect_url");
 
-  return (
-    <Container maxWidth="xl">
-      <Stack direction="row" p="32px">
-        <Box sx={{ maxWidth: '493px', px: '80px', flexGrow: 1 }}>
-        <Link to="/"><SvgIcon iconName="logo-full" /></Link>
-          <Typography variant="header_2" component="h2" mt="71px">
-            Get Start Now
-          </Typography>
+  const redirectBack = () => {
+    setTimeout(() => {
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      } else {
+        navigate("/");
+      }
+    });
+  };
+  useEffect(() => {
+    if (!authenticated || !idToken) {
+      login();
+    } else {
+      handleSignInWithKeycloak(idToken);
+    }
+  }, [authenticated, idToken]);
 
-          <Typography variant="body" color="text.secondary" mt="8px">
-            Enter your credentials to access your account
-          </Typography>
-          <Stack spacing="32px" mt="40px">
-            <SignInWithOtherMethod />
+  const handleSignInWithKeycloak = async (token: string) => {
+    const { access_token, refresh_token } = await getTokensByKeycloakToken({
+      token,
+    });
+    CookiesHelper.set("accessToken", access_token);
+    CookiesHelper.set("refreshToken", refresh_token);
+    initAuthentication();
+    redirectBack();
+  };
 
-            <Divider
-              color="primary.contrastText"
-              sx={{
-                color: 'primary.contrastText',
-                fontSize: '12px',
-                fontWeight: 700,
-                '&.MuiDivider-root::before, &.MuiDivider-root::after': {
-                  borderTop: `thin solid ${theme.palette.primary.contrastText}`,
-                },
-              }}
-            >
-              OR
-            </Divider>
-            <SignInWithEmailPassword />
-          </Stack>
-        </Box>
-        <Box sx={{ width: '676px' }}>
-          <AppJourney />
-        </Box>
-      </Stack>
-    </Container>
-  );
+  return <Container maxWidth="xl"></Container>;
 };
 
 export default SignIn;

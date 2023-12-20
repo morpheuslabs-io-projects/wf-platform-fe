@@ -1,33 +1,54 @@
-import { createBrowserRouter } from 'react-router-dom';
-import SignIn from '../pages/SignIn';
-import NotFound from '../pages/NotFound';
-import SignUp from '@/pages/SignUp';
-import MorpheusLandingPage from '@/pages/MorpheusLandingPage';
-import Inside from '@/pages/Inside';
-import PrivateRoute from './PrivateRoute';
+import CoreComponent from "@/components/core/Core";
+import { CookiesHelper } from "@/helper/cookies";
+import MorpheusLandingPage from "@/pages/MorpheusLandingPage";
+import { createBrowserRouter } from "react-router-dom";
+import NotFound from "../pages/NotFound";
+import SignIn from "../pages/SignIn";
+import AuthRouter from "./PrivateRoutes";
+import PublicGuard from "./PublicGuard";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const authLoader = (_: unknown) => {
+  const accessToken = CookiesHelper.get("accessToken");
+  const userInfo = CookiesHelper.get("userInfo");
+
+  if (!accessToken && !userInfo) {
+    return false;
+  }
+  return true;
+};
 
 const router = createBrowserRouter([
-	{
-		path: '/',
-		element: <MorpheusLandingPage />,
-	},
-	{
-		path: '/sign-in',
-		element: <SignIn />,
-	},
-	{
-		path: '/sign-up',
-		element: <SignUp />,
-	},
-	{
-		path: '/inside',
-		element: <Inside />,
-		
-	},
-	{
-		path: '*',
-		element: <NotFound />,
-	},
+  {
+    path: "*",
+    element: <NotFound />,
+  },
+
+  {
+    element: <CoreComponent />,
+    children: [
+      {
+        path: "/",
+        element: <MorpheusLandingPage />,
+      },
+      {
+        path: "/",
+        element: <PublicGuard />,
+        children: [
+          {
+            path: "/sign-in",
+            element: <SignIn />,
+          },
+        ],
+      },
+
+      {
+        path: "/",
+        loader: authLoader,
+        children: [...AuthRouter],
+      },
+    ],
+  },
 ]);
 
 export default router;

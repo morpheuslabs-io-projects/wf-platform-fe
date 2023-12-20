@@ -296,9 +296,11 @@ export const DialogModal = ({
           <Box sx={{ textAlign: "left" }}>
             <IconButton
               style={{ borderRadius: "0", padding: "20px 0 0" }}
-              onClick={() =>
-                window.open(dataSolutionDetails.actionUrl, "_blank")
-              }
+              onClick={() => {
+                let url = dataSolutionDetails.actionUrl;
+                url = url.match(/^https?:/) ? url : "//" + url;
+                window.open(url, "_blank");
+              }}
             >
               <GetStarted />
             </IconButton>

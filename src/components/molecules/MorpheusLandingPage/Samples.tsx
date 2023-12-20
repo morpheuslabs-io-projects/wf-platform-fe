@@ -89,7 +89,7 @@ const SampleComponent: FC = () => {
         </Stack>
         <Stack
           direction={{ sm: "column", md: "row" }}
-          spacing={{ xs: 1, sm: 1 }}
+          spacing={{ xs: 1, sm: 3 }}
           alignItems="center"
           justifyContent={mode === EWindowSize.PC ? "left" : "center"}
           style={{ textAlign: "center" }}
@@ -109,6 +109,7 @@ const SampleComponent: FC = () => {
                         : "25%"
                     } `,
                     height: "auto",
+                    maxWidth: `${mode === EWindowSize.PC && "382px"}`,
                   }}
                 >
                   <SCItemLanding
@@ -132,7 +133,7 @@ const SampleComponent: FC = () => {
           direction="row"
           useFlexGap
           flexWrap="wrap"
-          sx={{ pb: "32px", justifyContent: "center" }}
+          sx={{ pt: "20px", justifyContent: "center" }}
         >
           {dataFromApi && (
             <Pagination

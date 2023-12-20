@@ -56,7 +56,7 @@ const SampleComponent: FC = () => {
     }
 
     if (mode === EWindowSize.TABLET) {
-      setPerPage(2);
+      setPerPage(1);
       setPage(1);
     }
     if (mode === EWindowSize.PC) {
@@ -91,7 +91,7 @@ const SampleComponent: FC = () => {
           direction={{ sm: "column", md: "row" }}
           spacing={{ xs: 1, sm: 1 }}
           alignItems="center"
-          justifyContent="center"
+          justifyContent={mode === EWindowSize.PC ? "left" : "center"}
           style={{ textAlign: "center" }}
         >
           {listDataLanding &&
@@ -105,13 +105,19 @@ const SampleComponent: FC = () => {
                       mode === EWindowSize.MOBILE
                         ? "50%"
                         : mode === EWindowSize.TABLET
-                        ? "50%"
+                        ? "70%"
                         : "25%"
                     } `,
                     height: "auto",
                   }}
                 >
                   <SCItemLanding
+                    maxHeight={`${
+                      mode === EWindowSize.PC ? "265px" : "400px"
+                    } `}
+                    minHeight={`${
+                      mode === EWindowSize.PC ? "265px" : "200px"
+                    } `}
                     title={sample.title}
                     image={sample.image}
                     slug={sample.slug}

@@ -5,18 +5,15 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { ISCItemLading, SCItemLanding } from "@/components/atoms/SCItemLanding";
-import { usePaginationState } from "@/hooks/use-pagination-state";
+// import { usePaginationState } from "@/hooks/use-pagination-state";
 import { Pagination } from "./Pagination";
 import { DialogModal } from "./DialogModal";
 import { getListSampleSolution } from "@/services/sampleSolution.service";
 import { EWindowSize, useReSize } from "@/hooks/useSize";
 
 const SampleComponent: FC = () => {
-  const [perPageWindow, setPerPageWindow] = useState(4);
-  const pagination = usePaginationState({
-    initialPage: 1,
-    initialPerPage: 4,
-  });
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(4);
 
   const mode = useReSize();
 
@@ -30,10 +27,7 @@ const SampleComponent: FC = () => {
     if (dataFromApi && dataFromApi.total) {
       const listDataDisplay: any[] = [];
       dataFromApi.solutions.forEach((item: any, idx: number) => {
-        if (
-          idx >= (pagination.page - 1) * pagination.perPage &&
-          idx <= pagination.page * pagination.perPage - 1
-        ) {
+        if (idx >= (page - 1) * perPage && idx <= page * perPage - 1) {
           listDataDisplay.push({
             id: item.id,
             image: item.photo,
@@ -44,7 +38,7 @@ const SampleComponent: FC = () => {
       });
       setListDataLanding(listDataDisplay as ISCItemLading[]);
     }
-  }, [dataFromApi, JSON.stringify(pagination)]);
+  }, [dataFromApi, perPage, page]);
 
   useEffect(() => {
     // async () => {
@@ -57,17 +51,17 @@ const SampleComponent: FC = () => {
 
   useEffect(() => {
     if (mode === EWindowSize.MOBILE) {
-      setPerPageWindow(1);
-      pagination.setPage(1);
+      setPerPage(1);
+      setPage(1);
     }
 
     if (mode === EWindowSize.TABLET) {
-      pagination.setPerPage(2);
-      pagination.setPage(1);
+      setPerPage(2);
+      setPage(1);
     }
     if (mode === EWindowSize.PC) {
-      pagination.setPerPage(4);
-      pagination.setPage(1);
+      setPerPage(4);
+      setPage(1);
     }
   }, [mode]);
 
@@ -95,13 +89,28 @@ const SampleComponent: FC = () => {
         </Stack>
         <Stack
           direction={{ sm: "column", md: "row" }}
-          spacing={{ xs: 1, sm: 2 }}
+          spacing={{ xs: 1, sm: 1 }}
+          alignItems="center"
+          justifyContent="center"
+          style={{ textAlign: "center" }}
         >
           {listDataLanding &&
             listDataLanding.length &&
             listDataLanding.map((sample, idx) => {
               return (
-                <Stack key={idx} sx={{ width: "25%", height: "auto" }}>
+                <Stack
+                  key={idx}
+                  sx={{
+                    width: `${
+                      mode === EWindowSize.MOBILE
+                        ? "50%"
+                        : mode === EWindowSize.TABLET
+                        ? "50%"
+                        : "25%"
+                    } `,
+                    height: "auto",
+                  }}
+                >
                   <SCItemLanding
                     title={sample.title}
                     image={sample.image}
@@ -122,15 +131,15 @@ const SampleComponent: FC = () => {
           {dataFromApi && (
             <Pagination
               total={(dataFromApi && dataFromApi.total) || 0}
-              page={pagination.page}
-              perPage={pagination.perPage}
+              page={page}
+              perPage={perPage}
               // eslint-disable-next-line @typescript-eslint/no-empty-function
               onNextPage={() => {
-                pagination.setPage(pagination.page + 1);
+                setPage(page + 1);
               }}
               // eslint-disable-next-line @typescript-eslint/no-empty-function
               onPreviousPage={() => {
-                pagination.setPage(pagination.page - 1);
+                setPage(page - 1);
               }}
             />
           )}

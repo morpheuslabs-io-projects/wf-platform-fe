@@ -7,7 +7,7 @@ import { useAuthentication } from "@/store/authentication";
 import { Avatar, Link, Typography } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
@@ -19,9 +19,9 @@ const HeaderComponent: React.FC = () => {
 
   const { user } = useAuthentication();
 
-  const onGoToSignIn = async () => {
-    navigate(ROUTE_PATH.SIGN_IN);
-  };
+  // const onGoToSignIn = async () => {
+  //   navigate(ROUTE_PATH.SIGN_IN);
+  // };
 
   const onGoToLogout = async () => {
     navigate(ROUTE_PATH.LOGOUT);
@@ -73,13 +73,13 @@ const HeaderComponent: React.FC = () => {
               },
             }}
           >
-            {!user && (
+            {/* {!user && (
               <Box>
                 <Button onClick={onGoToSignIn} variant="ghost">
                   Login
                 </Button>
               </Box>
-            )}
+            )} */}
             {user && (
               <Avatar
                 alt="avatar"

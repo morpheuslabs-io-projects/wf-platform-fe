@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 /** @format */
 
 export const WindowSize = {
-  TABLET: 1024,
+  TABLET: 1200,
   MOBILE: 768,
 };
 

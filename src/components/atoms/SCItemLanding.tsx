@@ -1,5 +1,6 @@
 /** @format */
 
+import { EWindowSize, useReSize } from "@/hooks/useSize";
 import { Box } from "@mui/material";
 export interface ISCItemLading {
   image: string;
@@ -10,6 +11,7 @@ export interface ISCItemLading {
   minHeight: string;
 }
 export const SCItemLanding = (params: ISCItemLading) => {
+  const mode = useReSize();
   return (
     <Box
       style={{
@@ -39,7 +41,7 @@ export const SCItemLanding = (params: ISCItemLading) => {
           style={{
             width: "100%",
             maxWidth: "100%",
-            maxHeight: "100%",
+            maxHeight: `${mode === EWindowSize.PC ? "218px" : mode === EWindowSize.TABLET ? "250px" : "100%"}`,
           }}
         />
       </Box>

@@ -1,9 +1,9 @@
 /** @format */
 
 import MorpheusLogoFull from "@/assets/icons/morpheus-logo-full.svg";
-import SCLogo from "@/assets/icons/sc-logo.svg";
-import { ROUTE_PATH } from "@/constants/AppConfig";
-import { useAuthentication } from "@/store/authentication";
+// import SCLogo from "@/assets/icons/sc-logo.svg";
+// import { ROUTE_PATH } from "@/constants/AppConfig";
+// import { useAuthentication } from "@/store/authentication";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";

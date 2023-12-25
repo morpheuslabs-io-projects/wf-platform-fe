@@ -51,12 +51,12 @@ const SampleComponent: FC = () => {
 
   useEffect(() => {
     if (mode === EWindowSize.MOBILE) {
-      setPerPage(1);
+      setPerPage(2);
       setPage(1);
     }
 
     if (mode === EWindowSize.TABLET) {
-      setPerPage(1);
+      setPerPage(2);
       setPage(1);
     }
     if (mode === EWindowSize.PC) {
@@ -72,12 +72,17 @@ const SampleComponent: FC = () => {
   return (
     <Box
       sx={{
-        pt: "120px",
-        pb: "80px",
+        pt: ` ${mode === EWindowSize.MOBILE ? "0" : "120px"}`,
+        pb: ` ${mode === EWindowSize.MOBILE ? "30px" : "80px"}`,
         backgroundColor: "#F1F5FA ",
       }}
     >
-      <Box sx={{ maxWidth: "1600px", marginLeft: "25px", marginRight: "25px" }}>
+      <Box
+        sx={{
+          maxWidth: "1600px",
+          margin: `${mode !== EWindowSize.MOBILE ? "0 25px" : "0 14px"}`,
+        }}
+      >
         <Stack
           spacing={{ xs: 2 }}
           direction="row"
@@ -91,7 +96,7 @@ const SampleComponent: FC = () => {
           direction={{ sm: "column", md: "row" }}
           spacing={{ xs: 1, sm: 3 }}
           alignItems="center"
-          justifyContent={mode === EWindowSize.PC ? "left" : "center"}
+          justifyContent={mode === EWindowSize.PC ? "stretch" : "center"}
           style={{ textAlign: "center" }}
         >
           {listDataLanding &&
@@ -103,12 +108,14 @@ const SampleComponent: FC = () => {
                   sx={{
                     width: `${
                       mode === EWindowSize.MOBILE
-                        ? "50%"
+                        ? "100%"
                         : mode === EWindowSize.TABLET
-                        ? "70%"
+                        ? "50%"
                         : "25%"
                     } `,
+                    alignItems: "stretch",
                     height: "auto",
+                    // alignSelf: "stretch",
                     maxWidth: `${mode === EWindowSize.PC && "382px"}`,
                   }}
                 >

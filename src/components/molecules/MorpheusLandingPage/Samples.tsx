@@ -90,7 +90,7 @@ const SampleComponent: FC = () => {
           flexWrap="wrap"
           sx={{ pb: "32px", justifyContent: "center" }}
         >
-          <Typography variant="header_3">Sample Solutions</Typography>
+          <Typography variant="header_3">Featured Solutions</Typography>
         </Stack>
         <Stack
           direction={{ sm: "column", md: "row" }}

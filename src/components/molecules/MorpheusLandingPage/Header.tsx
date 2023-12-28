@@ -58,7 +58,7 @@ const HeaderComponent: React.FC = () => {
             justifyContent: "space-between",
           }}
         >
-          <Toolbar sx={{ cursor: "pointer" }} onClick={() => navigate("/")}>
+          <Toolbar onClick={() => navigate("/")}>
             <Box
               component="img"
               src={MorpheusLogoFull}

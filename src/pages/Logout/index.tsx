@@ -6,20 +6,23 @@ import { useSearchParams } from "react-router-dom";
 
 export const Logout = () => {
   const { authenticated, logout } = useReactKeycloak();
+  const accessToken = CookiesHelper.get("accessToken");
+  const refreshToken = CookiesHelper.get("refreshToken");
+  const isHasToken = accessToken || refreshToken;
 
   const [searchParams] = useSearchParams();
   const redirectUrl = searchParams.get("redirect_url");
 
   useEffect(() => {
-    if (authenticated) {
+    if (authenticated || isHasToken) {
       handleLogout();
     }
-  }, [authenticated]);
+  }, [authenticated, isHasToken]);
 
   const handleLogout = async () => {
-    await CookiesHelper.remove("accessToken");
-    await CookiesHelper.remove("refreshToken");
-    await CookiesHelper.remove("userInfo");
+    CookiesHelper.remove("accessToken");
+    CookiesHelper.remove("refreshToken");
+    CookiesHelper.remove("userInfo");
     await logout({
       redirectUri: redirectUrl || window.location.origin,
     });

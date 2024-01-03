@@ -28,7 +28,6 @@ export const Pagination = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [perPage]);
-  console.log(page);
   return (
     <>
       <IconButton
@@ -47,7 +46,6 @@ export const Pagination = ({
       </IconButton>
       <>
         {Array.from(Array(pageDisplay), (_e, i) => {
-          console.log(page);
           return i + 1 === page ? (
             <IconButton aria-label="settings">
               <img src={DotBlack} alt="" />

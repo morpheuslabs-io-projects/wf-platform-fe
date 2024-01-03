@@ -39,3 +39,15 @@ body {
   height: 100%;
   object-fit: cover;
 }
+
+.swiper-pagination {
+  position: absolute;
+  left: calc(50% - 50px) !important;
+  width: 100px !important;
+  height: 32px;
+}
+
+.swiper-pagination-bullet-active {
+  --rk-colors-accentColor: black !important;
+  --swiper-theme-color: black !important;
+}

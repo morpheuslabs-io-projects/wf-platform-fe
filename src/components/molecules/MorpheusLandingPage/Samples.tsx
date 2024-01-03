@@ -1,6 +1,6 @@
 /** @format */
 
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -10,7 +10,15 @@ import { Pagination } from "./Pagination";
 import { DialogModal } from "./DialogModal";
 import { getListSampleSolution } from "@/services/sampleSolution.service";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination as PaginationSwiper } from "swiper/modules";
+import {
+  Pagination as PaginationSwiper,
+  Navigation,
+  Scrollbar,
+  A11y,
+} from "swiper";
+
+import { useSwiper } from "swiper/react";
+
 import "swiper/css";
 import "swiper/css/pagination";
 const SampleComponent: FC = () => {
@@ -66,7 +74,7 @@ const SampleComponent: FC = () => {
         backgroundColor: "#F1F5FA ",
       }}
     >
-      <Box sx={{ maxWidth: "1600px", marginLeft: "25px" }}>
+      <Box sx={{ maxWidth: "1600px", marginLeft: "25px", marginRight: "25px" }}>
         <Stack
           spacing={{ xs: 2 }}
           direction="row"
@@ -86,7 +94,7 @@ const SampleComponent: FC = () => {
             pagination={{
               clickable: true,
             }}
-            modules={[PaginationSwiper]}
+            modules={[PaginationSwiper, Navigation, Scrollbar, A11y]}
             className="mySwiper"
           >
             {listDataLanding &&
@@ -105,30 +113,30 @@ const SampleComponent: FC = () => {
                   </SwiperSlide>
                 );
               })}
+            <Stack
+              spacing={{ xs: 2 }}
+              direction="row"
+              useFlexGap
+              flexWrap="wrap"
+              sx={{ pt: "20px", justifyContent: "center" }}
+            >
+              {dataFromApi && (
+                <Pagination
+                  total={(dataFromApi && dataFromApi.total) || 0}
+                  page={pagination.page}
+                  perPage={pagination.perPage}
+                  // eslint-disable-next-line @typescript-eslint/no-empty-function
+                  onNextPage={() => {
+                    // swiper.slideNext();
+                  }}
+                  // eslint-disable-next-line @typescript-eslint/no-empty-function
+                  onPreviousPage={() => {
+                    // swiper.slidePrev();
+                  }}
+                />
+              )}
+            </Stack>
           </Swiper>
-        </Stack>
-        <Stack
-          spacing={{ xs: 2 }}
-          direction="row"
-          useFlexGap
-          flexWrap="wrap"
-          sx={{ pb: "32px", justifyContent: "center" }}
-        >
-          {dataFromApi && (
-            <Pagination
-              total={(dataFromApi && dataFromApi.total) || 0}
-              page={pagination.page}
-              perPage={pagination.perPage}
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              onNextPage={() => {
-                pagination.setPage(pagination.page + 1);
-              }}
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              onPreviousPage={() => {
-                pagination.setPage(pagination.page - 1);
-              }}
-            />
-          )}
         </Stack>
         {slugShowModalDetails && (
           <DialogModal

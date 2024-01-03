@@ -1,11 +1,12 @@
 /** @format */
 
-import { IconButton } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import SliderRight from "@/assets/icons/slider-right.svg";
 import SliderLeft from "@/assets/icons/slider-left.svg";
 import DotBlack from "@/assets/icons/dot-black.svg";
 import DotGrey from "@/assets/icons/dot-grey.svg";
 import { useEffect, useState } from "react";
+import { useSwiper } from "swiper/react";
 interface IPagination {
   total: number;
   page: number;
@@ -21,6 +22,8 @@ export const Pagination = ({
   onPreviousPage,
 }: IPagination) => {
   const [pageDisplay, setPageDisplay] = useState(0);
+  const swiper = useSwiper();
+
   useEffect(() => {
     if (perPage) {
       const pages = Math.ceil(total / perPage);
@@ -28,24 +31,29 @@ export const Pagination = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [perPage]);
-  console.log(page);
   return (
-    <>
+    <Box
+      style={{
+        width: "180px",
+        display: "flex",
+        justifyContent: "space-between",
+      }}
+    >
       <IconButton
         aria-label="settings"
         onClick={() => {
-          if (page > 1) {
-            onPreviousPage();
+          swiper.slidePrev();
+        }}
+        style={
+          {
+            // opacity: page <= 1 ? "0.2" : "1",
+            // cursor: page <= 1 ? "not-allowed" : "pointer",
           }
-        }}
-        style={{
-          opacity: page <= 1 ? "0.2" : "1",
-          cursor: page <= 1 ? "not-allowed" : "pointer",
-        }}
+        }
       >
         <img src={SliderLeft} alt="" />
       </IconButton>
-      <>
+      {/* <>
         {Array.from(Array(pageDisplay), (_e, i) => {
           console.log(page);
           return i + 1 === page ? (
@@ -58,7 +66,7 @@ export const Pagination = ({
             </IconButton>
           );
         })}
-      </>
+      </> */}
       {/* <IconButton aria-label="settings">
         <img src={DotBlack} alt="" />
       </IconButton>
@@ -68,17 +76,15 @@ export const Pagination = ({
       <IconButton
         aria-label="settings"
         onClick={() => {
-          if (page < pageDisplay) {
-            onNextPage();
-          }
+          swiper.slideNext();
         }}
-        style={{
-          opacity: page == pageDisplay ? "0.2" : "1",
-          cursor: page == pageDisplay ? "not-allowed" : "pointer",
-        }}
+        // style={{
+        //   opacity: page == pageDisplay ? "0.2" : "1",
+        //   cursor: page == pageDisplay ? "not-allowed" : "pointer",
+        // }}
       >
         <img src={SliderRight} alt="" />
       </IconButton>
-    </>
+    </Box>
   );
 };

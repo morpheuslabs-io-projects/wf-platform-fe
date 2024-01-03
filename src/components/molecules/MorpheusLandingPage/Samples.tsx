@@ -9,7 +9,10 @@ import { usePaginationState } from "@/hooks/use-pagination-state";
 import { Pagination } from "./Pagination";
 import { DialogModal } from "./DialogModal";
 import { getListSampleSolution } from "@/services/sampleSolution.service";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination as PaginationSwiper } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 const SampleComponent: FC = () => {
   const pagination = usePaginationState({
     initialPage: 1,
@@ -26,17 +29,17 @@ const SampleComponent: FC = () => {
     if (dataFromApi && dataFromApi.total) {
       const listDataDisplay: any[] = [];
       dataFromApi.solutions.forEach((item: any, idx: number) => {
-        if (
-          idx >= (pagination.page - 1) * pagination.perPage &&
-          idx <= pagination.page * pagination.perPage - 1
-        ) {
-          listDataDisplay.push({
-            id: item.id,
-            image: item.photo,
-            title: item.title,
-            slug: item.slug,
-          });
-        }
+        // if (
+        //   idx >= (pagination.page - 1) * pagination.perPage &&
+        //   idx <= pagination.page * pagination.perPage - 1
+        // ) {
+        listDataDisplay.push({
+          id: item.id,
+          image: item.photo,
+          title: item.title,
+          slug: item.slug,
+        });
+        // }
       });
       setListDataLanding(listDataDisplay as ISCItemLading[]);
     }
@@ -52,7 +55,7 @@ const SampleComponent: FC = () => {
   }, [pagination.page]);
 
   const handleShowDetails = (slug: string) => {
-    setShowModalDetails(slug);
+    // setShowModalDetails(slug);
   };
 
   return (
@@ -77,20 +80,32 @@ const SampleComponent: FC = () => {
           direction={{ sm: "column", md: "row" }}
           spacing={{ xs: 1, sm: 2 }}
         >
-          {listDataLanding &&
-            listDataLanding.length &&
-            listDataLanding.map((sample, idx) => {
-              return (
-                <Stack key={idx} sx={{ width: "25%", height: "auto" }}>
-                  <SCItemLanding
-                    title={sample.title}
-                    image={sample.image}
-                    slug={sample.slug}
-                    handleShowDetails={handleShowDetails}
-                  />
-                </Stack>
-              );
-            })}
+          <Swiper
+            slidesPerView={4}
+            spaceBetween={20}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[PaginationSwiper]}
+            className="mySwiper"
+          >
+            {listDataLanding &&
+              listDataLanding.length &&
+              listDataLanding.map((sample, idx) => {
+                return (
+                  <SwiperSlide key={idx}>
+                    <Stack sx={{ width: "100%", height: "auto" }}>
+                      <SCItemLanding
+                        title={sample.title}
+                        image={sample.image}
+                        slug={sample.slug}
+                        handleShowDetails={handleShowDetails}
+                      />
+                    </Stack>
+                  </SwiperSlide>
+                );
+              })}
+          </Swiper>
         </Stack>
         <Stack
           spacing={{ xs: 2 }}

@@ -3,34 +3,12 @@
 import { Box, IconButton } from "@mui/material";
 import SliderRight from "@/assets/icons/slider-right.svg";
 import SliderLeft from "@/assets/icons/slider-left.svg";
-import DotBlack from "@/assets/icons/dot-black.svg";
-import DotGrey from "@/assets/icons/dot-grey.svg";
-import { useEffect, useState } from "react";
+
 import { useSwiper } from "swiper/react";
-interface IPagination {
-  total: number;
-  page: number;
-  perPage: number;
-  onNextPage: () => void;
-  onPreviousPage: () => void;
-}
-export const Pagination = ({
-  total,
-  page,
-  perPage,
-  onNextPage,
-  onPreviousPage,
-}: IPagination) => {
-  const [pageDisplay, setPageDisplay] = useState(0);
+
+export const Pagination = () => {
   const swiper = useSwiper();
 
-  useEffect(() => {
-    if (perPage) {
-      const pages = Math.ceil(total / perPage);
-      setPageDisplay(pages);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [perPage]);
   return (
     <Box
       style={{

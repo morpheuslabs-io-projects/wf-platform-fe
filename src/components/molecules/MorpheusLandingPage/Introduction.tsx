@@ -53,6 +53,7 @@ const Introduction: FC = () => {
                   variant="sub_title"
                   style={{
                     display: "inline-block",
+                    padding: "0 10px",
                     lineHeight: `${
                       mode === EWindowSize.MOBILE ? "21px" : "34px"
                     }`,

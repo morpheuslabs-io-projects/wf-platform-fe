@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 export const WindowSize = {
   TABLET: 1200,
   MOBILE: 768,
+  PCMIN: 1368,
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -14,6 +15,7 @@ export enum EWindowSize {
   PC = "pc",
   TABLET = "tablet",
   MOBILE = "mobile",
+  PCMIN = "pcmin",
 }
 
 const getIsMobile = () => {

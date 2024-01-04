@@ -143,7 +143,7 @@ const SampleComponent: FC = () => {
                           mode === EWindowSize.PC ? "265px" : "400px"
                         } `}
                         minHeight={`${
-                          mode === EWindowSize.PC ? "265px" : "200px"
+                          mode === EWindowSize.PC ? "" : "200px"
                         } `}
                         title={sample.title}
                         image={sample.image}

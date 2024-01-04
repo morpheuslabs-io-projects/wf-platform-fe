@@ -1,6 +1,6 @@
 /** @format */
 
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -35,7 +35,7 @@ const SampleComponent: FC = () => {
   useEffect(() => {
     if (dataFromApi && dataFromApi.total) {
       const listDataDisplay: any[] = [];
-      dataFromApi.solutions.forEach((item: any, idx: number) => {
+      dataFromApi.solutions.forEach((item: any) => {
         // if (
         //   idx >= (pagination.page - 1) * pagination.perPage &&
         //   idx <= pagination.page * pagination.perPage - 1
@@ -169,21 +169,7 @@ const SampleComponent: FC = () => {
                     flexWrap="wrap"
                     sx={{ pt: "20px", justifyContent: "center" }}
                   >
-                    {dataFromApi && (
-                      <Pagination
-                        total={(dataFromApi && dataFromApi.total) || 0}
-                        page={0}
-                        perPage={0}
-                        // eslint-disable-next-line @typescript-eslint/no-empty-function
-                        onNextPage={() => {
-                          // swiper.slideNext();
-                        }}
-                        // eslint-disable-next-line @typescript-eslint/no-empty-function
-                        onPreviousPage={() => {
-                          // swiper.slidePrev();
-                        }}
-                      />
-                    )}
+                    {dataFromApi && <Pagination />}
                   </Stack>
                 </>
               )}

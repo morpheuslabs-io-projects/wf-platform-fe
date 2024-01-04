@@ -35,7 +35,7 @@ const SampleComponent: FC = () => {
   useEffect(() => {
     if (dataFromApi && dataFromApi.total) {
       const listDataDisplay: any[] = [];
-      dataFromApi.solutions.forEach((item: any,) => {
+      dataFromApi.solutions.forEach((item: any) => {
         // if (
         //   idx >= (pagination.page - 1) * pagination.perPage &&
         //   idx <= pagination.page * pagination.perPage - 1

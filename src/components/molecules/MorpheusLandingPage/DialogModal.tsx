@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { getDetailsSampleSolution } from "@/services/sampleSolution.service";
 
 import { ReactComponent as GetStarted } from "@/assets/icons/get-started.svg";
+import { EWindowSize, useReSize } from "@/hooks/useSize";
 interface IDialogModal {
   slugShowModalDetails: string;
   handleClose: () => void;
@@ -22,6 +23,7 @@ export const DialogModal = ({
   handleClose,
 }: IDialogModal) => {
   const [dataSolutionDetails, setDataSolutionDetails] = useState<any>();
+  const mode = useReSize();
 
   useEffect(() => {
     if (slugShowModalDetails) {
@@ -44,8 +46,8 @@ export const DialogModal = ({
           "& .MuiDialog-container": {
             "& .MuiPaper-root": {
               padding: "24px",
-              width: "60%",
-              maxWidth: "60%",
+              width: `${mode === EWindowSize.PC ? "60%" : "95%"}`,
+              maxWidth: `${mode === EWindowSize.PC ? "60%" : "95%"}`,
               alignItems: "center",
               textAlign: "center",
             },
@@ -71,7 +73,11 @@ export const DialogModal = ({
             <img
               src={dataSolutionDetails && dataSolutionDetails.photo}
               alt="bubble"
-              style={{ height: "400px", maxHeight: "400px", maxWidth: "100%" }}
+              style={{
+                height: `${mode === EWindowSize.PC ? "400px" : "128px"}`,
+                maxHeight: `${mode === EWindowSize.PC ? "400px" : "128px"}`,
+                maxWidth: "100%",
+              }}
             />
           </Box>
           <Box>
@@ -296,9 +302,11 @@ export const DialogModal = ({
           <Box sx={{ textAlign: "left" }}>
             <IconButton
               style={{ borderRadius: "0", padding: "20px 0 0" }}
-              onClick={() =>
-                window.open(dataSolutionDetails.actionUrl, "_blank")
-              }
+              onClick={() => {
+                let url = dataSolutionDetails.actionUrl;
+                url = url.match(/^https?:/) ? url : "//" + url;
+                window.open(url, "_blank");
+              }}
             >
               <GetStarted />
             </IconButton>

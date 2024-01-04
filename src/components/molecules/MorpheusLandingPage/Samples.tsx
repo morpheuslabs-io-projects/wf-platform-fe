@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { ISCItemLading, SCItemLanding } from "@/components/atoms/SCItemLanding";
-import { usePaginationState } from "@/hooks/use-pagination-state";
+// import { usePaginationState } from "@/hooks/use-pagination-state";
 import { Pagination } from "./Pagination";
 import { DialogModal } from "./DialogModal";
 import { getListSampleSolution } from "@/services/sampleSolution.service";
@@ -16,16 +16,17 @@ import {
   Scrollbar,
   A11y,
 } from "swiper";
+import { EWindowSize, useReSize } from "@/hooks/useSize";
 
 import { useSwiper } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/pagination";
 const SampleComponent: FC = () => {
-  const pagination = usePaginationState({
-    initialPage: 1,
-    initialPerPage: 4,
-  });
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(4);
+
+  const mode = useReSize();
 
   const [slugShowModalDetails, setShowModalDetails] = useState("");
   const [dataFromApi, setDataFromApi] = useState<any>();
@@ -51,7 +52,7 @@ const SampleComponent: FC = () => {
       });
       setListDataLanding(listDataDisplay as ISCItemLading[]);
     }
-  }, [dataFromApi]);
+  }, [dataFromApi, perPage, page]);
 
   useEffect(() => {
     // async () => {
@@ -60,7 +61,23 @@ const SampleComponent: FC = () => {
     });
 
     // };
-  }, [pagination.page]);
+  }, []);
+
+  useEffect(() => {
+    if (mode === EWindowSize.MOBILE) {
+      setPerPage(2);
+      setPage(1);
+    }
+
+    if (mode === EWindowSize.TABLET) {
+      setPerPage(2);
+      setPage(1);
+    }
+    if (mode === EWindowSize.PC) {
+      setPerPage(4);
+      setPage(1);
+    }
+  }, [mode]);
 
   const handleShowDetails = (slug: string) => {
     // setShowModalDetails(slug);
@@ -69,12 +86,17 @@ const SampleComponent: FC = () => {
   return (
     <Box
       sx={{
-        pt: "120px",
-        pb: "80px",
+        pt: ` ${mode === EWindowSize.MOBILE ? "0" : "120px"}`,
+        pb: ` ${mode === EWindowSize.MOBILE ? "30px" : "80px"}`,
         backgroundColor: "#F1F5FA ",
       }}
     >
-      <Box sx={{ maxWidth: "1600px", marginLeft: "25px", marginRight: "25px" }}>
+      <Box
+        sx={{
+          maxWidth: "1600px",
+          margin: `${mode !== EWindowSize.MOBILE ? "0 25px" : "0 14px"}`,
+        }}
+      >
         <Stack
           spacing={{ xs: 2 }}
           direction="row"
@@ -82,14 +104,19 @@ const SampleComponent: FC = () => {
           flexWrap="wrap"
           sx={{ pb: "32px", justifyContent: "center" }}
         >
-          <Typography variant="header_3">Sample Solutions</Typography>
+          <Typography variant="header_3">Featured Solutions</Typography>
         </Stack>
         <Stack
           direction={{ sm: "column", md: "row" }}
-          spacing={{ xs: 1, sm: 2 }}
+          spacing={{ xs: 1, sm: 3 }}
+          alignItems="center"
+          justifyContent={mode === EWindowSize.PC ? "stretch" : "center"}
+          style={{ textAlign: "center" }}
         >
           <Swiper
-            slidesPerView={4}
+            slidesPerView={
+              mode === EWindowSize.PC ? 4 : mode === EWindowSize.TABLET ? 2 : 1
+            }
             spaceBetween={20}
             pagination={{
               clickable: true,
@@ -101,9 +128,23 @@ const SampleComponent: FC = () => {
               listDataLanding.length &&
               listDataLanding.map((sample, idx) => {
                 return (
-                  <SwiperSlide key={idx}>
-                    <Stack sx={{ width: "100%", height: "auto" }}>
+                  <SwiperSlide key={idx} >
+                    <Stack
+                      sx={{
+                        width: "100%",
+                        alignItems: "stretch",
+                        height: "auto",
+                        // alignSelf: "stretch",
+                        maxWidth: `${mode === EWindowSize.PC && "382px"}`,
+                      }}
+                    >
                       <SCItemLanding
+                        maxHeight={`${
+                          mode === EWindowSize.PC ? "265px" : "400px"
+                        } `}
+                        minHeight={`${
+                          mode === EWindowSize.PC ? "265px" : "200px"
+                        } `}
                         title={sample.title}
                         image={sample.image}
                         slug={sample.slug}
@@ -113,6 +154,7 @@ const SampleComponent: FC = () => {
                   </SwiperSlide>
                 );
               })}
+
             <Stack
               spacing={{ xs: 2 }}
               direction="row"
@@ -123,8 +165,8 @@ const SampleComponent: FC = () => {
               {dataFromApi && (
                 <Pagination
                   total={(dataFromApi && dataFromApi.total) || 0}
-                  page={pagination.page}
-                  perPage={pagination.perPage}
+                  page={0}
+                  perPage={0}
                   // eslint-disable-next-line @typescript-eslint/no-empty-function
                   onNextPage={() => {
                     // swiper.slideNext();

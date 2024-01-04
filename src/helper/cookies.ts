@@ -2,7 +2,7 @@ import { VITE_ROOT_DOMAIN } from "@/constants/AppConfig";
 import Cookies from "js-cookie";
 export class CookiesHelper {
   static _getKey(name: string) {
-    const env = process.env.NODE_ENV;
+    const env = process.env.VITE_NODE_ENV;
     if (env === "production") {
       return name;
     }

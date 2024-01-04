@@ -1,20 +1,24 @@
 /** @format */
 
+import { EWindowSize, useReSize } from "@/hooks/useSize";
 import { Box } from "@mui/material";
 export interface ISCItemLading {
   image: string;
   title: any;
   slug: string;
   handleShowDetails?: (slug: string) => void;
+  maxHeight: string;
+  minHeight: string;
 }
 export const SCItemLanding = (params: ISCItemLading) => {
+  const mode = useReSize();
   return (
     <Box
       style={{
         width: "100%",
         height: "100%",
         backgroundColor: "#FFFFFF",
-        minHeight: "265px",
+        minHeight: params.minHeight,
         cursor: "pointer",
         boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.15)",
       }}
@@ -24,15 +28,20 @@ export const SCItemLanding = (params: ISCItemLading) => {
         }
       }}
     >
-      <Box style={{ textAlign: "center", height: "200px" }}>
+      <Box
+        style={{
+          textAlign: "center",
+          maxHeight: params.maxHeight,
+          width: "100%",
+        }}
+      >
         <img
           src={params.image}
           alt="bubble"
           style={{
-            maxHeight: "200px",
-            maxWidth: "100%",
-            height: "100%",
             width: "100%",
+            maxWidth: "100%",
+            maxHeight: `${mode === EWindowSize.PC ? "218px" : mode === EWindowSize.TABLET ? "250px" : "100%"}`,
           }}
         />
       </Box>

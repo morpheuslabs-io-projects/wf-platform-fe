@@ -41,7 +41,16 @@ export const SCItemLanding = (params: ISCItemLading) => {
           style={{
             width: "100%",
             maxWidth: "100%",
-            maxHeight: `${mode === EWindowSize.PC ? "218px" : mode === EWindowSize.TABLET ? "250px" : "100%"}`,
+            maxHeight: `${
+              mode === EWindowSize.PC
+                ? "218px"
+                : mode === EWindowSize.PCMIN
+                ? "181px"
+                : mode === EWindowSize.TABLET
+                ? "210px"
+                : "100%"
+            }`,
+            height: "100%",
           }}
         />
       </Box>

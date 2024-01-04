@@ -1,6 +1,6 @@
 /** @format */
 
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -9,8 +9,17 @@ import { ISCItemLading, SCItemLanding } from "@/components/atoms/SCItemLanding";
 import { Pagination } from "./Pagination";
 import { DialogModal } from "./DialogModal";
 import { getListSampleSolution } from "@/services/sampleSolution.service";
+import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  Pagination as PaginationSwiper,
+  Navigation,
+  Scrollbar,
+  A11y,
+} from "swiper/modules";
 import { EWindowSize, useReSize } from "@/hooks/useSize";
 
+import "swiper/css";
+import "swiper/css/pagination";
 const SampleComponent: FC = () => {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(4);
@@ -27,14 +36,17 @@ const SampleComponent: FC = () => {
     if (dataFromApi && dataFromApi.total) {
       const listDataDisplay: any[] = [];
       dataFromApi.solutions.forEach((item: any, idx: number) => {
-        if (idx >= (page - 1) * perPage && idx <= page * perPage - 1) {
-          listDataDisplay.push({
-            id: item.id,
-            image: item.photo,
-            title: item.title,
-            slug: item.slug,
-          });
-        }
+        // if (
+        //   idx >= (pagination.page - 1) * pagination.perPage &&
+        //   idx <= pagination.page * pagination.perPage - 1
+        // ) {
+        listDataDisplay.push({
+          id: item.id,
+          image: item.photo,
+          title: item.title,
+          slug: item.slug,
+        });
+        // }
       });
       setListDataLanding(listDataDisplay as ISCItemLading[]);
     }
@@ -99,64 +111,83 @@ const SampleComponent: FC = () => {
           justifyContent={mode === EWindowSize.PC ? "stretch" : "center"}
           style={{ textAlign: "center" }}
         >
-          {listDataLanding &&
-            listDataLanding.length &&
-            listDataLanding.map((sample, idx) => {
-              return (
-                <Stack
-                  key={idx}
-                  sx={{
-                    width: `${
-                      mode === EWindowSize.MOBILE
-                        ? "100%"
-                        : mode === EWindowSize.TABLET
-                        ? "50%"
-                        : "25%"
-                    } `,
-                    alignItems: "stretch",
-                    height: "auto",
-                    // alignSelf: "stretch",
-                    maxWidth: `${mode === EWindowSize.PC && "382px"}`,
-                  }}
-                >
-                  <SCItemLanding
-                    maxHeight={`${
-                      mode === EWindowSize.PC ? "265px" : "400px"
-                    } `}
-                    minHeight={`${
-                      mode === EWindowSize.PC ? "265px" : "200px"
-                    } `}
-                    title={sample.title}
-                    image={sample.image}
-                    slug={sample.slug}
-                    handleShowDetails={handleShowDetails}
-                  />
-                </Stack>
-              );
-            })}
-        </Stack>
-        <Stack
-          spacing={{ xs: 2 }}
-          direction="row"
-          useFlexGap
-          flexWrap="wrap"
-          sx={{ pt: "20px", justifyContent: "center" }}
-        >
-          {dataFromApi && (
-            <Pagination
-              total={(dataFromApi && dataFromApi.total) || 0}
-              page={page}
-              perPage={perPage}
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              onNextPage={() => {
-                setPage(page + 1);
-              }}
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              onPreviousPage={() => {
-                setPage(page - 1);
-              }}
-            />
-          )}
+          <Swiper
+            slidesPerView={
+              mode === EWindowSize.PC ? 4 : mode === EWindowSize.TABLET ? 2 : 1
+            }
+            spaceBetween={20}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[PaginationSwiper, Navigation, Scrollbar, A11y]}
+            className="mySwiper"
+          >
+            {listDataLanding &&
+              listDataLanding.map((sample, idx) => {
+                return (
+                  <SwiperSlide key={idx} style={{ height: "auto" }}>
+                    <Stack
+                      sx={{
+                        width: "100%",
+                        // alignSelf: "stretch",
+                        maxWidth: `${mode === EWindowSize.PC && "382px"}`,
+                      }}
+                    >
+                      <SCItemLanding
+                        maxHeight={`${
+                          mode === EWindowSize.PC
+                            ? "218px"
+                            : mode === EWindowSize.PCMIN
+                            ? "181px"
+                            : mode === EWindowSize.TABLET
+                            ? "210px"
+                            : "100%"
+                        }`}
+                        minHeight={`${mode === EWindowSize.PC ? "" : "200px"} `}
+                        title={sample.title}
+                        image={sample.image}
+                        slug={sample.slug}
+                        handleShowDetails={handleShowDetails}
+                      />
+                    </Stack>
+                  </SwiperSlide>
+                );
+              })}
+
+            {listDataLanding &&
+              listDataLanding.length >
+                (mode === EWindowSize.PC
+                  ? 4
+                  : mode === EWindowSize.TABLET
+                  ? 2
+                  : 1) && (
+                <>
+                  <Stack
+                    spacing={{ xs: 2 }}
+                    direction="row"
+                    useFlexGap
+                    flexWrap="wrap"
+                    sx={{ pt: "20px", justifyContent: "center" }}
+                  >
+                    {dataFromApi && (
+                      <Pagination
+                        total={(dataFromApi && dataFromApi.total) || 0}
+                        page={0}
+                        perPage={0}
+                        // eslint-disable-next-line @typescript-eslint/no-empty-function
+                        onNextPage={() => {
+                          // swiper.slideNext();
+                        }}
+                        // eslint-disable-next-line @typescript-eslint/no-empty-function
+                        onPreviousPage={() => {
+                          // swiper.slidePrev();
+                        }}
+                      />
+                    )}
+                  </Stack>
+                </>
+              )}
+          </Swiper>
         </Stack>
         {slugShowModalDetails && (
           <DialogModal

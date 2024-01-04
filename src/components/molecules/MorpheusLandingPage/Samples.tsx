@@ -78,7 +78,7 @@ const SampleComponent: FC = () => {
   }, [mode]);
 
   const handleShowDetails = (slug: string) => {
-    // setShowModalDetails(slug);
+    setShowModalDetails(slug);
   };
 
   return (
@@ -123,13 +123,9 @@ const SampleComponent: FC = () => {
             className="mySwiper"
           >
             {listDataLanding &&
-              listDataLanding.length &&
               listDataLanding.map((sample, idx) => {
                 return (
-                  <SwiperSlide
-                    key={idx}
-                    style={{ height: "auto" }}
-                  >
+                  <SwiperSlide key={idx} style={{ height: "auto" }}>
                     <Stack
                       sx={{
                         width: "100%",
@@ -158,29 +154,39 @@ const SampleComponent: FC = () => {
                 );
               })}
 
-            <Stack
-              spacing={{ xs: 2 }}
-              direction="row"
-              useFlexGap
-              flexWrap="wrap"
-              sx={{ pt: "20px", justifyContent: "center" }}
-            >
-              {dataFromApi && (
-                <Pagination
-                  total={(dataFromApi && dataFromApi.total) || 0}
-                  page={0}
-                  perPage={0}
-                  // eslint-disable-next-line @typescript-eslint/no-empty-function
-                  onNextPage={() => {
-                    // swiper.slideNext();
-                  }}
-                  // eslint-disable-next-line @typescript-eslint/no-empty-function
-                  onPreviousPage={() => {
-                    // swiper.slidePrev();
-                  }}
-                />
+            {listDataLanding &&
+              listDataLanding.length >
+                (mode === EWindowSize.PC
+                  ? 4
+                  : mode === EWindowSize.TABLET
+                  ? 2
+                  : 1) && (
+                <>
+                  <Stack
+                    spacing={{ xs: 2 }}
+                    direction="row"
+                    useFlexGap
+                    flexWrap="wrap"
+                    sx={{ pt: "20px", justifyContent: "center" }}
+                  >
+                    {dataFromApi && (
+                      <Pagination
+                        total={(dataFromApi && dataFromApi.total) || 0}
+                        page={0}
+                        perPage={0}
+                        // eslint-disable-next-line @typescript-eslint/no-empty-function
+                        onNextPage={() => {
+                          // swiper.slideNext();
+                        }}
+                        // eslint-disable-next-line @typescript-eslint/no-empty-function
+                        onPreviousPage={() => {
+                          // swiper.slidePrev();
+                        }}
+                      />
+                    )}
+                  </Stack>
+                </>
               )}
-            </Stack>
           </Swiper>
         </Stack>
         {slugShowModalDetails && (

@@ -15,10 +15,8 @@ import {
   Navigation,
   Scrollbar,
   A11y,
-} from "swiper";
+} from "swiper/modules";
 import { EWindowSize, useReSize } from "@/hooks/useSize";
-
-import { useSwiper } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -128,23 +126,28 @@ const SampleComponent: FC = () => {
               listDataLanding.length &&
               listDataLanding.map((sample, idx) => {
                 return (
-                  <SwiperSlide key={idx} >
+                  <SwiperSlide
+                    key={idx}
+                    style={{ height: "auto" }}
+                  >
                     <Stack
                       sx={{
                         width: "100%",
-                        alignItems: "stretch",
-                        height: "auto",
                         // alignSelf: "stretch",
                         maxWidth: `${mode === EWindowSize.PC && "382px"}`,
                       }}
                     >
                       <SCItemLanding
                         maxHeight={`${
-                          mode === EWindowSize.PC ? "265px" : "400px"
-                        } `}
-                        minHeight={`${
-                          mode === EWindowSize.PC ? "" : "200px"
-                        } `}
+                          mode === EWindowSize.PC
+                            ? "218px"
+                            : mode === EWindowSize.PCMIN
+                            ? "181px"
+                            : mode === EWindowSize.TABLET
+                            ? "210px"
+                            : "100%"
+                        }`}
+                        minHeight={`${mode === EWindowSize.PC ? "" : "200px"} `}
                         title={sample.title}
                         image={sample.image}
                         slug={sample.slug}

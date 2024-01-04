@@ -50,6 +50,7 @@ export const SCItemLanding = (params: ISCItemLading) => {
                 ? "210px"
                 : "100%"
             }`,
+            height: "100%",
           }}
         />
       </Box>

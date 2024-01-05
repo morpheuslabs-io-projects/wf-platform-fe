@@ -105,7 +105,7 @@ const Introduction: FC = () => {
               alignItems: `${mode === EWindowSize.MOBILE && "center"}`,
               position: "relative",
               gap: `${mode === EWindowSize.MOBILE ? "24px" : "16px"}`,
-              top: `${mode !== EWindowSize.MOBILE && "-110px"}`,
+              top: `${mode !== EWindowSize.MOBILE && "-45px"}`,
             }}
           >
             <Box
@@ -251,7 +251,7 @@ const Introduction: FC = () => {
         sx={{
           display: "flex",
           px: `${mode === EWindowSize.MOBILE ? "14px" : "8%"}`,
-          pt: `${mode === EWindowSize.MOBILE ? "0" : "8px"}`,
+          pt: `${mode === EWindowSize.MOBILE ? "0" : "120px"}`,
           bgcolor: `${
             mode === EWindowSize.MOBILE ? "#F1F5FA" : "background.default"
           }`,

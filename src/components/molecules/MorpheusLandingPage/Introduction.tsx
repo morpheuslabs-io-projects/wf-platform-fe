@@ -73,6 +73,7 @@ const Introduction: FC = () => {
                   variant="header_2"
                   style={{
                     display: "inline-block",
+                    marginTop: "10px",
                     lineHeight: `${
                       mode === EWindowSize.MOBILE ? "48px" : "70px"
                     }`,
@@ -105,7 +106,7 @@ const Introduction: FC = () => {
               alignItems: `${mode === EWindowSize.MOBILE && "center"}`,
               position: "relative",
               gap: `${mode === EWindowSize.MOBILE ? "24px" : "16px"}`,
-              top: `${mode !== EWindowSize.MOBILE && "-45px"}`,
+              top: `${mode !== EWindowSize.MOBILE && "-110px"}`,
             }}
           >
             <Box
@@ -129,7 +130,8 @@ const Introduction: FC = () => {
                 boxSizing: "border-box",
                 alignItems: "start",
                 background: "linear-gradient(160deg, #D7E0FF 0%, #FFF 100%)",
-                backdropFilter: "blur(2px)",
+                boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.15)",
+                backdropFilter: "blur(4px)",
                 "&:hover": {
                   cursor: "pointer",
                 },
@@ -150,13 +152,6 @@ const Introduction: FC = () => {
                 }}
               >
                 Start Process Automation
-                <Box
-                  component="img"
-                  src={NextIcon}
-                  alt=""
-                  sx={{ pl: "10px" }}
-                  style={{}}
-                />
               </Typography>
             </Box>
             <Box
@@ -180,7 +175,8 @@ const Introduction: FC = () => {
                 boxSizing: "border-box",
                 alignItems: "start",
                 background: "linear-gradient(160deg, #DCFFD7 0%, #FFF 100%)",
-                backdropFilter: "blur(2px)",
+                boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.15)",
+                backdropFilter: "blur(4px)",
                 "&:hover": {
                   cursor: "pointer",
                 },
@@ -201,12 +197,6 @@ const Introduction: FC = () => {
                 }}
               >
                 Start Integration Automation
-                <Box
-                  component="img"
-                  src={NextIcon}
-                  alt=""
-                  sx={{ pl: "10px" }}
-                />
               </Typography>
             </Box>
             <Box
@@ -230,7 +220,8 @@ const Introduction: FC = () => {
                 boxSizing: "border-box",
                 alignItems: "start",
                 background: "linear-gradient(160deg, #FFFBD7 0%, #FFF 100%)",
-                backdropFilter: "blur(2px)",
+                boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.15)",
+                backdropFilter: "blur(4px)",
                 "&:hover": {
                   cursor: "pointer",
                 },
@@ -252,12 +243,6 @@ const Introduction: FC = () => {
               >
                 Create {mode === EWindowSize.PC && <br />}
                 Smart Contracts
-                <Box
-                  component="img"
-                  src={NextIcon}
-                  alt=""
-                  sx={{ pl: "10px" }}
-                />
               </Typography>
             </Box>
           </Box>
@@ -267,7 +252,7 @@ const Introduction: FC = () => {
         sx={{
           display: "flex",
           px: `${mode === EWindowSize.MOBILE ? "14px" : "8%"}`,
-          pt: `${mode === EWindowSize.MOBILE ? "0" : "120px"}`,
+          pt: `${mode === EWindowSize.MOBILE ? "0" : "8px"}`,
           bgcolor: `${
             mode === EWindowSize.MOBILE ? "#F1F5FA" : "background.default"
           }`,

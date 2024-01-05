@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Background from "@/assets/icons/morpheus-background.svg";
 import AI from "@/assets/icons/AI.svg";
-import NextIcon from "@/assets/icons/next-black.svg";
 import { VITE_APP_SC_URL, VITE_APP_WF_URL } from "@/constants/AppConfig";
 import { EWindowSize, useReSize } from "@/hooks/useSize";
 

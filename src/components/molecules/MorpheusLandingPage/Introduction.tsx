@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Background from "@/assets/icons/morpheus-background.svg";
 import AI from "@/assets/icons/AI.svg";
-import NextIcon from "@/assets/icons/next-black.svg";
 import { VITE_APP_SC_URL, VITE_APP_WF_URL } from "@/constants/AppConfig";
 import { EWindowSize, useReSize } from "@/hooks/useSize";
 
@@ -73,6 +72,7 @@ const Introduction: FC = () => {
                   variant="header_2"
                   style={{
                     display: "inline-block",
+                    marginTop: "10px",
                     lineHeight: `${
                       mode === EWindowSize.MOBILE ? "48px" : "70px"
                     }`,
@@ -129,7 +129,8 @@ const Introduction: FC = () => {
                 boxSizing: "border-box",
                 alignItems: "start",
                 background: "linear-gradient(160deg, #D7E0FF 0%, #FFF 100%)",
-                backdropFilter: "blur(2px)",
+                boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.15)",
+                backdropFilter: "blur(4px)",
                 "&:hover": {
                   cursor: "pointer",
                 },
@@ -150,13 +151,6 @@ const Introduction: FC = () => {
                 }}
               >
                 Start Process Automation
-                <Box
-                  component="img"
-                  src={NextIcon}
-                  alt=""
-                  sx={{ pl: "10px" }}
-                  style={{}}
-                />
               </Typography>
             </Box>
             <Box
@@ -180,7 +174,8 @@ const Introduction: FC = () => {
                 boxSizing: "border-box",
                 alignItems: "start",
                 background: "linear-gradient(160deg, #DCFFD7 0%, #FFF 100%)",
-                backdropFilter: "blur(2px)",
+                boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.15)",
+                backdropFilter: "blur(4px)",
                 "&:hover": {
                   cursor: "pointer",
                 },
@@ -201,12 +196,6 @@ const Introduction: FC = () => {
                 }}
               >
                 Start Integration Automation
-                <Box
-                  component="img"
-                  src={NextIcon}
-                  alt=""
-                  sx={{ pl: "10px" }}
-                />
               </Typography>
             </Box>
             <Box
@@ -230,7 +219,8 @@ const Introduction: FC = () => {
                 boxSizing: "border-box",
                 alignItems: "start",
                 background: "linear-gradient(160deg, #FFFBD7 0%, #FFF 100%)",
-                backdropFilter: "blur(2px)",
+                boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.15)",
+                backdropFilter: "blur(4px)",
                 "&:hover": {
                   cursor: "pointer",
                 },
@@ -252,12 +242,6 @@ const Introduction: FC = () => {
               >
                 Create {mode === EWindowSize.PC && <br />}
                 Smart Contracts
-                <Box
-                  component="img"
-                  src={NextIcon}
-                  alt=""
-                  sx={{ pl: "10px" }}
-                />
               </Typography>
             </Box>
           </Box>

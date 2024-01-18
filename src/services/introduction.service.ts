@@ -11,6 +11,8 @@ const axiosIntroductionVideo = axios.create({
 });
 
 export const getListIntroductionVideos = async (): Promise<any> => {
-  const response = await axiosIntroductionVideo.get("/introduction");
+  const response = await axiosIntroductionVideo.get(
+    "/introduction?platform=lp"
+  );
   return response?.data;
 };

@@ -175,14 +175,14 @@ const Introduction: FC = () => {
                     ? "10px 20px"
                     : mode === EWindowSize.TABLET
                     ? "10px 10px"
-                    : "45px 50px"
+                    : "32px 32px"
                 } `,
                 width: `${
                   mode === EWindowSize.MOBILE
                     ? "70%"
                     : mode === EWindowSize.TABLET
                     ? "240px"
-                    : "327px"
+                    : "345px"
                 } `,
                 minWidth: `${mode !== EWindowSize.MOBILE ? "240px" : "320px"} `,
                 boxSizing: "border-box",
@@ -209,7 +209,7 @@ const Introduction: FC = () => {
                   alignItems: "center",
                 }}
               >
-                Start Process Automation
+                Start Web3 <br /> Process Automation
               </Typography>
             </Box>
             <Box
@@ -220,14 +220,14 @@ const Introduction: FC = () => {
                     ? "10px 20px"
                     : mode === EWindowSize.TABLET
                     ? "10px 10px"
-                    : "45px 50px"
+                    : "32px 32px"
                 } `,
                 width: `${
                   mode === EWindowSize.MOBILE
                     ? "70%"
                     : mode === EWindowSize.TABLET
                     ? "240px"
-                    : "327px"
+                    : "345px"
                 } `,
                 minWidth: `${mode !== EWindowSize.MOBILE ? "240px" : "320px"} `,
                 boxSizing: "border-box",
@@ -254,7 +254,7 @@ const Introduction: FC = () => {
                   alignItems: "center",
                 }}
               >
-                Start Integration Automation
+                Start Web3 <br /> Integration Automation
               </Typography>
             </Box>
             <Box
@@ -265,14 +265,14 @@ const Introduction: FC = () => {
                     ? "10px 20px"
                     : mode === EWindowSize.TABLET
                     ? "10px 10px"
-                    : "45px 50px"
+                    : "32px 48px"
                 } `,
                 width: `${
                   mode === EWindowSize.MOBILE
                     ? "70%"
                     : mode === EWindowSize.TABLET
                     ? "240px"
-                    : "327px"
+                    : "345px"
                 } `,
                 minWidth: `${mode !== EWindowSize.MOBILE ? "240px" : "320px"} `,
                 boxSizing: "border-box",

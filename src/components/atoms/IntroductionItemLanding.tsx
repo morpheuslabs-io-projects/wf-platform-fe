@@ -1,7 +1,7 @@
 /** @format */
 
 import { EWindowSize, useReSize } from "@/hooks/useSize";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 export interface ISCItemLading {
   image: string;
   title: string;
@@ -65,17 +65,24 @@ export const IntroductionItemLanding = (params: ISCItemLading) => {
           justifyContent: "center",
         }}
       >
-        <p
+        <Typography
+          variant="body"
           style={{
-            textAlign: "center",
             color: "#252525",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            WebkitLineClamp: "2",
+            WebkitBoxOrient: "vertical",
             fontSize: "14",
+            textAlign: "center",
             fontFamily: "Poppins",
             fontWeight: "400",
+            height: "54px",
           }}
         >
           {params.title}
-        </p>
+        </Typography>
       </Box>
     </Box>
   );

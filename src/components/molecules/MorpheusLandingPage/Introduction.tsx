@@ -1,16 +1,79 @@
-/** @format */
-
-import { FC } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
 import Background from "@/assets/icons/morpheus-background.svg";
 import AI from "@/assets/icons/AI.svg";
 import { VITE_APP_SC_URL, VITE_APP_WF_URL } from "@/constants/AppConfig";
 import { EWindowSize, useReSize } from "@/hooks/useSize";
+import { Stack } from "@mui/material";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { IntroductionItemLanding } from "@/components/atoms/IntroductionItemLanding";
+import {
+  Pagination as PaginationSwiper,
+  Navigation,
+  Scrollbar,
+  A11y,
+} from "swiper/modules";
+import { Pagination } from "./Pagination";
+
+import { getListIntroductionVideos } from "@/services/introduction.service";
+import "swiper/css";
+import "swiper/css/pagination";
 
 const Introduction: FC = () => {
   const mode = useReSize();
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(4);
+  const [videoIntroductions, setVideoIntroductions] = useState<any[]>([]);
+  const [dataFromApi, setDataFromApi] = useState<any>();
+
+  const getIntroductionVideos = useCallback(async () => {
+    const introductionVideos = await getListIntroductionVideos();
+    setDataFromApi(introductionVideos);
+  }, [videoIntroductions?.length]);
+
+  useEffect(() => {
+    if (dataFromApi && dataFromApi.total) {
+      const listDataDisplay: any[] = [];
+      dataFromApi.introductions.forEach((item: any) => {
+        // if (
+        //   idx >= (pagination.page - 1) * pagination.perPage &&
+        //   idx <= pagination.page * pagination.perPage - 1
+        // ) {
+        listDataDisplay.push({
+          id: item.id,
+          title: item.title,
+          image: item.image,
+          description: item.description,
+          video: item.video,
+          cta: item.cta,
+        });
+        // }
+      });
+      setVideoIntroductions(listDataDisplay);
+    }
+  }, [dataFromApi, perPage, page]);
+
+  useEffect(() => {
+    getIntroductionVideos();
+  }, []);
+
+  useEffect(() => {
+    if (mode === EWindowSize.MOBILE) {
+      setPerPage(2);
+      setPage(1);
+    }
+
+    if (mode === EWindowSize.TABLET) {
+      setPerPage(2);
+      setPage(1);
+    }
+    if (mode === EWindowSize.PC) {
+      setPerPage(4);
+      setPage(1);
+    }
+  }, [mode]);
+
   return (
     <>
       <Box
@@ -116,14 +179,14 @@ const Introduction: FC = () => {
                     ? "10px 20px"
                     : mode === EWindowSize.TABLET
                     ? "10px 10px"
-                    : "45px 50px"
+                    : "32px 32px"
                 } `,
                 width: `${
                   mode === EWindowSize.MOBILE
                     ? "70%"
                     : mode === EWindowSize.TABLET
                     ? "240px"
-                    : "327px"
+                    : "345px"
                 } `,
                 minWidth: `${mode !== EWindowSize.MOBILE ? "240px" : "320px"} `,
                 boxSizing: "border-box",
@@ -150,7 +213,7 @@ const Introduction: FC = () => {
                   alignItems: "center",
                 }}
               >
-                Start Process Automation
+                Start Web3 <br /> Process Automation
               </Typography>
             </Box>
             <Box
@@ -161,14 +224,14 @@ const Introduction: FC = () => {
                     ? "10px 20px"
                     : mode === EWindowSize.TABLET
                     ? "10px 10px"
-                    : "45px 50px"
+                    : "32px 32px"
                 } `,
                 width: `${
                   mode === EWindowSize.MOBILE
                     ? "70%"
                     : mode === EWindowSize.TABLET
                     ? "240px"
-                    : "327px"
+                    : "345px"
                 } `,
                 minWidth: `${mode !== EWindowSize.MOBILE ? "240px" : "320px"} `,
                 boxSizing: "border-box",
@@ -195,7 +258,7 @@ const Introduction: FC = () => {
                   alignItems: "center",
                 }}
               >
-                Start Integration Automation
+                Start Web3 <br /> Integration Automation
               </Typography>
             </Box>
             <Box
@@ -206,14 +269,14 @@ const Introduction: FC = () => {
                     ? "10px 20px"
                     : mode === EWindowSize.TABLET
                     ? "10px 10px"
-                    : "45px 50px"
+                    : "32px 48px"
                 } `,
                 width: `${
                   mode === EWindowSize.MOBILE
                     ? "70%"
                     : mode === EWindowSize.TABLET
                     ? "240px"
-                    : "327px"
+                    : "345px"
                 } `,
                 minWidth: `${mode !== EWindowSize.MOBILE ? "240px" : "320px"} `,
                 boxSizing: "border-box",
@@ -249,44 +312,93 @@ const Introduction: FC = () => {
       </Box>
       <Box
         sx={{
-          display: "flex",
-          px: `${mode === EWindowSize.MOBILE ? "14px" : "8%"}`,
-          pt: `${mode === EWindowSize.MOBILE ? "0" : "120px"}`,
-          bgcolor: `${
-            mode === EWindowSize.MOBILE ? "#F1F5FA" : "background.default"
-          }`,
-          position: "relative",
-          top: `${mode === EWindowSize.MOBILE ? "-53px" : "0"}`,
+          maxWidth: "1600px",
+          margin: `${mode !== EWindowSize.MOBILE ? "0 25px" : "0 14px"}`,
         }}
       >
-        <Grid
-          container
-          columnSpacing={3}
-          rowSpacing={3}
-          style={{ overflow: "hidden" }}
+        <Stack
+          spacing={{ xs: 2 }}
+          direction="row"
+          useFlexGap
+          flexWrap="wrap"
+          sx={{ pb: "32px", justifyContent: "center" }}
         >
-          <Grid item xs={12} md={6}>
-            <Box>
-              <iframe
-                width="100%"
-                height="350"
-                src="https://www.youtube.com/embed/5wOhrU2V-SI"
-                title="Artificial intelligence Intro Template"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={6} sx={{ display: "flex" }}>
-            <Box
-              sx={{
-                alignItems: "center",
-                display: "flex",
-              }}
-            >
-              Find out more info from the product demo video
-            </Box>
-          </Grid>
-        </Grid>
+          <Typography variant="header_3">
+            New here? Our guide makes it simple
+          </Typography>
+        </Stack>
+        <Stack
+          direction={{ sm: "column", md: "row" }}
+          spacing={{ xs: 1, sm: 3 }}
+          alignItems="center"
+          justifyContent={mode === EWindowSize.PC ? "stretch" : "center"}
+          style={{ textAlign: "center" }}
+        >
+          <Swiper
+            slidesPerView={
+              mode === EWindowSize.PC ? 4 : mode === EWindowSize.TABLET ? 2 : 1
+            }
+            spaceBetween={20}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[PaginationSwiper, Navigation, Scrollbar, A11y]}
+            className="mySwiper"
+          >
+            {videoIntroductions &&
+              videoIntroductions.map((introduction, idx) => {
+                return (
+                  <SwiperSlide key={idx} style={{ height: "auto" }}>
+                    <Stack
+                      sx={{
+                        width: "100%",
+                        // alignSelf: "stretch",
+                        maxWidth: `${mode === EWindowSize.PC && "382px"}`,
+                      }}
+                    >
+                      <IntroductionItemLanding
+                        maxHeight={`${
+                          mode === EWindowSize.PC
+                            ? "218px"
+                            : mode === EWindowSize.PCMIN
+                            ? "181px"
+                            : mode === EWindowSize.TABLET
+                            ? "210px"
+                            : "100%"
+                        }`}
+                        minHeight={`${mode === EWindowSize.PC ? "" : "200px"} `}
+                        title={introduction.title}
+                        image={introduction.image}
+                        video={introduction.video}
+                        cta={introduction.cta}
+                        description={introduction.description}
+                      />
+                    </Stack>
+                  </SwiperSlide>
+                );
+              })}
+
+            {videoIntroductions &&
+              videoIntroductions.length >
+                (mode === EWindowSize.PC
+                  ? 4
+                  : mode === EWindowSize.TABLET
+                  ? 2
+                  : 1) && (
+                <>
+                  <Stack
+                    spacing={{ xs: 2 }}
+                    direction="row"
+                    useFlexGap
+                    flexWrap="wrap"
+                    sx={{ pt: "20px", justifyContent: "center" }}
+                  >
+                    {dataFromApi && <Pagination />}
+                  </Stack>
+                </>
+              )}
+          </Swiper>
+        </Stack>
       </Box>
     </>
   );

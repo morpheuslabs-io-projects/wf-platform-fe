@@ -5,7 +5,7 @@ import Background from "@/assets/icons/morpheus-background.svg";
 import AI from "@/assets/icons/AI.svg";
 import { VITE_APP_SC_URL, VITE_APP_WF_URL } from "@/constants/AppConfig";
 import { EWindowSize, useReSize } from "@/hooks/useSize";
-import { Pagination, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { IntroductionItemLanding } from "@/components/atoms/IntroductionItemLanding";
 import {
@@ -14,7 +14,11 @@ import {
   Scrollbar,
   A11y,
 } from "swiper/modules";
+import { Pagination } from "./Pagination";
+
 import { getListIntroductionVideos } from "@/services/introduction.service";
+import "swiper/css";
+import "swiper/css/pagination";
 
 const Introduction: FC = () => {
   const mode = useReSize();

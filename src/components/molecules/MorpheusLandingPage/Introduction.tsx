@@ -321,7 +321,7 @@ const Introduction: FC = () => {
           direction="row"
           useFlexGap
           flexWrap="wrap"
-          sx={{ pb: "32px", justifyContent: "center" }}
+          sx={{ pb: "48px", justifyContent: "center" }}
         >
           <Typography variant="header_3">Platform Overview</Typography>
         </Stack>

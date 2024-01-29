@@ -157,7 +157,11 @@ const Introduction: FC = () => {
             </Box>
           </Box>
         </Box>
-        <Box>
+        <Box
+          sx={{
+            background: "#F1F5FA",
+          }}
+        >
           <Box
             sx={{
               display: "flex",
@@ -312,91 +316,105 @@ const Introduction: FC = () => {
       </Box>
       <Box
         sx={{
-          maxWidth: "1600px",
-          margin: `${mode !== EWindowSize.MOBILE ? "0 25px" : "0 14px"}`,
+          width: "100%",
+          background: "#F1F5FA",
         }}
       >
-        <Stack
-          spacing={{ xs: 2 }}
-          direction="row"
-          useFlexGap
-          flexWrap="wrap"
-          sx={{ pb: "48px", justifyContent: "center" }}
+        <Box
+          sx={{
+            maxWidth: "1536px",
+            padding: `${mode !== EWindowSize.MOBILE ? "0 25px" : "0 14px"}`,
+            margin: "0 auto",
+          }}
         >
-          <Typography variant="header_3">Platform Overview</Typography>
-        </Stack>
-        <Stack
-          direction={{ sm: "column", md: "row" }}
-          spacing={{ xs: 1, sm: 3 }}
-          alignItems="center"
-          justifyContent={mode === EWindowSize.PC ? "stretch" : "center"}
-          style={{ textAlign: "center" }}
-        >
-          <Swiper
-            slidesPerView={
-              mode === EWindowSize.PC ? 4 : mode === EWindowSize.TABLET ? 2 : 1
-            }
-            spaceBetween={20}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[PaginationSwiper, Navigation, Scrollbar, A11y]}
-            className="mySwiper"
+          <Stack
+            spacing={{ xs: 2 }}
+            direction="row"
+            useFlexGap
+            flexWrap="wrap"
+            sx={{ pb: "48px", justifyContent: "center" }}
           >
-            {videoIntroductions &&
-              videoIntroductions.map((introduction, idx) => {
-                return (
-                  <SwiperSlide key={idx} style={{ height: "auto" }}>
-                    <Stack
-                      sx={{
-                        width: "100%",
-                        // alignSelf: "stretch",
-                        maxWidth: `${mode === EWindowSize.PC && "382px"}`,
-                      }}
-                    >
-                      <IntroductionItemLanding
-                        maxHeight={`${
-                          mode === EWindowSize.PC
-                            ? "218px"
-                            : mode === EWindowSize.PCMIN
-                            ? "181px"
-                            : mode === EWindowSize.TABLET
-                            ? "210px"
-                            : "100%"
-                        }`}
-                        minHeight={`${mode === EWindowSize.PC ? "" : "200px"} `}
-                        title={introduction.title}
-                        image={introduction.image}
-                        video={introduction.video}
-                        cta={introduction.cta}
-                        description={introduction.description}
-                      />
-                    </Stack>
-                  </SwiperSlide>
-                );
-              })}
-
-            {videoIntroductions &&
-              videoIntroductions.length >
-                (mode === EWindowSize.PC
+            <Typography variant="header_3">Platform Overview</Typography>
+          </Stack>
+          <Stack
+            direction={{ sm: "column", md: "row" }}
+            spacing={{ xs: 1, sm: 3 }}
+            alignItems="center"
+            justifyContent={mode === EWindowSize.PC ? "stretch" : "center"}
+            style={{ textAlign: "center" }}
+          >
+            <Swiper
+              slidesPerView={
+                mode === EWindowSize.PC
                   ? 4
                   : mode === EWindowSize.TABLET
                   ? 2
-                  : 1) && (
-                <>
-                  <Stack
-                    spacing={{ xs: 2 }}
-                    direction="row"
-                    useFlexGap
-                    flexWrap="wrap"
-                    sx={{ pt: "20px", justifyContent: "center" }}
-                  >
-                    {dataFromApi && <Pagination />}
-                  </Stack>
-                </>
-              )}
-          </Swiper>
-        </Stack>
+                  : 1
+              }
+              spaceBetween={20}
+              pagination={{
+                clickable: true,
+              }}
+              modules={[PaginationSwiper, Navigation, Scrollbar, A11y]}
+              className="mySwiper"
+            >
+              {videoIntroductions &&
+                videoIntroductions.map((introduction, idx) => {
+                  return (
+                    <SwiperSlide key={idx} style={{ height: "auto" }}>
+                      <Stack
+                        sx={{
+                          width: "100%",
+                          alignSelf: "stretch",
+                          maxWidth: `${mode === EWindowSize.PC && "382px"}`,
+                        }}
+                      >
+                        <IntroductionItemLanding
+                          maxHeight={`${
+                            mode === EWindowSize.PC
+                              ? "218px"
+                              : mode === EWindowSize.PCMIN
+                              ? "181px"
+                              : mode === EWindowSize.TABLET
+                              ? "210px"
+                              : "100%"
+                          }`}
+                          minHeight={`${
+                            mode === EWindowSize.PC ? "" : "200px"
+                          } `}
+                          title={introduction.title}
+                          image={introduction.image}
+                          video={introduction.video}
+                          cta={introduction.cta}
+                          description={introduction.description}
+                        />
+                      </Stack>
+                    </SwiperSlide>
+                  );
+                })}
+
+              {videoIntroductions &&
+                videoIntroductions.length >
+                  (mode === EWindowSize.PC
+                    ? 4
+                    : mode === EWindowSize.TABLET
+                    ? 2
+                    : 1) && (
+                  <>
+                    <Stack
+                      spacing={{ xs: 2 }}
+                      direction="row"
+                      useFlexGap
+                      flexWrap="wrap"
+                      sx={{ pt: "20px", justifyContent: "center" }}
+                    >
+                      {dataFromApi && <Pagination />}
+                    </Stack>
+                  </>
+                )}
+            </Swiper>
+          </Stack>
+        </Box>
       </Box>
     </>
   );

@@ -1,5 +1,3 @@
-/** @format */
-
 import { Box, Typography } from "@mui/material";
 export interface ISCItemLading {
   image: string;
@@ -15,8 +13,9 @@ export const IntroductionItemLanding = (params: ISCItemLading) => {
   return (
     <Box
       style={{
-        width: "100%",
-        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        gap: "8px",
         backgroundColor: "#FFFFFF",
         minHeight: params.minHeight,
         cursor: "pointer",

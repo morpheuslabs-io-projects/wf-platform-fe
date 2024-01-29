@@ -15,9 +15,8 @@ export const IntroductionItemLanding = (params: ISCItemLading) => {
   return (
     <Box
       style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "8px",
+        width: "100%",
+        height: "100%",
         backgroundColor: "#FFFFFF",
         minHeight: params.minHeight,
         cursor: "pointer",
@@ -38,7 +37,8 @@ export const IntroductionItemLanding = (params: ISCItemLading) => {
           src={params.image}
           alt="bubble"
           style={{
-            maxWidth: "calc(100%)",
+            maxWidth: "100%",
+            border: "1px solid #D6D6D6",
           }}
         />
       </Box>

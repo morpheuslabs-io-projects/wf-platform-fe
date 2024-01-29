@@ -1,5 +1,3 @@
-/** @format */
-
 import { Box, Typography } from "@mui/material";
 export interface ISCItemLading {
   image: string;

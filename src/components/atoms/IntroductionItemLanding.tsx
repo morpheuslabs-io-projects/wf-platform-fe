@@ -1,5 +1,6 @@
 /** @format */
 
+import { useReSize } from "@/hooks/useSize";
 import { Box, Typography } from "@mui/material";
 export interface ISCItemLading {
   image: string;
@@ -12,12 +13,13 @@ export interface ISCItemLading {
   description?: string;
 }
 export const IntroductionItemLanding = (params: ISCItemLading) => {
+  const mode = useReSize();
+
   return (
     <Box
       style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "8px",
+        width: "100%",
+        height: "100%",
         backgroundColor: "#FFFFFF",
         minHeight: params.minHeight,
         cursor: "pointer",
@@ -38,7 +40,8 @@ export const IntroductionItemLanding = (params: ISCItemLading) => {
           src={params.image}
           alt="bubble"
           style={{
-            maxWidth: "calc(100%)",
+            maxWidth: "100%",
+            height: "100%",
           }}
         />
       </Box>

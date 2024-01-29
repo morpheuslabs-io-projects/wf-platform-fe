@@ -91,8 +91,9 @@ const SampleComponent: FC = () => {
     >
       <Box
         sx={{
-          maxWidth: "1600px",
-          margin: `${mode !== EWindowSize.MOBILE ? "0 25px" : "0 14px"}`,
+          maxWidth: "1536px",
+          padding: `${mode !== EWindowSize.MOBILE ? "0 25px" : "0 14px"}`,
+          margin: "0 auto",
         }}
       >
         <Stack

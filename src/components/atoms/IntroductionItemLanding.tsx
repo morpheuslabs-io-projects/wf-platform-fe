@@ -1,6 +1,5 @@
 /** @format */
 
-import { useReSize } from "@/hooks/useSize";
 import { Box, Typography } from "@mui/material";
 export interface ISCItemLading {
   image: string;
@@ -13,8 +12,6 @@ export interface ISCItemLading {
   description?: string;
 }
 export const IntroductionItemLanding = (params: ISCItemLading) => {
-  const mode = useReSize();
-
   return (
     <Box
       style={{
@@ -41,7 +38,7 @@ export const IntroductionItemLanding = (params: ISCItemLading) => {
           alt="bubble"
           style={{
             maxWidth: "100%",
-            height: "100%",
+            border: "1px solid #D6D6D6",
           }}
         />
       </Box>

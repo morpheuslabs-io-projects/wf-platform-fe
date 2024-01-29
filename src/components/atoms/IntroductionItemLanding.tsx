@@ -1,6 +1,5 @@
 /** @format */
 
-import { EWindowSize, useReSize } from "@/hooks/useSize";
 import { Box, Typography } from "@mui/material";
 export interface ISCItemLading {
   image: string;
@@ -13,45 +12,33 @@ export interface ISCItemLading {
   description?: string;
 }
 export const IntroductionItemLanding = (params: ISCItemLading) => {
-  const mode = useReSize();
-  console.log("params", params);
   return (
     <Box
       style={{
-        width: "100%",
-        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        gap: "8px",
         backgroundColor: "#FFFFFF",
         minHeight: params.minHeight,
         cursor: "pointer",
         boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.15)",
       }}
       onClick={() => {
-        if (params.cta) window.open(params.cta, "_blank");
+        if (params.video) window.open(params.video, "_blank");
       }}
     >
       <Box
-        style={{
+        sx={{
           textAlign: "center",
           maxHeight: params.maxHeight,
-          width: "100%",
+          padding: "16px 16px 0 16px",
         }}
       >
         <img
           src={params.image}
           alt="bubble"
           style={{
-            width: "100%",
-            maxWidth: "100%",
-            maxHeight: `${
-              mode === EWindowSize.PC
-                ? "218px"
-                : mode === EWindowSize.PCMIN
-                ? "181px"
-                : mode === EWindowSize.TABLET
-                ? "210px"
-                : "100%"
-            }`,
-            height: "100%",
+            maxWidth: "calc(100%)",
           }}
         />
       </Box>
@@ -79,6 +66,7 @@ export const IntroductionItemLanding = (params: ISCItemLading) => {
             fontFamily: "Poppins",
             fontWeight: "400",
             height: "54px",
+            padding: "0 16px 16px 16px",
           }}
         >
           {params.title}

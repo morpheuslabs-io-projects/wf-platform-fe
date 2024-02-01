@@ -21,7 +21,8 @@ export const FooterComponent = () => {
           wordWrap: "break-word",
         }}
       >
-        Copyrights ©️ 2023 Morpheus Labs. All Rights Reserved.
+        Copyrights ©️ {new Date().getFullYear()} Morpheus Labs. All Rights
+        Reserved.
       </div>
     </Box>
   );

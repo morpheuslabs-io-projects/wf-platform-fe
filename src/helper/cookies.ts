@@ -19,6 +19,11 @@ export class CookiesHelper {
 
   static remove(name: string) {
     const domain = VITE_ROOT_DOMAIN;
+    const env = process.env.VITE_NODE_ENV;
     Cookies.remove(this._getKey(name), { domain });
+    if (env === "production") {
+      Cookies.remove(`test_${name}`, { domain });
+      Cookies.remove(`development_${name}`, { domain });
+    }
   }
 }

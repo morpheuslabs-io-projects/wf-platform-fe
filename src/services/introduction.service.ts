@@ -7,7 +7,7 @@ const axiosIntroductionVideo = axios.create({
     "Content-Type": "application/json",
     Accept: "application/json",
   },
-  timeout: 300,
+  timeout: 3000,
 });
 
 export const getListIntroductionVideos = async (): Promise<any> => {

@@ -127,7 +127,7 @@ const Introduction: FC = () => {
                       "linear-gradient(90deg, #FFF 0%, rgba(255, 255, 255, 0.47) 60.71%, rgba(255, 255, 255, 0.49) 100%)",
                   }}
                 >
-                  Enable Web3 Transformation and Process Automation with our
+                  Enable Web3 Transformation and Process Automation with
                 </Typography>
               </Box>
               <Box>

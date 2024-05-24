@@ -1,6 +1,6 @@
 ## wf-platform-fe
 
-### RUN DEV 
+### RUN DEV
 
 1. `yarn install`
 2. `yarn dev:3003`

@@ -1,0 +1,33 @@
+.paymentType {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 20px;
+}
+.paymentType label.MuiFormControlLabel-root {
+	background: white;
+	align-content: center;
+	justify-content: center;
+	flex-wrap: nowrap;
+	flex-direction: column;
+	width: 162px;
+	height: 162px;
+	border: 2px solid #fff;
+}
+.paymentType label.MuiFormControlLabel-root:has(.Mui-checked) {
+	border: 2px solid blue;
+}
+.paymentType
+	label.MuiFormControlLabel-root
+	span.MuiButtonBase-root.MuiRadio-root.MuiRadio-colorPrimary.PrivateSwitchBase-root.MuiRadio-root.MuiRadio-colorPrimary.MuiRadio-root.MuiRadio-colorPrimary {
+	/* HIDE RADIO */
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+/* IMAGE STYLES */
+.paymentType input[type='radio'] + img {
+	cursor: pointer;
+}

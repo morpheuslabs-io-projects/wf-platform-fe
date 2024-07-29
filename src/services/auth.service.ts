@@ -3,7 +3,7 @@ import { KeycloakSignInData, KeycloakSignInResponse } from "@/types";
 import { ROUTE_PATH, VITE_AUTH_API_ENDPOINT } from "@/constants/AppConfig";
 import { CookiesHelper } from "@/helper/cookies";
 import axios from "axios";
-import { redirect } from "react-router-dom";
+import { AxiosCommon } from "@/helper/axios";
 
 const axiosAuthClient = axios.create({
   baseURL: VITE_AUTH_API_ENDPOINT,
@@ -34,7 +34,7 @@ axiosAuthClient.interceptors.response.use(
   async (error) => {
     if (error.response.status === 401) {
       CookiesHelper.remove("accessToken");
-      redirect(ROUTE_PATH.SIGN_IN);
+      window.open(`${ROUTE_PATH.SIGN_IN()}`, "_self");
     }
     const message = error.response.data.message || error.message;
     return Promise.reject(message);
@@ -53,4 +53,11 @@ export const getTokensByKeycloakToken = async (
     data
   );
   return resp;
+};
+
+const authClient = new AxiosCommon(VITE_AUTH_API_ENDPOINT);
+
+export const verify = async (): Promise<any> => {
+  const res = await authClient.getRequest(`auth/verify`);
+  return res.data;
 };

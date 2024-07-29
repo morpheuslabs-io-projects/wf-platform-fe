@@ -1,8 +1,6 @@
-/** @format */
-
 import { Box } from "@mui/material";
 
-export const FooterComponent = () => {
+export const Copyrights = () => {
   return (
     <Box
       style={{

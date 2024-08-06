@@ -1,6 +1,9 @@
-## wf-platform-fe
+# wf-platform-fe (Authentication Frontend module)
 
-### RUN DEV 
+## Prerequisites
+Make sure that you have:
+- Node version 18.x and npm
+- PM2
 
 ## Installation
 

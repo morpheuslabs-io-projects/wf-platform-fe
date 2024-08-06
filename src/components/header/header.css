@@ -1,0 +1,37 @@
+#user-avatar-box-menu {
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	position: absolute;
+	top: 90%;
+	right: 75%;
+	width: 100%;
+	border-radius: 8px;
+	border: 2px solid rgba(230, 235, 242, 0.8);
+	background: #fff;
+	box-shadow: 40px 40px 100px 0px rgba(25, 61, 131, 0.2);
+	backdrop-filter: blur(6px);
+	gap: 8px;
+	padding: 0 12px;
+}
+
+#user-avatar-box-menu a {
+	text-decoration: none;
+}
+.user-dropdown-menu-item {
+	padding: 12px;
+	width: 100%;
+	text-decoration: none;
+}
+
+.user-dropdown-menu-item:hover {
+	background: linear-gradient(
+		169deg,
+		rgba(234, 238, 238, 0.8) 0%,
+		rgba(230, 235, 242, 0.8) 97.46%
+	);
+	color: #000;
+}

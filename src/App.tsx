@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createWeb3Modal } from "@web3modal/wagmi/react";
 import { useEffect, useState } from "react";
 import { RouterProvider } from "react-router-dom";
-import { WagmiProvider } from "wagmi";
+import { createConfig, http, WagmiProvider } from "wagmi";
 import { Copyrights } from "./components/atoms/Copyrights";
 import WhitelistModal from "./components/atoms/WhitelistModal";
 import { CookiesHelper } from "./helper/cookies";
@@ -18,8 +18,15 @@ import router from "./router";
 import { verify } from "./services/auth.service";
 import { refreshSession } from "./services/axiosSetup";
 import { MembershipService } from "./services/membership.service";
-import { PROJECT_ID, wagmiConfig } from "./services/web3Setup";
+import { PaymentService } from "./services/payments.service";
+import {
+  chains,
+  connectors,
+  PROJECT_ID,
+  transports,
+} from "./services/web3Setup";
 import theme from "./theme";
+import { INetworkPayment } from "./types/web3.type";
 
 const queryClient = new QueryClient();
 
@@ -29,14 +36,15 @@ const KEYCLOACK_CONFIG = {
   clientId: VITE_SEED_CLIENT_ID,
 };
 
-createWeb3Modal({
-  projectId: PROJECT_ID,
-  wagmiConfig: wagmiConfig,
-});
-
 function App() {
-  const { initAuthentication, user, setCurrentMembership, logout } =
-    useAuthentication();
+  const {
+    initAuthentication,
+    user,
+    setCurrentMembership,
+    logout,
+    setConfig,
+    wagmiConfig,
+  } = useAuthentication();
   const [whitelisted, setWhitelisted] = useState(false);
 
   useEffect(() => {
@@ -52,7 +60,24 @@ function App() {
       }
     };
     continueSession();
+    PaymentService.getNetworks()
+      .then((networks) => {
+        if (!networks) return;
+        Object.entries(networks).forEach(
+          ([id, payment]: [string, INetworkPayment]) => {
+            const chainId = Number(id) as (typeof chains)[number]["id"];
+            if (transports[chainId]) transports[chainId] = http(payment.rpcUrl);
+          }
+        );
+        const wagmiConfig = createConfig({ chains, connectors, transports });
+        createWeb3Modal({
+          projectId: PROJECT_ID,
+          wagmiConfig: wagmiConfig,
+        });
 
+        setConfig(networks, wagmiConfig);
+      })
+      .catch((error) => console.log(error));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -61,6 +86,7 @@ function App() {
       const verifyUser = async () => {
         try {
           await verify();
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
           if (
             error.response.status === 401 &&
@@ -77,33 +103,31 @@ function App() {
       verifyUser();
 
       MembershipService.getCurrentMembership()
-        .then((res) => {
-          setCurrentMembership(res);
-        })
+        .then((res) => setCurrentMembership(res))
         .catch((error) => console.log(error));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
+  if (!wagmiConfig) return null;
+
   return (
-    <>
-      <ReactKeycloakProvider
-        init={KEYCLOACK_CONFIG}
-        initOptions={{
-          onLoad: "check-sso",
-        }}
-      >
-        <QueryClientProvider client={queryClient}>
-          <WagmiProvider config={wagmiConfig}>
-            <ThemeProvider theme={theme}>
-              <RouterProvider router={router} />
-              <Copyrights />
-              {whitelisted && <WhitelistModal />}
-            </ThemeProvider>
-          </WagmiProvider>
-        </QueryClientProvider>
-      </ReactKeycloakProvider>
-    </>
+    <ReactKeycloakProvider
+      init={KEYCLOACK_CONFIG}
+      initOptions={{
+        onLoad: "check-sso",
+      }}
+    >
+      <QueryClientProvider client={queryClient}>
+        <WagmiProvider config={wagmiConfig}>
+          <ThemeProvider theme={theme}>
+            <RouterProvider router={router} />
+            <Copyrights />
+            {whitelisted && <WhitelistModal />}
+          </ThemeProvider>
+        </WagmiProvider>
+      </QueryClientProvider>
+    </ReactKeycloakProvider>
   );
 }
 

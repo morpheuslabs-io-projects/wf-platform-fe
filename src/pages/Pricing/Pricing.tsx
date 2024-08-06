@@ -22,10 +22,12 @@ const pricingPlans = [
 ];
 
 const Pricing = () => {
-  const { setCurrentMembership, currentMembership } = useAuthentication();
+  const { setCurrentMembership, currentMembership, networks, wagmiConfig } =
+    useAuthentication();
   const [loading, setLoading] = useState(true);
   const [memberships, setMemberships] = useState<IMembership[]>([]);
   const [selected, setSelected] = useState<IMembership | null>(null);
+
   const { success } = useNotification();
 
   const currentTierIndex = memberships.findIndex(
@@ -55,6 +57,7 @@ const Pricing = () => {
         window.location.origin + window.location.pathname
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClose = (result?: boolean) => {
@@ -267,7 +270,14 @@ const Pricing = () => {
           {pricingPlans.map(renderPlan)}
         </Box>
       )}
-      <MakePaymentDialog selected={selected} onClose={handleClose} />
+      {!!networks && !!wagmiConfig && (
+        <MakePaymentDialog
+          selected={selected}
+          onClose={handleClose}
+          networks={networks}
+          wagmiConfig={wagmiConfig}
+        />
+      )}
     </Box>
   );
 };

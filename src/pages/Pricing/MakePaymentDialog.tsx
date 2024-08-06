@@ -8,15 +8,15 @@ import { useTokenAllowance } from "@/hooks/useTokenAllowance";
 import { useTokenBalance } from "@/hooks/useTokenBalance";
 import { useTokenDecimals } from "@/hooks/useTokenDecimals";
 import { PaymentService } from "@/services/payments.service";
-import { chains_wc, wagmiConfig } from "@/services/web3Setup";
+import { chains } from "@/services/web3Setup";
 import { useAuthentication } from "@/store/authentication";
 import { useNotification } from "@/store/notification";
 import { IMembership, ISubscribeParams, IUpgradeMembershipBody } from "@/types";
 import {
   IAddress,
   INetworkResponse,
-  INumberString,
   IPriceConversionResponse,
+  IWagmiConfig,
 } from "@/types/web3.type";
 import CloseIcon from "@mui/icons-material/Close";
 import { CircularProgress } from "@mui/material";
@@ -41,6 +41,8 @@ import SelectPaymentDialog from "./SelectPaymentDialog";
 interface IMakePaymentDialog {
   selected: IMembership | null;
   onClose: (result?: boolean) => void;
+  networks: INetworkResponse;
+  wagmiConfig: IWagmiConfig;
 }
 
 enum PaymentType {
@@ -49,10 +51,13 @@ enum PaymentType {
 }
 
 export default function MakePaymentDialog(props: IMakePaymentDialog) {
-  const { selected, onClose } = props;
-  const [networks, setNetworks] = useState<INetworkResponse | null>(null);
-  const [chainId, setChainId] = useState<number | undefined>();
-  const [token, setToken] = useState<IAddress | undefined>();
+  const { selected, onClose, networks, wagmiConfig } = props;
+  const [chainId, setChainId] = useState<number | undefined>(
+    Number(Object.keys(networks)[0])
+  );
+  const [token, setToken] = useState<IAddress | undefined>(
+    chainId ? networks[`${chainId}`]?.acceptTokens[0]?.address : undefined
+  );
   const [rates, setRates] = useState<IPriceConversionResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const web3Modal = useWeb3Modal();
@@ -79,7 +84,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
     error: errorBalance,
   } = useTokenBalance(token);
 
-  const networkSelected = chainId ? networks?.[`${chainId}`] : null;
+  const networkSelected = chainId ? networks[`${chainId}`] : null;
 
   const tokenSelected = networkSelected?.acceptTokens.find(
     (item) => item.address === token
@@ -110,11 +115,12 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
     amountInWei !== undefined && balance !== undefined && balance < amountInWei;
 
   const { approve } = useApproveToken(
+    wagmiConfig,
     token,
     networkSelected?.smartContractAddress
   );
 
-  const { subscribe } = useSubscribe();
+  const { subscribe } = useSubscribe(wagmiConfig);
 
   const handleSelectNetwork = async (event: SelectChangeEvent<number>) => {
     const value = Number(event.target.value);
@@ -126,8 +132,6 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
   };
 
   const handleOptionChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event);
-    console.log("handleOptionChange", event.target.value);
     setSelectedPaymentMethod(event.target.value as PaymentType);
   };
 
@@ -138,7 +142,6 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
   };
 
   const handleSelectedPaymentMethod = () => {
-    console.log("handleSelectedPaymentMethod");
     switch (selectedPaymentMethod) {
       case PaymentType.CREDIT_CARD:
         setIsCreditCardSelected(true);
@@ -152,28 +155,12 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
   };
 
   useEffect(() => {
-    const getNetworks = () => {
-      PaymentService.getNetworks()
-        .then((networks) => {
-          setNetworks(networks);
-          const firstChain = Object.keys(networks)[0] as INumberString;
-          if (!firstChain) return;
-          const firstNetwork = networks[firstChain];
-          setChainId(Number(firstChain));
-          setToken(firstNetwork.acceptTokens[0]?.address || null);
-        })
-        .catch((error) => console.log(error));
-    };
-
     const getMindRate = () => {
       PaymentService.getMindRate()
         .then((rates) => setRates(rates))
         .catch((error) => console.log(error));
     };
-
-    getNetworks();
     getMindRate();
-
     const interval = setInterval(() => getMindRate(), 300000);
 
     return () => clearTimeout(interval);
@@ -267,7 +254,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
 
   useEffect(() => {
     if (networkChainId !== chainId) {
-      if (networks?.[`${networkChainId}`]) {
+      if (networks[`${networkChainId}`]) {
         setChainId(Number(networkChainId));
       } else if (chainId) switchChain?.({ chainId });
     }
@@ -275,7 +262,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
   }, [networkChainId, switchChain]);
 
   const paymentChains = useMemo(() => {
-    return chains_wc.filter((item) => networks?.[`${item.id}`]);
+    return chains.filter((item) => networks[`${item.id}`]);
   }, [networks]);
 
   const disabled =
@@ -473,7 +460,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                   ? "Extending "
                   : "Upgrading to "}
                 {selected?.tier_name} tier for a duration of{" "}
-                {networks?.membershipDuration || 30} days
+                {networks.membershipDuration || 30} days
               </Typography>
               {walletconnectAccount?.address ? (
                 <>

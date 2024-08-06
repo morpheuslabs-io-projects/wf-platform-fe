@@ -1,4 +1,5 @@
 import { Chain } from "viem";
+import { createConfig } from "wagmi";
 
 export type IAddress = `0x${string}`;
 
@@ -56,3 +57,5 @@ export interface IPriceConversion {
 export interface IPriceConversionResponse {
   [key: string]: IPriceConversion;
 }
+
+export type IWagmiConfig = ReturnType<typeof createConfig>;

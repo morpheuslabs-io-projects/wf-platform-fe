@@ -1,5 +1,5 @@
 import { PaymentService } from "@/services/payments.service";
-import { chains_wc } from "@/services/web3Setup";
+import { chains } from "@/services/web3Setup";
 import { IMembership, IUpgradeMembershipResponse } from "@/types";
 import { INetworkResponse, INumberString } from "@/types/web3.type";
 import { Link, Typography, Paper } from "@mui/material";
@@ -79,7 +79,7 @@ const PaymenTableCellistory = ({ paymentHistory }: IPaymentHistoryProps) => {
           {paymentHistory.map((row: IPaymentHistory) => {
             const networkId = row.payment_gateway_id;
             const networkSelected = networks?.[networkId];
-            const chainSelected = chains_wc.find(
+            const chainSelected = chains.find(
               (item) => item.id === Number(networkId)
             );
             const isTokenPayment = row.payment_gateway !== "stripe";
@@ -87,7 +87,7 @@ const PaymenTableCellistory = ({ paymentHistory }: IPaymentHistoryProps) => {
               (networkSelected?.explorerUrl ||
                 chainSelected?.blockExplorers?.default?.url) + "/tx/";
             return (
-              <TableRow>
+              <TableRow key={row.id}>
                 <TableCell>
                   <Typography noWrap fontSize={14}>
                     {row.id}

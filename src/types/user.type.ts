@@ -1,4 +1,5 @@
 import { MongoDocument } from "./mongoDocument.type";
+import { IAddress } from "./web3.type";
 
 export interface User extends MongoDocument {
   username: string;
@@ -67,16 +68,16 @@ export interface IUpgradeMembershipBody {
 export interface IUpgradeMembershipResponse {
   payload: {
     requestor: string;
-    token: string;
+    token: IAddress;
     paymentAmount: number;
-    paymentReceiver: string;
+    paymentReceiver: IAddress;
     item: number;
     expiry: number;
     chainId: number;
     action: "subscribe";
     nonce: string;
   };
-  signature: string;
+  signature: `0x${string}`;
   tx: {
     user_id: number;
     idempotency_key: string;
@@ -109,12 +110,12 @@ export interface IUpgradeMembershipResponse {
 }
 
 export interface ISubscribeParams {
-  token: string;
+  token: IAddress;
   paymentAmount: number | string;
-  paymentReceiver: string;
+  paymentReceiver: IAddress;
   item: number;
   expiry: number;
-  signature: string;
+  signature: `0x${string}`;
 }
 
 export interface IUpdatePaymentTransactionBody {

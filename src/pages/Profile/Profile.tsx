@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 
 const Profile = () => {
   const { currentMembership } = useAuthentication();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [paymentHistory, setPaymentHistory] = useState<any[]>([]);
 
   useEffect(() => {

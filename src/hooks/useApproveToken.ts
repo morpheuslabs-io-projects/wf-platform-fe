@@ -1,8 +1,9 @@
-import { wagmiConfig } from "@/services/web3Setup";
+import { IWagmiConfig } from "@/types/web3.type";
 import { writeContract } from "@wagmi/core";
 import { erc20Abi } from "viem";
 
 export default function useApproveToken(
+  wagmiConfig: IWagmiConfig,
   tokenAddress?: `0x${string}`,
   contractAddress?: `0x${string}`
 ) {

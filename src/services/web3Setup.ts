@@ -1,5 +1,6 @@
 import "@rainbow-me/rainbowkit/styles.css";
-import { createConfig } from "wagmi";
+import { http, Transport } from "@wagmi/core";
+import { CreateConnectorFn } from "wagmi";
 import {
   bsc,
   bscTestnet,
@@ -12,7 +13,7 @@ import { injected, walletConnect } from "wagmi/connectors";
 
 export const PROJECT_ID = import.meta.env.VITE_PROJECT_ID || "";
 
-export const chains_wc = [
+export const chains = [
   mainnet,
   bsc,
   polygon,
@@ -37,7 +38,16 @@ export const connectorWalletConnect = walletConnect({
   metadata,
 });
 
-export const wagmiConfig = createConfig({
-  chains: chains_wc,
-  connectors: [injected(), walletConnect({ projectId: PROJECT_ID, metadata })],
-} as any);
+export const connectors: CreateConnectorFn[] = [
+  injected(),
+  walletConnect({ projectId: PROJECT_ID, metadata }),
+];
+
+export const transports: Record<(typeof chains)[number]["id"], Transport> = {
+  [mainnet.id]: http(),
+  [bsc.id]: http(),
+  [polygon.id]: http(),
+  [sepolia.id]: http(),
+  [bscTestnet.id]: http(),
+  [polygonAmoy.id]: http(),
+};

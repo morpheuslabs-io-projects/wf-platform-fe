@@ -6,6 +6,8 @@ import { useAuthentication } from "@/store/authentication";
 const MyProfile = () => {
   const { user } = useAuthentication();
 
+  if (!user) return null;
+
   return (
     <Box
       sx={{

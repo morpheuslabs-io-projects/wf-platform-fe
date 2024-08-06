@@ -137,24 +137,11 @@ const HeaderComponent: React.FC = () => {
                 }}
                 id={"user-avatar-box-menu"}
               >
-                <Link
-                  href={"/profile"}
-                  target="_blank"
-                  className={"user-dropdown-menu-item"}
-                >
+                <Link href={"/profile"} className={"user-dropdown-menu-item"}>
                   <Typography variant="body">My Profile</Typography>
                 </Link>
                 <Link
-                  href={"/dashboard"}
-                  target="_blank"
-                  className={"user-dropdown-menu-item"}
-                >
-                  <Typography variant="body">Dashboard</Typography>
-                </Link>
-
-                <Link
                   href={"/pricing-plan"}
-                  target="_blank"
                   className={"user-dropdown-menu-item"}
                 >
                   <Typography variant="body">Pricing</Typography>

@@ -1,5 +1,3 @@
-/** @format */
-
 import { createTheme } from "@mui/material";
 import { ColorPartial } from "@mui/material/styles/createPalette";
 import { CSSProperties } from "react";
@@ -36,6 +34,7 @@ declare module "@mui/material/Button" {
     fill: true;
     fill_small: true;
     text: true;
+    ghost_no_background: true;
   }
 }
 
@@ -45,8 +44,11 @@ declare module "@mui/material/styles" {
     header_2: CSSProperties;
     header_3: CSSProperties;
     sub_title: CSSProperties;
+    sub_title_XS: true;
+    subtitle_bold: CSSProperties;
     body: CSSProperties;
     body_bold: CSSProperties;
+    body_bold_S: true;
     button_S: CSSProperties;
     button_S_no_opacity: CSSProperties;
     button_M: CSSProperties;
@@ -58,8 +60,11 @@ declare module "@mui/material/styles" {
     header_2?: CSSProperties;
     header_3?: CSSProperties;
     sub_title?: CSSProperties;
+    sub_title_XS: true;
+    subtitle_bold?: CSSProperties;
     body?: CSSProperties;
     body_bold?: CSSProperties;
+    body_bold_S: true;
     button_S?: CSSProperties;
     button_S_no_opacity?: CSSProperties;
     button_M?: CSSProperties;
@@ -75,8 +80,11 @@ declare module "@mui/material/Typography" {
     header_4: true;
     header_5: true;
     sub_title: true;
+    sub_title_XS: true;
+    subtitle_bold: true;
     body: true;
     body_bold: true;
+    body_bold_S: true;
     button_S: true;
     button_S_no_opacity: true;
     button_M: true;
@@ -84,7 +92,7 @@ declare module "@mui/material/Typography" {
   }
 }
 
-const defaultTheme = createTheme({
+export const defaultTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
@@ -116,17 +124,31 @@ const defaultTheme = createTheme({
       black: {
         50: "#252525",
       },
+      grey: {
+        50: "#25252599",
+      },
       purple: {
         50: "#8249FD",
         100: "#A6AEF6",
+        500: "#634BF3",
       },
       green: {
         50: "#56F22F",
+        100: "#17E98A",
+      },
+      orange: {
+        100: "#EE893F",
       },
       cyan: {
         50: "#69DFDA",
         100: "#56B0B6",
         150: "#4BA0EE",
+      },
+      gray: {
+        50: "#E3E3E3",
+      },
+      red: {
+        50: "#FD5B5B",
       },
     },
   },
@@ -134,7 +156,7 @@ const defaultTheme = createTheme({
 
 const theme = createTheme(defaultTheme, {
   typography: {
-    fontFamily: ["Poppins", "sans-serif"].join(","),
+    fontFamily: ["DM Sans", "Poppins", "sans-serif"].join(","),
     fontSize: 16,
   },
   components: {
@@ -197,6 +219,22 @@ const theme = createTheme(defaultTheme, {
           },
         },
         {
+          props: { variant: "sub_title_XS" },
+          style: {
+            fontSize: "14px",
+            fontWeight: 400,
+            lineHeight: "34px",
+          },
+        },
+        {
+          props: { variant: "subtitle_bold" },
+          style: {
+            fontSize: "24px",
+            fontWeight: 700,
+            lineHeight: "34px",
+          },
+        },
+        {
           props: { variant: "body" },
           style: {
             fontSize: "16px",
@@ -207,6 +245,13 @@ const theme = createTheme(defaultTheme, {
           props: { variant: "body_bold" },
           style: {
             fontSize: "16px",
+            fontWeight: 700,
+          },
+        },
+        {
+          props: { variant: "body_bold_S" },
+          style: {
+            fontSize: "14px",
             fontWeight: 700,
           },
         },
@@ -335,6 +380,29 @@ const theme = createTheme(defaultTheme, {
           },
         },
         {
+          props: { variant: "ghost_no_background" },
+          style: {
+            backgroundColor: "none",
+            color: defaultTheme.palette.colors.black[50],
+            border: "1px solid",
+            borderColor: defaultTheme.palette.colors.black[50],
+            borderRadius: "unset",
+            padding: "13px 24px",
+            fontSize: "16px",
+            height: "54px",
+            fontWeight: "700",
+            boxSizing: "none",
+            "&:disabled": {
+              backdropFilter: "blur(2px)",
+              opacity: 0.3,
+            },
+            "&:hover": {
+              backgroundColor: "inherit",
+              color: "inherit",
+            },
+          },
+        },
+        {
           props: { variant: "fill" },
           style: {
             backgroundColor: defaultTheme.palette.colors.black[50],
@@ -409,7 +477,7 @@ const theme = createTheme(defaultTheme, {
     MuiInput: {
       styleOverrides: {
         root: {
-          fontFamily: ["Poppins", "sans-serif"].join(","),
+          fontFamily: ["DM Sans", "Poppins", "sans-serif"].join(","),
         },
       },
     },
@@ -418,6 +486,56 @@ const theme = createTheme(defaultTheme, {
       styleOverrides: {
         root: {
           color: defaultTheme.palette.colors.cyan[150],
+        },
+      },
+    },
+    MuiTable: {
+      styleOverrides: {
+        root: {
+          fontFamily: ["Poppins", "sans-serif"].join(","),
+        },
+      },
+    },
+    MuiTableContainer: {
+      styleOverrides: {
+        root: {
+          boxShadow: "none",
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        head: {
+          backgroundColor: defaultTheme.palette.colors.white[50],
+          color: defaultTheme.palette.colors.grey[50],
+          fontWeight: "700",
+          border: "none",
+          fontFamily: "Poppins",
+        },
+        body: {
+          fontSize: 14,
+          margin: "4px 0",
+          paddingTop: "4px",
+          paddingBottom: "4px",
+          border: "none",
+          cursor: "pointer",
+        },
+      },
+    },
+    MuiTabs: {
+      styleOverrides: {
+        indicator: {
+          backgroundColor: defaultTheme.palette.colors.black[50],
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          color: defaultTheme.palette.colors.black[50],
+          "&.Mui-selected": {
+            color: defaultTheme.palette.colors.black[50],
+          },
         },
       },
     },

@@ -151,7 +151,7 @@ const Introduction: FC = () => {
                     //   "linear-gradient(90deg, #FFF 0%, rgba(255, 255, 255, 0.47) 60.71%, rgba(255, 255, 255, 0.49) 100%)",
                   }}
                 >
-                  AI-Powered Web3 Workflow Platform
+                  AI-Powered Web3 Platform
                 </Typography>
               </Box>
             </Box>
@@ -178,6 +178,7 @@ const Introduction: FC = () => {
             <Box
               sx={{
                 display: "flex",
+                justifyContent: "center",
                 padding: `${
                   mode === EWindowSize.MOBILE
                     ? "10px 20px"
@@ -223,6 +224,7 @@ const Introduction: FC = () => {
             <Box
               sx={{
                 display: "flex",
+                justifyContent: "center",
                 padding: `${
                   mode === EWindowSize.MOBILE
                     ? "10px 20px"
@@ -247,7 +249,6 @@ const Introduction: FC = () => {
                   cursor: "pointer",
                 },
               }}
-              onClick={() => window.open(`${VITE_APP_WF_URL}`)}
             >
               <Typography
                 variant="sub_title"
@@ -262,12 +263,23 @@ const Introduction: FC = () => {
                   alignItems: "center",
                 }}
               >
-                Start Web3 <br /> Integration Automation
+                Create Web3 <br /> Web Applications
+                <Typography
+                  style={{
+                    fontSize: "14px",
+                    alignItems: "center",
+                    transform: "lowercase",
+                    textAlign: "center",
+                  }}
+                >
+                  Comming soon
+                </Typography>
               </Typography>
             </Box>
             <Box
               sx={{
                 display: "flex",
+                justifyContent: "center",
                 padding: `${
                   mode === EWindowSize.MOBILE
                     ? "10px 20px"

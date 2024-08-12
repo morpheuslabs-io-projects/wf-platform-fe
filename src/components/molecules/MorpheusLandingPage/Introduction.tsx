@@ -270,6 +270,7 @@ const Introduction: FC = () => {
                     alignItems: "center",
                     transform: "lowercase",
                     textAlign: "center",
+                    marginTop: "8px",
                   }}
                 >
                   Comming soon

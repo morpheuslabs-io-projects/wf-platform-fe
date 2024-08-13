@@ -273,7 +273,7 @@ const Introduction: FC = () => {
                     marginTop: "8px",
                   }}
                 >
-                  Comming soon
+                  comming soon
                 </Typography>
               </Typography>
             </Box>

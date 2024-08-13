@@ -50,6 +50,8 @@ enum PaymentType {
   TOKEN = "token_payment",
 }
 
+const durations = [30, 60, 90, 180, 360, 720, 1080];
+
 export default function MakePaymentDialog(props: IMakePaymentDialog) {
   const { selected, onClose, networks, wagmiConfig } = props;
   const [chainId, setChainId] = useState<number | undefined>(
@@ -71,6 +73,8 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
   const [isTokenSelected, setIsTokenSelected] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
     useState<PaymentType | null>(null);
+  const [duration, setDuration] = useState(durations[0]);
+  const durationPeriod = Math.floor(duration / 30);
 
   const {
     decimals,
@@ -98,13 +102,17 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
   } = useTokenAllowance(token, networkSelected?.smartContractAddress);
 
   const tokenPrice = useMemo(() => {
-    if (tokenSelected?.name.toUpperCase() === "USDT") return selected?.price;
+    if (tokenSelected?.name.toUpperCase() === "USDT")
+      return (selected?.price || 0) * durationPeriod;
     if (!tokenSelected || !rates) return;
     const conversion = rates[tokenSelected.name.toUpperCase()];
     const priceInUSD = conversion?.quote["USD"];
     if (!priceInUSD) return;
-    return ((selected?.price || 0) * conversion.amount) / priceInUSD.price;
-  }, [tokenSelected, rates, selected]);
+    return (
+      ((selected?.price || 0) * conversion.amount * durationPeriod) /
+      priceInUSD.price
+    );
+  }, [tokenSelected, rates, selected, durationPeriod]);
 
   const amountInWei =
     tokenPrice && decimals
@@ -195,6 +203,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
       const { address, name } = tokenSelected;
       const body: IUpgradeMembershipBody = {
         membership_id: selected.id,
+        duration_period: durationPeriod,
         subscriber_address: walletconnectAccount.address,
         token_address: address,
         chain_id: chainId,
@@ -304,6 +313,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
           <CreditCardPaymentDialog
             selected={selected}
             onClose={handleOnCloseModal}
+            durations={durations}
           />
         )}
 
@@ -420,6 +430,37 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                   );
                 })}
               </Select>
+              <Typography fontSize={14}>Select duration:</Typography>
+              <Select
+                value={duration}
+                sx={{
+                  height: "40px",
+                  width: "100%",
+                  m: "16px 0 24px",
+                  border: "none",
+                  background: "white",
+                  borderRadius: 0,
+                  fieldset: { border: "none" },
+                }}
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+                onChange={(e) => setDuration(Number(e.target.value))}
+              >
+                {durations.map((item) => {
+                  return (
+                    <MenuItem value={item} key={item}>
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        lineHeight={1.5}
+                        gap={0.5}
+                      >
+                        {item} days
+                      </Box>
+                    </MenuItem>
+                  );
+                })}
+              </Select>
               <Typography fontSize={14} mb={1}>
                 You have to pay:
               </Typography>
@@ -459,8 +500,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                 {currentMembership?.id === selected?.id
                   ? "Extending "
                   : "Upgrading to "}
-                {selected?.tier_name} tier for a duration of{" "}
-                {networks.membershipDuration || 30} days
+                {selected?.tier_name} tier for a duration of {duration} days
               </Typography>
               {walletconnectAccount?.address ? (
                 <>

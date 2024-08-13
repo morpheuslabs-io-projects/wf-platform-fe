@@ -59,6 +59,7 @@ export interface IUserToken {
 
 export interface IUpgradeMembershipBody {
   membership_id: IMembership["id"];
+  duration_period: number;
   subscriber_address: string;
   token_address: string;
   chain_id: number;
@@ -125,6 +126,7 @@ export interface IUpdatePaymentTransactionBody {
 export interface IUpgradeMembershipCardBody {
   membership_id: IMembership["id"];
   return_url: string;
+  duration_period: number;
   payment_method_id?: string;
 }
 

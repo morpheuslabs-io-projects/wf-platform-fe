@@ -36,7 +36,6 @@ export interface IChain extends Chain {
 }
 
 export interface INetworkResponse {
-  membershipDuration: number;
   [key: INumberString]: INetworkPayment;
 }
 

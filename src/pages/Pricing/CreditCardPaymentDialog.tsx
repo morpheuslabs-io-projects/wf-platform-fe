@@ -1,4 +1,4 @@
-import { IMembership } from "@/types";
+import { IMembership, IUpgradeMembershipCardBody } from "@/types";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   PaymentElement,
@@ -18,6 +18,8 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  MenuItem,
+  Select,
   Typography,
 } from "@mui/material";
 import { PaymentService } from "@/services/payments.service";
@@ -30,7 +32,11 @@ interface IMakePaymentDialog {
   loading?: boolean;
 }
 
-const CheckoutForm = ({ selected, onClose }: IMakePaymentDialog) => {
+const CheckoutForm = ({
+  selected,
+  onClose,
+  durationPeriod,
+}: IMakePaymentDialog & { durationPeriod: number }) => {
   const stripe = useStripe();
   const elements = useElements();
   const { success } = useNotification();
@@ -56,9 +62,10 @@ const CheckoutForm = ({ selected, onClose }: IMakePaymentDialog) => {
     // Create the PaymentIntent and obtain clientSecret from your server endpoint
     try {
       if (selected) {
-        const requestBody = {
+        const requestBody: IUpgradeMembershipCardBody = {
           membership_id: selected.id,
           return_url: `${window.location.origin}/pricing-plan`,
+          duration_period: durationPeriod,
         };
         const { client_secret } =
           await PaymentService.createStripePaymentIntent(requestBody);
@@ -113,13 +120,17 @@ const CheckoutForm = ({ selected, onClose }: IMakePaymentDialog) => {
   );
 };
 
-function CreditCardPaymentDialog(props: IMakePaymentDialog) {
-  const { selected, onClose, loading } = props;
+function CreditCardPaymentDialog(
+  props: IMakePaymentDialog & { durations: number[] }
+) {
+  const { selected, onClose, loading, durations } = props;
   const stripePromise = loadStripe(VITE_STRIPE_CLIENT_ID);
+  const [duration, setDuration] = useState(durations[0]);
+  const durationPeriod = Math.floor(duration / 30);
 
   const options = {
     mode: "payment",
-    amount: selected?.price,
+    amount: (selected?.price || 0) * durationPeriod,
     currency: "usd",
     confirmation_method: "automatic",
     // Fully customizable with appearance API.
@@ -173,17 +184,54 @@ function CreditCardPaymentDialog(props: IMakePaymentDialog) {
             Plan you have selected: <b>{selected?.tier_name || ""}</b>
           </Typography>
         </Box>
+        <Typography fontSize={14}>Select duration:</Typography>
+        <Select
+          value={duration}
+          sx={{
+            height: "40px",
+            width: "100%",
+            m: "12px 0",
+            border: "none",
+            background: "white",
+            borderRadius: 0,
+            fieldset: { border: "none" },
+          }}
+          displayEmpty
+          inputProps={{ "aria-label": "Without label" }}
+          onChange={(e) => setDuration(Number(e.target.value))}
+        >
+          {durations.map((item) => {
+            return (
+              <MenuItem value={item} key={item}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  lineHeight={1.5}
+                  gap={0.5}
+                >
+                  {item} days
+                </Box>
+              </MenuItem>
+            );
+          })}
+        </Select>
         <Box>
           <Typography fontSize={14} mb={1}>
             You have to pay:{" "}
-            <b>{selected?.price ? `${selected?.price} USD` : ""}</b>
+            <b>
+              {selected?.price ? `${selected.price * durationPeriod} USD` : ""}
+            </b>
           </Typography>
         </Box>
         <Elements
           stripe={stripePromise}
           options={{ ...options, mode: "payment" }}
         >
-          <CheckoutForm selected={selected} onClose={onClose} />
+          <CheckoutForm
+            selected={selected}
+            onClose={onClose}
+            durationPeriod={durationPeriod}
+          />
         </Elements>
       </DialogContent>
     </>

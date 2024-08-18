@@ -209,7 +209,7 @@ function CreditCardPaymentDialog(
                   lineHeight={1.5}
                   gap={0.5}
                 >
-                  {item} days
+                  {Math.floor(item / 30)} month{item > 30 ? "s" : ""}
                 </Box>
               </MenuItem>
             );

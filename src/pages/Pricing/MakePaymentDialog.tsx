@@ -455,7 +455,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                         lineHeight={1.5}
                         gap={0.5}
                       >
-                        {item} days
+                        {Math.floor(item / 30)} month{item > 30 ? "s" : ""}
                       </Box>
                     </MenuItem>
                   );
@@ -500,7 +500,8 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                 {currentMembership?.id === selected?.id
                   ? "Extending "
                   : "Upgrading to "}
-                {selected?.tier_name} tier for a duration of {duration} days
+                {selected?.tier_name} tier for a duration of {durationPeriod}{" "}
+                month{durationPeriod > 1 ? "s" : ""}
               </Typography>
               {walletconnectAccount?.address ? (
                 <>

@@ -7,7 +7,7 @@ import SettingIcon from "@/assets/icons/setting-blue.svg";
 import { ROUTE_PATH } from "@/constants/AppConfig";
 import { EWindowSize, useReSize } from "@/hooks/useSize";
 import { useAuthentication } from "@/store/authentication";
-import { Avatar, Link, Modal, Typography } from "@mui/material";
+import { Avatar, Link, Menu, MenuItem, Modal, Typography } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -23,8 +23,8 @@ const HeaderComponent: React.FC = () => {
   const navigate = useNavigate();
   const mode = useReSize();
   const { user } = useAuthentication();
-  const [showDropdownMenu, setShowDropdownMenu] = React.useState(false);
-  const dropdownRef = React.useRef<HTMLDivElement | null>(null);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
+  const open = Boolean(anchorEl);
   const [showModalMenuMobile, setShowModalMenuMobile] = React.useState(false);
 
   const onGoToSignIn = async () => {
@@ -35,21 +35,12 @@ const HeaderComponent: React.FC = () => {
     window.open(ROUTE_PATH.LOGOUT(), "_self");
   };
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setShowDropdownMenu(false);
-    }
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    setAnchorEl(event.currentTarget);
   };
-
-  React.useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <AppBar
@@ -115,50 +106,74 @@ const HeaderComponent: React.FC = () => {
               </Box>
             )}
             {user && (
-              <Avatar
-                alt="avatar"
-                src={user.avatar || AvatarIcon}
-                sx={{
-                  backgroundColor: "colors.black.50",
-                  position: "relative",
-                  marginRight: mode === EWindowSize.MOBILE ? "10px" : "0",
-                }}
-                onClick={() => {
-                  setShowDropdownMenu(!showDropdownMenu);
-                }}
-              />
-            )}
-            {user && (
-              <Box
-                ref={dropdownRef}
-                sx={{
-                  display: showDropdownMenu ? "flex" : "none",
-                  minWidth: "87px",
-                }}
-                id={"user-avatar-box-menu"}
-              >
-                <Link href={"/profile"} className={"user-dropdown-menu-item"}>
-                  <Typography variant="body">My Profile</Typography>
-                </Link>
-                <Link
-                  href={"/pricing-plan"}
-                  className={"user-dropdown-menu-item"}
+              <>
+                <Avatar
+                  alt="avatar"
+                  src={user.avatar || AvatarIcon}
+                  sx={{
+                    backgroundColor: "colors.black.50",
+                    position: "relative",
+                    marginRight: mode === EWindowSize.MOBILE ? "10px" : "0",
+                  }}
+                  onClick={handleClick}
+                />
+                <Menu
+                  id="demo-positioned-menu"
+                  aria-labelledby="demo-positioned-button"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  slotProps={{
+                    paper: {
+                      elevation: 0,
+                      sx: {
+                        overflow: "visible",
+                        filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                        mt: 1.5,
+                        "& .MuiAvatar-root": {
+                          width: 32,
+                          height: 32,
+                          ml: -0.5,
+                          mr: 1,
+                        },
+                        "&:before": {
+                          content: '""',
+                          display: "block",
+                          position: "absolute",
+                          top: 0,
+                          right: 14,
+                          width: 10,
+                          height: 10,
+                          bgcolor: "background.paper",
+                          transform: "translateY(-50%) rotate(45deg)",
+                          zIndex: 0,
+                        },
+                        "& .MuiMenu-list": {
+                          paddingBottom: 0,
+                          paddingTop: 0,
+                        },
+                        "& .MuiMenuItem-root": {
+                          padding: "14px 20px",
+                        },
+                      },
+                    },
+                  }}
+                  transformOrigin={{ horizontal: "right", vertical: "top" }}
+                  anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                 >
-                  <Typography variant="body">Pricing</Typography>
-                </Link>
-                {mode === EWindowSize.MOBILE && (
-                  <Box
-                    className={"user-dropdown-menu-item"}
-                    onClick={onGoToLogout}
-                  >
-                    <Typography variant="body">Logout</Typography>
-                  </Box>
-                )}
-              </Box>
+                  <MenuItem sx={{ minWidth: "250px" }} href="/profile">
+                    My Profile
+                  </MenuItem>
+                  <MenuItem href="/pricing-plan">Pricing</MenuItem>
+                  {mode === EWindowSize.MOBILE && (
+                    <MenuItem onClick={onGoToLogout}>Logout</MenuItem>
+                  )}
+                </Menu>
+              </>
             )}
             {user && mode !== EWindowSize.MOBILE && (
               <Box>
-                <Box>
+                <Box onClick={handleClick}>
                   {user.first_name && user.last_name ? (
                     <Typography variant="body_bold">
                       {`${user.first_name} ${user.last_name}`}

@@ -42,6 +42,16 @@ const HeaderComponent: React.FC = () => {
     setAnchorEl(null);
   };
 
+  const onClickMyProfile = () => {
+    handleClose();
+    navigate("/profile");
+  };
+
+  const onClickPricingPlans = () => {
+    handleClose();
+    navigate("/pricing-plan");
+  };
+
   return (
     <AppBar
       position="static"
@@ -161,10 +171,13 @@ const HeaderComponent: React.FC = () => {
                   transformOrigin={{ horizontal: "right", vertical: "top" }}
                   anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                 >
-                  <MenuItem sx={{ minWidth: "250px" }} href="/profile">
+                  <MenuItem
+                    sx={{ minWidth: "250px" }}
+                    onClick={onClickMyProfile}
+                  >
                     My Profile
                   </MenuItem>
-                  <MenuItem href="/pricing-plan">Pricing</MenuItem>
+                  <MenuItem onClick={onClickPricingPlans}>Pricing</MenuItem>
                   {mode === EWindowSize.MOBILE && (
                     <MenuItem onClick={onGoToLogout}>Logout</MenuItem>
                   )}

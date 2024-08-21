@@ -50,6 +50,7 @@ function App() {
   useEffect(() => {
     const continueSession = async () => {
       try {
+        if (!CookiesHelper.get("refreshToken")) return;
         const { access_token, refresh_token } = await refreshSession();
         CookiesHelper.set("accessToken", access_token);
         CookiesHelper.set("refreshToken", refresh_token);

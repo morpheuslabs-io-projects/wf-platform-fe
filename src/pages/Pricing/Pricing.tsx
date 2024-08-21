@@ -1,33 +1,48 @@
 import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
 
+import AdditionIcon from "@/assets/icons/addition.svg";
 import { ReactComponent as NotAvailableIcon } from "@/assets/icons/not-available.svg";
 import { ReactComponent as CheckIcon } from "@/assets/icons/tick.svg";
 import { MembershipService } from "@/services/membership.service";
-import { useAuthentication } from "@/store/authentication";
-import { useNotification } from "@/store/notification";
-import { IMembership } from "@/types";
-import React, { useEffect, useState } from "react";
-import { SmartcontractFeatures, WorkFlowFeatures } from "./features";
-import MakePaymentDialog from "./MakePaymentDialog";
-import { createConfig, http, WagmiProvider } from "wagmi";
 import { PaymentService } from "@/services/payments.service";
-import { INetworkPayment } from "@/types/web3.type";
 import {
   chains,
   connectors,
   PROJECT_ID,
   transports,
 } from "@/services/web3Setup";
+import { useAuthentication } from "@/store/authentication";
+import { useNotification } from "@/store/notification";
+import { IMembership } from "@/types";
+import { INetworkPayment } from "@/types/web3.type";
 import { createWeb3Modal } from "@web3modal/wagmi/react";
+import React, { useEffect, useState } from "react";
+import { createConfig, http, WagmiProvider } from "wagmi";
+import {
+  AdditionalFeatures,
+  SmartcontractFeatures,
+  WebStudioFeatures,
+  WorkFlowFeatures,
+} from "./features";
+import MakePaymentDialog from "./MakePaymentDialog";
 
 const pricingPlans = [
+  {
+    title: "Smart Contract Studio",
+    features: SmartcontractFeatures,
+  },
   {
     title: "Workflow Studio",
     features: WorkFlowFeatures,
   },
   {
-    title: "Smart Contract Studio",
-    features: SmartcontractFeatures,
+    title: "Web3 Web Studio",
+    features: WebStudioFeatures,
+  },
+  {
+    title: "Additional Subscription Benefits",
+    features: AdditionalFeatures,
+    icon: AdditionIcon,
   },
 ];
 
@@ -108,23 +123,35 @@ const Pricing = () => {
         <Typography
           variant="body_bold"
           sx={{
+            fontSize: 22,
             color: "#495BFD",
+            width: "max-content",
+            ...(plan.icon && {
+              background: "-webkit-linear-gradient(45deg, #7656FA, #69D6DC)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }),
           }}
         >
+          {plan.icon && (
+            <Box
+              component="img"
+              src={plan.icon}
+              sx={{ width: 24, height: 24 }}
+            />
+          )}
           {plan.title}
         </Typography>
         {plan.features.map((feature, index: number) => (
           <Grid container spacing={2} key={`${plan.title}-features-${index}`}>
-            <Grid
-              item
-              sx={{
-                boxShadow: "0px 1px 0px 0px rgba(0, 0, 0, 0.37)",
-                display: "flex",
-                alignItems: "center",
-              }}
-              xs={4}
-            >
-              <Typography variant="body">{feature.title}</Typography>
+            <Grid item sx={{ display: "flex", alignItems: "center" }} xs={4}>
+              <Typography
+                variant="body"
+                fontSize={feature.key ? 14 : 18}
+                fontWeight={feature.key ? 400 : 700}
+              >
+                {feature.title}
+              </Typography>
               {feature.icon && (
                 <img
                   src={feature.icon}
@@ -134,13 +161,13 @@ const Pricing = () => {
               )}
             </Grid>
             {memberships.map((membership, index) => {
-              const value = membership.benefits[feature.key];
+              if (!feature.key) return;
+              const value = feature.key && membership.benefits[feature.key];
               return (
                 <Grid
                   key={membership.id}
                   item
                   sx={{
-                    boxShadow: "0px 1px 0px 0px rgba(0, 0, 0, 0.37)",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -156,8 +183,8 @@ const Pricing = () => {
                   ) : (
                     <Typography variant="body_bold">
                       {index === memberships.length - 1 && !value
-                        ? "Custom limit"
-                        : value}
+                        ? "Custom"
+                        : value || 0}
                     </Typography>
                   )}
                 </Grid>
@@ -222,7 +249,7 @@ const Pricing = () => {
                   >
                     <Typography
                       variant="subtitle_bold"
-                      sx={{ color: "#9F87E9" }}
+                      sx={{ color: "#9F87E9", position: "relative" }}
                     >
                       {membership.tier_name}
                       {membership.most_popular && (

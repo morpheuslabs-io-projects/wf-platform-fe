@@ -9,6 +9,16 @@ import { IMembership } from "@/types";
 import React, { useEffect, useState } from "react";
 import { SmartcontractFeatures, WorkFlowFeatures } from "./features";
 import MakePaymentDialog from "./MakePaymentDialog";
+import { createConfig, http, WagmiProvider } from "wagmi";
+import { PaymentService } from "@/services/payments.service";
+import { INetworkPayment } from "@/types/web3.type";
+import {
+  chains,
+  connectors,
+  PROJECT_ID,
+  transports,
+} from "@/services/web3Setup";
+import { createWeb3Modal } from "@web3modal/wagmi/react";
 
 const pricingPlans = [
   {
@@ -22,8 +32,13 @@ const pricingPlans = [
 ];
 
 const Pricing = () => {
-  const { setCurrentMembership, currentMembership, networks, wagmiConfig } =
-    useAuthentication();
+  const {
+    setCurrentMembership,
+    currentMembership,
+    networks,
+    wagmiConfig,
+    setConfig,
+  } = useAuthentication();
   const [loading, setLoading] = useState(true);
   const [memberships, setMemberships] = useState<IMembership[]>([]);
   const [selected, setSelected] = useState<IMembership | null>(null);
@@ -33,6 +48,28 @@ const Pricing = () => {
   const currentTierIndex = memberships.findIndex(
     ({ id }) => id === currentMembership?.id
   );
+
+  useEffect(() => {
+    PaymentService.getNetworks()
+      .then((networks) => {
+        if (!networks) return;
+        Object.entries(networks).forEach(
+          ([id, payment]: [string, INetworkPayment]) => {
+            const chainId = Number(id) as (typeof chains)[number]["id"];
+            if (transports[chainId]) transports[chainId] = http(payment.rpcUrl);
+          }
+        );
+        const wagmiConfig = createConfig({ chains, connectors, transports });
+        createWeb3Modal({
+          projectId: PROJECT_ID,
+          wagmiConfig: wagmiConfig,
+        });
+
+        setConfig(networks, wagmiConfig);
+      })
+      .catch((error) => console.log(error));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -271,12 +308,14 @@ const Pricing = () => {
         </Box>
       )}
       {!!networks && !!wagmiConfig && (
-        <MakePaymentDialog
-          selected={selected}
-          onClose={handleClose}
-          networks={networks}
-          wagmiConfig={wagmiConfig}
-        />
+        <WagmiProvider config={wagmiConfig}>
+          <MakePaymentDialog
+            selected={selected}
+            onClose={handleClose}
+            networks={networks}
+            wagmiConfig={wagmiConfig}
+          />
+        </WagmiProvider>
       )}
     </Box>
   );

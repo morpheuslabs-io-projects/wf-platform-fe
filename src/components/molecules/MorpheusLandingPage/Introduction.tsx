@@ -264,17 +264,6 @@ const Introduction: FC = () => {
                 }}
               >
                 Create Web3 <br /> Web Applications
-                <Typography
-                  style={{
-                    fontSize: "14px",
-                    alignItems: "center",
-                    transform: "lowercase",
-                    textAlign: "center",
-                    marginTop: "8px",
-                  }}
-                >
-                  coming soon
-                </Typography>
               </Typography>
             </Box>
             <Box

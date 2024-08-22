@@ -13,6 +13,7 @@ export class CookiesHelper {
     const domain = VITE_ROOT_DOMAIN;
     Cookies.set(this._getKey(name), value, { domain });
   }
+
   static get(name: string) {
     return Cookies.get(this._getKey(name));
   }
@@ -22,5 +23,12 @@ export class CookiesHelper {
     Cookies.remove(this._getKey(name), { domain });
     Cookies.remove(`test_${name}`, { domain });
     Cookies.remove(`development_${name}`, { domain });
+  }
+
+  static clearAll() {
+    const domain = VITE_ROOT_DOMAIN;
+    Object.keys(Cookies.get()).forEach((key) =>
+      Cookies.remove(key, { domain })
+    );
   }
 }

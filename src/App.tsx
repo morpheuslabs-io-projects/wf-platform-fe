@@ -36,6 +36,7 @@ function App() {
       try {
         if (!CookiesHelper.get("refreshToken")) return;
         const { access_token, refresh_token } = await refreshSession();
+        CookiesHelper.clearAll();
         CookiesHelper.set("accessToken", access_token);
         CookiesHelper.set("refreshToken", refresh_token);
         initAuthentication();

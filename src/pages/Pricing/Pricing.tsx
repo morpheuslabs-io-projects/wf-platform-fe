@@ -21,6 +21,7 @@ import { createConfig, http, WagmiProvider } from "wagmi";
 import {
   AdditionalFeatures,
   SmartcontractFeatures,
+  specialReplaceNull,
   WebStudioFeatures,
   WorkFlowFeatures,
 } from "./features";
@@ -162,7 +163,10 @@ const Pricing = () => {
             </Grid>
             {memberships.map((membership, index) => {
               if (!feature.key) return;
-              const value = feature.key && membership.benefits[feature.key];
+              const value = membership.benefits[feature.key];
+              const replaceValue =
+                value || (specialReplaceNull[feature.key] ?? value);
+
               return (
                 <Grid
                   key={membership.id}
@@ -174,17 +178,17 @@ const Pricing = () => {
                   }}
                   xs={2}
                 >
-                  {typeof value === "boolean" ? (
-                    value ? (
+                  {typeof replaceValue === "boolean" ? (
+                    replaceValue ? (
                       <CheckIcon />
                     ) : (
                       <NotAvailableIcon />
                     )
                   ) : (
                     <Typography variant="body_bold">
-                      {index === memberships.length - 1 && !value
+                      {index === memberships.length - 1 && !replaceValue
                         ? "Custom"
-                        : value || 0}
+                        : replaceValue || 0}
                     </Typography>
                   )}
                 </Grid>

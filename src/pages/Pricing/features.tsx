@@ -219,3 +219,8 @@ export const AdditionalFeatures: IFeature[] = [
     title: "Custom marketing support",
   },
 ];
+
+export const specialReplaceNull: Partial<{ [key in keyof IBenefit]: boolean }> =
+  {
+    text_uptime_gurantee: false,
+  };

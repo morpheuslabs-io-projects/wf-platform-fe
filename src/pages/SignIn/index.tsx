@@ -34,6 +34,7 @@ const SignIn = () => {
     const { access_token, refresh_token } = await getTokensByKeycloakToken({
       token,
     });
+    CookiesHelper.clearAll();
     CookiesHelper.set("accessToken", access_token);
     CookiesHelper.set("refreshToken", refresh_token);
     initAuthentication();

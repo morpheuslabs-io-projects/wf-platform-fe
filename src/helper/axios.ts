@@ -78,6 +78,7 @@ export class AxiosCommon {
             "Currently the platform functions are restricted for private access"
         ) {
           const { access_token, refresh_token } = await refreshSession();
+          CookiesHelper.clearAll();
           CookiesHelper.set("accessToken", access_token);
           CookiesHelper.set("refreshToken", refresh_token);
         } else {

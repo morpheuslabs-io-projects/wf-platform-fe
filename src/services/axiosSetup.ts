@@ -5,7 +5,6 @@ import {
 } from "@/constants/AppConfig";
 import { CookiesHelper } from "@/helper/cookies";
 import axios from "axios";
-import { redirect } from "react-router-dom";
 
 const API_ENDPOINT: string = VITE_API_ENDPOINT;
 
@@ -39,7 +38,7 @@ axiosClient.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       CookiesHelper.remove("accessToken");
-      redirect(ROUTE_PATH.SIGN_IN());
+      window.open(`${ROUTE_PATH.SIGN_IN()}`, "_self");
     }
     return Promise.reject(error);
   }

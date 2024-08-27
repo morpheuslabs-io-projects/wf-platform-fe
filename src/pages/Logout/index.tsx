@@ -1,6 +1,6 @@
+import HeaderComponent from "@/components/header/Header";
 import { CookiesHelper } from "@/helper/cookies";
 import { useReactKeycloak } from "@/providers/KeycloakProvider";
-import { Container } from "@mui/material";
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -30,5 +30,5 @@ export const Logout = () => {
     })();
   }, [redirectUrl, authenticated, logout, navigate]);
 
-  return <Container maxWidth="xl"></Container>;
+  return <HeaderComponent />;
 };

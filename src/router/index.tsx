@@ -6,6 +6,7 @@ import NotFound from "../pages/NotFound";
 import SignIn from "../pages/SignIn";
 import AuthRouter from "./PrivateRoutes";
 import PublicGuard from "./PublicGuard";
+import { Logout } from "@/pages/Logout";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const authLoader = (_: unknown) => {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
             element: <SignIn />,
           },
         ],
+      },
+      {
+        path: "/logout",
+        element: <Logout />,
       },
 
       {

@@ -1,6 +1,5 @@
 import HeaderComponent from "@/components/header/Header";
 import Inside from "@/pages/Inside";
-import { Logout } from "@/pages/Logout";
 import NotFound from "@/pages/NotFound";
 import Pricing from "@/pages/Pricing/Pricing";
 import Profile from "@/pages/Profile/Profile";
@@ -22,10 +21,6 @@ const AuthRouter: RouteObject[] = [
     path: "/",
     element: <PrivateElementWithHeader />,
     children: [
-      {
-        path: "/logout",
-        element: <Logout />,
-      },
       {
         path: "/inside",
         element: <Inside />,

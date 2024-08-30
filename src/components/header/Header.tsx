@@ -4,10 +4,20 @@ import MorpheusLogoFull from "@/assets/icons/morpheus-logo-full.svg";
 // import SCLogo from "@/assets/icons/sc-logo.svg";
 import AvatarIcon from "@/assets/icons/avatar.svg";
 import SettingIcon from "@/assets/icons/setting-blue.svg";
+import SupportCenterIcon from "@/assets/icons/support-center.svg";
+
 import { ROUTE_PATH } from "@/constants/AppConfig";
 import { EWindowSize, useReSize } from "@/hooks/useSize";
 import { useAuthentication } from "@/store/authentication";
-import { Avatar, Link, Menu, MenuItem, Modal, Typography } from "@mui/material";
+import {
+  Avatar,
+  Link,
+  Menu,
+  MenuItem,
+  Modal,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -108,6 +118,17 @@ const HeaderComponent: React.FC = () => {
             }}
             id={"user-avatar-box"}
           >
+            <Box>
+              <Tooltip title="Support Center">
+                <IconButton
+                  onClick={() => {
+                    window.open("/support-center", "_blank");
+                  }}
+                >
+                  <img src={SupportCenterIcon} alt="support-center" />
+                </IconButton>
+              </Tooltip>
+            </Box>
             {!user && (
               <Box>
                 <Button onClick={onGoToSignIn} variant="ghost">

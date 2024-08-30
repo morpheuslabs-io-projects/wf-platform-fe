@@ -45,6 +45,7 @@ function SupportChat() {
             display: "flex",
             gap: "24px",
             justifyContent: "center",
+            flexWrap: "wrap",
           }}
         >
           <Box
@@ -67,7 +68,9 @@ function SupportChat() {
               }}
             >
               <CheckCircleIcon color="success" />
-              <Typography variant="body_bold">Ready to Go Live?</Typography>
+              <Typography variant="body_bold" sx={{ textAlign: "center" }}>
+                Ready to Go Live?
+              </Typography>
             </Box>
             <Box
               sx={{
@@ -101,7 +104,7 @@ function SupportChat() {
               }}
             >
               <CheckCircleIcon color="success" />
-              <Typography variant="body_bold">
+              <Typography variant="body_bold" sx={{ textAlign: "center" }}>
                 Need Coding or Technical Assistance?
               </Typography>
             </Box>
@@ -137,7 +140,7 @@ function SupportChat() {
               }}
             >
               <CheckCircleIcon color="success" />
-              <Typography variant="body_bold">
+              <Typography variant="body_bold" sx={{ textAlign: "center" }}>
                 Unsure About Your Tech Stack?
               </Typography>
             </Box>

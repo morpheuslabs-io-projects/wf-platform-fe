@@ -125,7 +125,7 @@ function FaqItem({ faq, index, activeIndex, setActiveFaq }: FaqItemProps) {
 }
 
 function Faq() {
-  const [faqs, setFaqs] = useState(faqMock);
+  const [faqs] = useState(faqMock);
   const [activeFaq, setActiveFaq] = useState(-1);
 
   return (

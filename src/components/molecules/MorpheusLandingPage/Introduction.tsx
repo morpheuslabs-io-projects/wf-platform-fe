@@ -3,7 +3,11 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Background from "@/assets/icons/morpheus-background.svg";
 import AI from "@/assets/icons/AI.svg";
-import { VITE_APP_SC_URL, VITE_APP_WF_URL } from "@/constants/AppConfig";
+import {
+  VITE_APP_SC_URL,
+  VITE_APP_WF_URL,
+  VITE_APP_WS_URL,
+} from "@/constants/AppConfig";
 import { EWindowSize, useReSize } from "@/hooks/useSize";
 import { Stack } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -249,6 +253,7 @@ const Introduction: FC = () => {
                   cursor: "pointer",
                 },
               }}
+              onClick={() => window.open(`${VITE_APP_WS_URL}`)}
             >
               <Typography
                 variant="sub_title"

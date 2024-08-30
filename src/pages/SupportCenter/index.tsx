@@ -19,14 +19,20 @@ const SupportCenterPage: FC = () => {
       "https://static.zdassets.com/ekr/snippet.js?key=0cd87e1f-467a-4e3c-840b-c3857aa6f2bf";
     document.body.appendChild(script);
 
-    window.zE("messenger", "loginUser", function (cb: any) {
-      console.log("zenDesk initialized");
-      ZendeskService.getToken().then((zenToken) => {
-        cb(zenToken);
-      });
-    });
+    const interval = setInterval(() => {
+      if (typeof window.zE === "function") {
+        clearInterval(interval);
+        window.zE("messenger", "loginUser", function (cb: any) {
+          console.log("zenDesk initialized");
+          ZendeskService.getToken().then((zenToken) => {
+            cb(zenToken);
+          });
+        });
+      }
+    }, 1000);
 
     return () => {
+      clearInterval(interval);
       document.body.removeChild(script);
     };
   }, []);

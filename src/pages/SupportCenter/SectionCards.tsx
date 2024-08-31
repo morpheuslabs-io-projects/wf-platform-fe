@@ -115,6 +115,11 @@ const SectionCardsSupportCenter: FC = () => {
                   cursor: "pointer",
                 },
               }}
+              onClick={(e) => {
+                const faq = document.getElementById("faq");
+                e.preventDefault(); // Stop Page Reloading
+                faq && faq.scrollIntoView({ behavior: "smooth" });
+              }}
             >
               <img src={FAQ} alt="faq" />
               <Typography
@@ -160,6 +165,11 @@ const SectionCardsSupportCenter: FC = () => {
                   cursor: "pointer",
                 },
               }}
+              onClick={(e) => {
+                const faq = document.getElementById("faq");
+                e.preventDefault(); // Stop Page Reloading
+                faq && faq.scrollIntoView({ behavior: "smooth" });
+              }}
             >
               <img src={Documentations} alt="docunmentations" />
               <Typography
@@ -204,6 +214,12 @@ const SectionCardsSupportCenter: FC = () => {
                 "&:hover": {
                   cursor: "pointer",
                 },
+              }}
+              onClick={(e) => {
+                const supportChat = document.getElementById("support-chat");
+                e.preventDefault(); // Stop Page Reloading
+                supportChat &&
+                  supportChat.scrollIntoView({ behavior: "smooth" });
               }}
             >
               <img src={SupportChat} alt="support-chat" />

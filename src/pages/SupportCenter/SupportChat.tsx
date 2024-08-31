@@ -10,6 +10,7 @@ function SupportChat() {
         width: "100%",
         background: "#FFF",
       }}
+      id="support-chat"
     >
       <Box
         sx={{
@@ -172,6 +173,9 @@ function SupportChat() {
               color: "#FFF",
               padding: "14px 26px",
               borderRadius: "6px",
+            }}
+            onClick={() => {
+              window.zE("messenger", "open");
             }}
           >
             Contact Support

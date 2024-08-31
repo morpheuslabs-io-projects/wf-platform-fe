@@ -78,6 +78,7 @@ function FaqItem({ faq, index, activeIndex, setActiveFaq }: FaqItemProps) {
         marginBottom: "24px",
         position: "relative",
       }}
+      key={index}
     >
       <Box
         sx={{
@@ -135,6 +136,7 @@ function Faq() {
         background: "#FFF",
         padding: "48px 0px",
       }}
+      id="faq"
     >
       <Box
         sx={{

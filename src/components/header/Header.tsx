@@ -29,7 +29,12 @@ import { useNavigate } from "react-router-dom";
 import "./header.css";
 import { Copyrights } from "../atoms/Copyrights";
 
-const HeaderComponent: React.FC = () => {
+interface HeaderComponentProps {
+  supportCenter?: boolean;
+}
+
+const HeaderComponent = (props: HeaderComponentProps) => {
+  const { supportCenter = false } = props;
   const navigate = useNavigate();
   const mode = useReSize();
   const { user } = useAuthentication();
@@ -118,17 +123,19 @@ const HeaderComponent: React.FC = () => {
             }}
             id={"user-avatar-box"}
           >
-            <Box>
-              <Tooltip title="Support Center">
-                <IconButton
-                  onClick={() => {
-                    window.open("/support-center", "_blank");
-                  }}
-                >
-                  <img src={SupportCenterIcon} alt="support-center" />
-                </IconButton>
-              </Tooltip>
-            </Box>
+            {!supportCenter && (
+              <Box>
+                <Tooltip title="Support Center">
+                  <IconButton
+                    onClick={() => {
+                      window.open("/support-center", "_blank");
+                    }}
+                  >
+                    <img src={SupportCenterIcon} alt="support-center" />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            )}
             {!user && (
               <Box>
                 <Button onClick={onGoToSignIn} variant="ghost">

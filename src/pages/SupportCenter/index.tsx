@@ -39,7 +39,7 @@ const SupportCenterPage: FC = () => {
 
   return (
     <>
-      <HeaderComponent />
+      <HeaderComponent supportCenter={true} />
       <SectionCardsSupportCenter />
       <Faq />
       <SupportChat />

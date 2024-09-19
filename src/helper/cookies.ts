@@ -11,14 +11,21 @@ export class CookiesHelper {
 
   static set(name: string, value: string) {
     const domain = VITE_ROOT_DOMAIN;
-    Cookies.set(this._getKey(name), value, { 
+    console.log(`cookies helper set ${name}`);
+    const res = Cookies.set(this._getKey(name), value, { 
       domain: domain,
+      secure: true,
       sameSite: "strict",
      });
+     console.log(`cookies helper set ${name} - res ${res}`);
   }
 
   static get(name: string) {
-    return Cookies.get(this._getKey(name));
+    console.log(`cookies helper get ${name}`);
+    const res = Cookies.get(this._getKey(name));
+    console.log(`cookies helper get ${name} - res ${res}` );
+    
+    return res;
   }
 
   static remove(name: string) {

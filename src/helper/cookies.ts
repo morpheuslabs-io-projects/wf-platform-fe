@@ -11,7 +11,10 @@ export class CookiesHelper {
 
   static set(name: string, value: string) {
     const domain = VITE_ROOT_DOMAIN;
-    Cookies.set(this._getKey(name), value, { domain });
+    Cookies.set(this._getKey(name), value, { 
+      domain: domain,
+      sameSite: "strict",
+     });
   }
 
   static get(name: string) {

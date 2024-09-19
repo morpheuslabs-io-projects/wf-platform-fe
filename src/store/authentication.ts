@@ -23,7 +23,9 @@ export const useAuthentication = create<IAuthenticationStore>((set, get) => ({
   networks: null,
   wagmiConfig: null,
   initAuthentication: () => {
+    
     const _token = CookiesHelper.get("accessToken");
+    console.log(`initAuthentication ${_token}`)
     if (_token) {
       try {
         const _user = jwtDecode<IUserToken>(_token);
@@ -32,6 +34,7 @@ export const useAuthentication = create<IAuthenticationStore>((set, get) => ({
         get().logout();
       }
     }
+    console.log(`initAuthentication ${_token} - remove called`)
     CookiesHelper.remove("accessToken");
     CookiesHelper.remove("refreshToken");
     set({ user: false });

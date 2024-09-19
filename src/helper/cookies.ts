@@ -29,6 +29,7 @@ export class CookiesHelper {
   }
 
   static remove(name: string) {
+    console.log(`remove ${name}`)
     const domain = VITE_ROOT_DOMAIN;
     Cookies.remove(this._getKey(name), { domain });
     Cookies.remove(`test_${name}`, { domain });
@@ -36,6 +37,7 @@ export class CookiesHelper {
   }
 
   static clearAll() {
+    console.log('clearAll');
     const domain = VITE_ROOT_DOMAIN;
     Object.keys(Cookies.get()).forEach((key) =>
       Cookies.remove(key, { domain })

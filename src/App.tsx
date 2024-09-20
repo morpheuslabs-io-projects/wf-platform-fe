@@ -41,6 +41,7 @@ function App() {
         CookiesHelper.set("refreshToken", refresh_token);
         initAuthentication();
       } catch (error) {
+        console.log(`App.tsx error ${error}`)
         CookiesHelper.remove("accessToken");
         CookiesHelper.remove("refreshToken");
       }
@@ -56,7 +57,9 @@ function App() {
           await verify();
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
+          console.log(`verify() error ${error}`)
           if (
+            error.response &&
             error.response.status === 401 &&
             error.response.data.message ===
               "Currently the platform functions are restricted for private access"

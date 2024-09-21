@@ -1,8 +1,4 @@
-import {
-  ROUTE_PATH,
-  VITE_API_ENDPOINT,
-  VITE_AUTH_API_ENDPOINT,
-} from "@/constants/AppConfig";
+import { ROUTE_PATH, VITE_API_ENDPOINT } from "@/constants/AppConfig";
 import { CookiesHelper } from "@/helper/cookies";
 import axios from "axios";
 
@@ -63,15 +59,4 @@ export const patchRequest = async (url: string, payload: unknown) => {
 
 export const deleteRequest = async (url: string) => {
   return axiosClient.delete(`/${url}`).then((response) => response);
-};
-
-export const refreshSession = async () => {
-  const axiosClient = axios.create({
-    baseURL: VITE_AUTH_API_ENDPOINT,
-  });
-  const token = CookiesHelper.get("accessToken");
-  const res = await axiosClient.post(`auth/refresh-session`, {
-    token,
-  });
-  return res?.data?.data || {};
 };

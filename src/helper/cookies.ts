@@ -15,7 +15,6 @@ export class CookiesHelper {
     const res = Cookies.set(this._getKey(name), value, { 
       domain: domain,
       secure: true,
-      sameSite: "strict",
      });
      console.log(`cookies helper set ${name} - res ${res}`);
   }

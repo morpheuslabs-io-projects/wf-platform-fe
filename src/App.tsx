@@ -42,7 +42,6 @@ function App() {
         CookiesHelper.set("refreshToken", refresh_token);
         initAuthentication();
       } catch (error) {
-        console.log(`App.tsx error ${error}`);
         if ((error as AxiosError).response?.status === 401) {
           CookiesHelper.remove("accessToken");
           CookiesHelper.remove("refreshToken");

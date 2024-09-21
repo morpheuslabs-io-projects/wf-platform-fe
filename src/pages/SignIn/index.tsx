@@ -31,16 +31,13 @@ const SignIn = () => {
   }, [authenticated, idToken]);
 
   const handleSignInWithKeycloak = async (token: string) => {
-    console.log(`handleSignInWithKeycloak - token ${token}`);
     const { access_token, refresh_token } = await getTokensByKeycloakToken({
       token,
     });
-    console.log(`handleSignInWithKeycloak - token ${token} - 0`);
+    CookiesHelper.clearAll();
     CookiesHelper.set("accessToken", access_token);
     CookiesHelper.set("refreshToken", refresh_token);
-    console.log(`handleSignInWithKeycloak - token ${token} - 1`);
     initAuthentication();
-    console.log(`handleSignInWithKeycloak - token ${token} - 2`);
     redirectBack();
   };
 

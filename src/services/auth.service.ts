@@ -32,7 +32,6 @@ axiosAuthClient.interceptors.response.use(
     return response.data.data;
   },
   async (error) => {
-    console.log("axiosAuthClient error", error);
     if (error.response.status === 401) {
       CookiesHelper.remove("accessToken");
       window.open(`${ROUTE_PATH.SIGN_IN()}`, "_self");

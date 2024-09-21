@@ -11,24 +11,15 @@ export class CookiesHelper {
 
   static set(name: string, value: string) {
     const domain = VITE_ROOT_DOMAIN;
-    console.log(`cookies helper set ${name}`);
-    const res = Cookies.set(this._getKey(name), value, { 
-      domain: domain,
-      secure: true,
-     });
-     console.log(`cookies helper set ${name} - res ${res}`);
+    Cookies.set(this._getKey(name), value, { domain: domain, secure: true });
   }
 
   static get(name: string) {
-    console.log(`cookies helper get ${name}`);
     const res = Cookies.get(this._getKey(name));
-    console.log(`cookies helper get ${name} - res ${res}` );
-    
     return res;
   }
 
   static remove(name: string) {
-    console.log(`remove ${name}`)
     const domain = VITE_ROOT_DOMAIN;
     Cookies.remove(this._getKey(name), { domain });
     Cookies.remove(`test_${name}`, { domain });
@@ -36,7 +27,6 @@ export class CookiesHelper {
   }
 
   static clearAll() {
-    console.log('clearAll');
     const domain = VITE_ROOT_DOMAIN;
     Object.keys(Cookies.get()).forEach((key) =>
       Cookies.remove(key, { domain })

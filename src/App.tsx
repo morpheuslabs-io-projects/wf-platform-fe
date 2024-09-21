@@ -14,9 +14,10 @@ import { CookiesHelper } from "./helper/cookies";
 import { ReactKeycloakProvider } from "./providers/KeycloakProvider";
 import router from "./router";
 import { verify } from "./services/auth.service";
-import { refreshSession } from "./services/axiosSetup";
 import { MembershipService } from "./services/membership.service";
 import theme from "./theme";
+import { refreshSession } from "./helper/axios";
+import { AxiosError } from "axios";
 
 const queryClient = new QueryClient();
 
@@ -41,9 +42,11 @@ function App() {
         CookiesHelper.set("refreshToken", refresh_token);
         initAuthentication();
       } catch (error) {
-        console.log(`App.tsx error ${error}`)
-        CookiesHelper.remove("accessToken");
-        CookiesHelper.remove("refreshToken");
+        console.log(`App.tsx error ${error}`);
+        if ((error as AxiosError).response) {
+          CookiesHelper.remove("accessToken");
+          CookiesHelper.remove("refreshToken");
+        }
       }
     };
     continueSession();
@@ -57,7 +60,7 @@ function App() {
           await verify();
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
-          console.log(`verify() error ${error}`)
+          console.log(`verify() error ${error}`);
           if (
             error.response &&
             error.response.status === 401 &&

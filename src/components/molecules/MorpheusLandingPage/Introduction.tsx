@@ -161,11 +161,7 @@ const Introduction: FC = () => {
             </Box>
           </Box>
         </Box>
-        <Box
-          sx={{
-            background: "#F1F5FA",
-          }}
-        >
+        <Box>
           <Box
             sx={{
               display: "flex",
@@ -222,7 +218,7 @@ const Introduction: FC = () => {
                   alignItems: "center",
                 }}
               >
-                Start Web3 <br /> Process Automation
+                Start Web3 {mode === EWindowSize.PC && <br />} Process Automation
               </Typography>
             </Box>
             <Box
@@ -268,7 +264,7 @@ const Introduction: FC = () => {
                   alignItems: "center",
                 }}
               >
-                Create Web3 <br /> Web Applications
+                Create Web3 {mode === EWindowSize.PC && <br />} Web Applications
               </Typography>
             </Box>
             <Box

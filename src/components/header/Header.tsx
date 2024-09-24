@@ -124,7 +124,10 @@ const HeaderComponent = (props: HeaderComponentProps) => {
             id={"user-avatar-box"}
           >
             {!supportCenter && (
-              <Box>
+              <Box 
+                sx={{
+                  padding: mode === EWindowSize.MOBILE ? "0px" : "0",
+                }}>
                 <Tooltip title="Support Center">
                   <IconButton
                     onClick={() => {
@@ -137,8 +140,18 @@ const HeaderComponent = (props: HeaderComponentProps) => {
               </Box>
             )}
             {!user && (
-              <Box>
-                <Button onClick={onGoToSignIn} variant="ghost">
+              <Box 
+                sx={{
+                  position: "relative",
+                  marginRight: "16px",
+                }}>
+                <Button onClick={onGoToSignIn} variant="ghost" 
+                  sx={{
+                    position: "relative",
+                    height: mode === EWindowSize.MOBILE ? "40px" : "",
+                    width: mode === EWindowSize.MOBILE ? "100px" : "auto",
+                    padding: mode === EWindowSize.MOBILE ? "10px 5px" : "",
+                  }}>
                   Login
                 </Button>
               </Box>

@@ -133,8 +133,16 @@ const HeaderComponent = (props: HeaderComponentProps) => {
                     onClick={() => {
                       window.open("/support-center", "_blank");
                     }}
+                    style={{
+                      padding: "0px",
+                    }}
                   >
-                    <img src={SupportCenterIcon} alt="support-center" />
+                    <img src={SupportCenterIcon} 
+                      style={{
+                        width: mode === EWindowSize.MOBILE ? "24px" : "32px",
+                        height: mode === EWindowSize.MOBILE ? "24px" : "32px",
+                      }}
+                      width="24" height="24" alt="support-center" />
                   </IconButton>
                 </Tooltip>
               </Box>
@@ -148,9 +156,10 @@ const HeaderComponent = (props: HeaderComponentProps) => {
                 <Button onClick={onGoToSignIn} variant="ghost" 
                   sx={{
                     position: "relative",
-                    height: mode === EWindowSize.MOBILE ? "40px" : "",
-                    width: mode === EWindowSize.MOBILE ? "100px" : "auto",
-                    padding: mode === EWindowSize.MOBILE ? "10px 5px" : "",
+                    height: mode === EWindowSize.MOBILE ? "28px" : "",
+                    width: mode === EWindowSize.MOBILE ? "70px" : "auto",
+                    padding: mode === EWindowSize.MOBILE ? "5px 5px" : "",
+                    fontSize: mode === EWindowSize.MOBILE ? "12px" : "inherit",
                   }}>
                   Login
                 </Button>

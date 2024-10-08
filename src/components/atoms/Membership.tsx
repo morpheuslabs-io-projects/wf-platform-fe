@@ -12,6 +12,7 @@ const Membership = () => {
     return expiredAt instanceof Date ? expiredAt.toLocaleDateString() : "";
   }, [currentMembership?.expired_at]);
 
+  
   return (
     <Box
       sx={{

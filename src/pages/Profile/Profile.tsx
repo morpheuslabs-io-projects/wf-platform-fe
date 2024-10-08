@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Box, Card, CardContent, Typography, Button } from "@mui/material";
 
 import { useAuthentication } from "@/store/authentication";
 // import PaymentMethod from '@/components/atoms/PaymentMethod';
@@ -9,11 +9,21 @@ import PaidMembership from "@/components/atoms/PaidMembership";
 import PaymentHistory from "@/components/atoms/PaymentHistory";
 import { PaymentService } from "@/services/payments.service";
 import { useEffect, useState } from "react";
+import ReferFriendModal from './ReferFriendModal';
 
 const Profile = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { currentMembership } = useAuthentication();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [paymentHistory, setPaymentHistory] = useState<any[]>([]);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     PaymentService.getPaymentHistory()
@@ -39,6 +49,21 @@ const Profile = () => {
           margin: "52px 0",
         }}
       >
+
+        <Box sx={{ marginTop: "8px" }}>
+          <Button 
+            variant="primary"
+            sx={{
+              gap: "12px",
+              px: "55px",
+            }} onClick={handleOpenModal}>
+            Refer your friend & earn
+          </Button>
+
+          <ReferFriendModal isOpen={isModalOpen} handleClose={handleCloseModal} currentMembership={currentMembership} />
+        </Box>
+
+
         <Box sx={{ display: "flex", gap: "16px" }}>
           {currentMembership?.tier_name === "Freemium" ? (
             <>

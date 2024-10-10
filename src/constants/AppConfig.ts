@@ -15,7 +15,7 @@ export const {
   VITE_SEED_AUTH_URL,
   VITE_SEED_CLIENT_ID,
   VITE_SEED_REALM,
-  VITE_SAMPLE_SOLUTION_ENDPOINT,
+  VITE_WF_ADMIN_ENDPOINT,
 } = import.meta.env;
 
 export const ROUTE_PATH = {

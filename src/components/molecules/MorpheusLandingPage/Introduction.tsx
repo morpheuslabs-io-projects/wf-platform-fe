@@ -19,8 +19,7 @@ import {
   A11y,
 } from "swiper/modules";
 import { Pagination } from "./Pagination";
-
-import { getListIntroductionVideos } from "@/services/introduction.service";
+import { getListIntroductionVideos } from "@/services/wfAdmin.service";
 import "swiper/css";
 import "swiper/css/pagination";
 

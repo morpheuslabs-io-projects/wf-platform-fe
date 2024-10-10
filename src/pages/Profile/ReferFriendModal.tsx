@@ -1,36 +1,73 @@
-import React from 'react';
-import { Modal, Box, Typography, Button, TextField, IconButton } from '@mui/material';
+import { Modal, Box, Typography, Button, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-
-interface ReferFriendModalProps {
-  isOpen: boolean;
-  handleClose: () => void;
-}
+import { IMembership } from '@/types';
+import "./referralModal.css";
+import GiftIcon from '@/assets/icons/Gift.png';
+import { useEffect, useState } from 'react';
+import { fetchReferralData } from '@/services/wfAdmin.service';
 
 const style = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: '80%',
   maxWidth: 800,
-  bgcolor: 'background.paper',
+  bgcolor: 'rgba(243, 243, 243, 1)',
   borderRadius: '10px',
   boxShadow: 24,
   p: 4,
 };
 
-const ReferFriendModal: React.FC<ReferFriendModalProps> = ({ isOpen, handleClose, currentMembership }) => {
-  const referralCode = "1103939485";
+interface IReferralDialog {
+	currentMembership: IMembership | null;
+	handleClose: (result?: boolean) => void;
+	isOpen?: boolean;
+}
+
+const ReferFriendModal = ({ currentMembership, handleClose, isOpen }): IReferralDialog => {
+  const referralCode = currentMembership?.member_id;
   const referralLink = `http://invite.morpheuslabs.io/signup?r=${referralCode}`;
+  const [referralData, setReferralData] = useState([]);
 
-  console.log('currentMembership:', currentMembership);
-
-  const handleCopy = (text: string) => {
+  const handleCopy = (text) => {
     navigator.clipboard.writeText(text);
-    alert('Copied!');
   };
+
+  useEffect(() => {
+    console.log('useEffect ');
+
+    const getReferralData = async () => {
+    console.log('getReferralData ');
+      try {
+        if (currentMembership?.member_id) {
+          let data = await fetchReferralData(); // Use the service function
+          data = data || referralMockData;
+          setReferralData(data);
+        }
+      } catch (error) {
+        console.error('Error fetching referral data:', error);
+      }
+    };
+
+    getReferralData();
+  }, [currentMembership]);
+
+  const referralMockData = [
+    { registerDate: '23.01; 13:19:04', userId: '@morpheus93', subscription: 'Premium', earned: '+2,200 MIND' },
+    { registerDate: '24.01; 12:15:10', userId: '@user42', subscription: 'Basic', earned: '+500 MIND' },
+    { registerDate: '25.01; 09:45:55', userId: '@cooluser', subscription: 'Pro', earned: '+1,500 MIND' },
+    { registerDate: '23.01; 13:19:04', userId: '@morpheus93', subscription: 'Premium', earned: '+2,200 MIND' },
+    { registerDate: '24.01; 12:15:10', userId: '@user42', subscription: 'Basic', earned: '+500 MIND' },
+    { registerDate: '25.01; 09:45:55', userId: '@cooluser', subscription: 'Pro', earned: '+1,500 MIND' },
+    { registerDate: '23.01; 13:19:04', userId: '@morpheus93', subscription: 'Premium', earned: '+2,200 MIND' },
+    { registerDate: '24.01; 12:15:10', userId: '@user42', subscription: 'Basic', earned: '+500 MIND' },
+    { registerDate: '25.01; 09:45:55', userId: '@cooluser', subscription: 'Pro', earned: '+1,500 MIND' },
+    { registerDate: '23.01; 13:19:04', userId: '@morpheus93', subscription: 'Premium', earned: '+2,200 MIND' },
+    { registerDate: '24.01; 12:15:10', userId: '@user42', subscription: 'Basic', earned: '+500 MIND' },
+    { registerDate: '25.01; 09:45:55', userId: '@cooluser', subscription: 'Pro', earned: '+1,500 MIND' },
+    // Add more data here
+  ];
 
   return (
     <Modal
@@ -42,8 +79,26 @@ const ReferFriendModal: React.FC<ReferFriendModalProps> = ({ isOpen, handleClose
       <Box sx={style}>
         {/* Modal Header */}
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography id="refer-friend-modal-title" variant="h6" component="h2">
-            <span role="img" aria-label="info">📑</span> My Referral Info
+          <Typography id="refer-friend-modal-title" variant="h6" component="h2" 
+            sx={{ 
+              display: 'flex',
+              fontSize: '24px',
+              fontWeight: '700',
+              lineHeight: '33px'
+            }}
+          >
+            {/* Set the fill color explicitly */}
+            <Box
+              component="img"
+              src={GiftIcon}
+              alt=""
+              sx={{ 
+                width: '32px',
+                height: '32px',
+                marginRight: '10px'
+               }}
+            />
+            My Referral Info
           </Typography>
           <IconButton onClick={handleClose}>
             <CloseIcon />
@@ -52,21 +107,39 @@ const ReferFriendModal: React.FC<ReferFriendModalProps> = ({ isOpen, handleClose
 
         {/* Referral Code */}
         <Box mt={2}>
-          <Typography variant="body1">Your referral code:</Typography>
+          <Typography variant="body1"
+            sx={{
+              fontSize: '24px',
+              lineHeight: '33px',
+            }}
+          >
+            Your referral code:
+          </Typography>
           <Box display="flex" alignItems="center" mt={1}>
-            <TextField
-              value={referralCode}
-              variant="outlined"
-              size="small"
-              InputProps={{
-                readOnly: true,
+            <Box
+              component="span"
+              sx={{ 
+                marginRight: '8px', 
+                borderRadius: '32px', 
+                width: '140px',
+                backgroundColor: 'white',
+                padding: '8px 12px',
+                maxWidth: '140px',
+                textAlign: 'center',
+                fontWeight: '700'
               }}
-              sx={{ flexGrow: 1, marginRight: '8px' }}
-            />
+            >
+              {referralCode}
+            </Box>
             <Button
               variant="contained"
               onClick={() => handleCopy(referralCode)}
-              sx={{ borderRadius: '10px', color: 'white' }}
+              sx={{ 
+                borderRadius: '32px', 
+                color: 'white', 
+                background: 'rgba(73, 91, 253, 1)',
+                textTransform: 'capitalize'
+               }}
             >
               Copy code
             </Button>
@@ -75,21 +148,37 @@ const ReferFriendModal: React.FC<ReferFriendModalProps> = ({ isOpen, handleClose
 
         {/* Referral Link */}
         <Box mt={2}>
-          <Typography variant="body1">Your referral link:</Typography>
+          <Typography variant="body1"
+            sx={{
+              fontSize: '24px',
+              lineHeight: '33px',
+            }}
+          >
+            Your referral link:
+          </Typography>
           <Box display="flex" alignItems="center" mt={1}>
-            <TextField
-              value={referralLink}
-              variant="outlined"
-              size="small"
-              InputProps={{
-                readOnly: true,
+            <Box
+              component="span"
+              sx={{ 
+                marginRight: '8px', 
+                borderRadius: '32px',
+                backgroundColor: 'white',
+                padding: '8px 24px',
+                textAlign: 'center',
+                fontWeight: '700'
               }}
-              sx={{ flexGrow: 1, marginRight: '8px' }}
-            />
+            >
+              {referralLink}
+            </Box>
             <Button
               variant="contained"
               onClick={() => handleCopy(referralLink)}
-              sx={{ borderRadius: '10px', color: 'white' }}
+              sx={{ 
+                borderRadius: '32px', 
+                color: 'white', 
+                background: 'rgba(73, 91, 253, 1)',
+                textTransform: 'capitalize'
+               }}
             >
               Copy referral link
             </Button>
@@ -98,7 +187,14 @@ const ReferFriendModal: React.FC<ReferFriendModalProps> = ({ isOpen, handleClose
 
         {/* How It Works */}
         <Box mt={4}>
-          <Typography variant="h6">How it Works</Typography>
+          <Typography variant="body1"
+            sx={{
+              fontSize: '24px',
+              lineHeight: '33px',
+            }}
+          >
+            How it Works
+          </Typography>
           <Typography variant="body2" mt={1}>
             <b>1. Sign up number and date</b>
             <ul>
@@ -120,8 +216,15 @@ const ReferFriendModal: React.FC<ReferFriendModalProps> = ({ isOpen, handleClose
 
         {/* My Referrals */}
         <Box mt={4}>
-          <Typography variant="h6">My Referrals</Typography>
-          <table style={{ width: '100%', marginTop: '10px', textAlign: 'left' }}>
+          <Typography variant="body1"
+            sx={{
+              fontSize: '24px',
+              lineHeight: '33px',
+            }}
+          >
+            My Referrals
+          </Typography>
+          <table id={'table-my-referral'} style={{ width: '100%', marginTop: '10px', textAlign: 'left' }}>
             <thead>
               <tr>
                 <th>Register Date</th>
@@ -131,20 +234,14 @@ const ReferFriendModal: React.FC<ReferFriendModalProps> = ({ isOpen, handleClose
               </tr>
             </thead>
             <tbody>
-              {/* Repeat this row for each referral */}
-              <tr>
-                <td>23.01; 13:19:04</td>
-                <td>@morpheus93</td>
-                <td>Premium</td>
-                <td>+2,200 MIND</td>
-              </tr>
-              <tr>
-                <td>23.01; 13:19:04</td>
-                <td>@morpheus93</td>
-                <td>Premium</td>
-                <td>+2,200 MIND</td>
-              </tr>
-              {/* Add more referral rows as needed */}
+              {referralData.map((referral, index) => (
+                <tr key={index}>
+                  <td>{referral.registerDate}</td>
+                  <td>{referral.userId}</td>
+                  <td>{referral.subscription}</td>
+                  <td>{referral.earned}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </Box>

@@ -9,7 +9,8 @@ import PaidMembership from "@/components/atoms/PaidMembership";
 import PaymentHistory from "@/components/atoms/PaymentHistory";
 import { PaymentService } from "@/services/payments.service";
 import { useEffect, useState } from "react";
-import ReferFriendModal from './ReferFriendModal';
+import { ReactComponent as GiftIcon } from '@/assets/icons/gift.svg';
+import ReferFriendModal from "./ReferFriendModal";
 
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,8 +57,13 @@ const Profile = () => {
             sx={{
               gap: "12px",
               px: "55px",
+              padding: '10px 16px',
+              borderRadius: '8px',
+              textTransform: 'inherit',
+              fontSize: '24px',
+               color: 'white'
             }} onClick={handleOpenModal}>
-            Refer your friend & earn
+            <GiftIcon style={{ fill: 'white' }}/>Refer your friend & earn
           </Button>
 
           <ReferFriendModal isOpen={isModalOpen} handleClose={handleCloseModal} currentMembership={currentMembership} />

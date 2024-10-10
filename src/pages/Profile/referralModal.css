@@ -1,0 +1,13 @@
+#table-my-referral {
+    th {
+        font-size: 14px;
+        line-height: 21px;
+        font-weight: 400;
+    }
+    td {
+        font-weight: bold;
+        &:first-child {
+            font-weight: normal;
+        }
+    }
+}

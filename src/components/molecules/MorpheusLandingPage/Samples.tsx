@@ -8,7 +8,7 @@ import { ISCItemLading, SCItemLanding } from "@/components/atoms/SCItemLanding";
 // import { usePaginationState } from "@/hooks/use-pagination-state";
 import { Pagination } from "./Pagination";
 import { DialogModal } from "./DialogModal";
-import { getListSampleSolution } from "@/services/sampleSolution.service";
+import { getListSampleSolution } from "@/services/wfAdmin.service";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
   Pagination as PaginationSwiper,
@@ -17,9 +17,9 @@ import {
   A11y,
 } from "swiper/modules";
 import { EWindowSize, useReSize } from "@/hooks/useSize";
-
 import "swiper/css";
 import "swiper/css/pagination";
+
 const SampleComponent: FC = () => {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(4);

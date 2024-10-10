@@ -10,10 +10,10 @@ import {
 } from "@mui/material";
 import CloseIcon from "@/assets/icons/close-icon.svg";
 import { useEffect, useState } from "react";
-import { getDetailsSampleSolution } from "@/services/sampleSolution.service";
-
+import { getDetailsSampleSolution } from "@/services/wfAdmin.service";
 import { ReactComponent as GetStarted } from "@/assets/icons/get-started.svg";
 import { EWindowSize, useReSize } from "@/hooks/useSize";
+
 interface IDialogModal {
   slugShowModalDetails: string;
   handleClose: () => void;

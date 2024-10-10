@@ -197,18 +197,22 @@ const ReferFriendModal = ({ currentMembership, handleClose, isOpen }): IReferral
           </Typography>
           <Typography variant="body2" mt={1}>
             <b>1. Sign up number and date</b>
-            <ul>
-              <li>Below 10 persons signed up per month - Incentive TBC</li>
-              <li>Above 10 and below 30 signed up per month - Incentive TBC</li>
-              <li>Above 30 signed up per month - Incentive TBC</li>
-            </ul>
-            <b>2. Paying user number and Tiered Commission</b>
-            <ul>
-              <li>Below US$15,000 sales per month - 5%</li>
-              <li>Above US$15,000 and below US$30,000 per month - 7.5%</li>
-              <li>Above US$30,000 - 10% per month</li>
-            </ul>
           </Typography>
+          <ul>
+            <li>Below 10 persons signed up per month - Incentive TBC</li>
+            <li>Above 10 and below 30 signed up per month - Incentive TBC</li>
+            <li>Above 30 signed up per month - Incentive TBC</li>
+          </ul>
+
+          <Typography variant="body2" mt={1}>
+            <b>2. Paying user number and Tiered Commission</b>
+          </Typography>
+          <ul>
+            <li>Below US$15,000 sales per month - 5%</li>
+            <li>Above US$15,000 and below US$30,000 per month - 7.5%</li>
+            <li>Above US$30,000 - 10% per month</li>
+          </ul>
+
           <Typography variant="body2" mt={2}>
             Read more details <a href="#">here</a>
           </Typography>

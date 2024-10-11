@@ -35,8 +35,8 @@ import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { parseUnits } from "viem";
 import { useAccount, useChainId, useDisconnect, useSwitchChain } from "wagmi";
-import CreditCardPaymentDialog from "./CreditCardPaymentDialog";
 import SelectPaymentDialog from "./SelectPaymentDialog";
+import CreditCardPaymentDialog from "./CreditCardPayment/CreditCardPaymentDialog";
 
 interface IMakePaymentDialog {
   selected: IMembership | null;
@@ -75,6 +75,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
     useState<PaymentType | null>(null);
   const [duration, setDuration] = useState(durations[0]);
   const durationPeriod = Math.floor(duration / 30);
+  const [referralCode, setReferralCode] = useState(''); 
 
   const {
     decimals,
@@ -284,6 +285,10 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
     networkChainId !== chainId ||
     !tokenPrice;
 
+  const handleReferralCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setReferralCode(event.target.value);
+  };
+
   return (
     <Box
       sx={{
@@ -309,6 +314,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
           />
         )}
 
+        {/* CREDIT CARD PAYMENT */}
         {isCreditCardSelected && (
           <CreditCardPaymentDialog
             selected={selected}
@@ -317,6 +323,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
           />
         )}
 
+        {/* START TOKEN PAYMENT */}
         {isTokenSelected && (
           <>
             <Backdrop
@@ -601,6 +608,26 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                   Cannot get Price conversion
                 </Typography>
               )}
+        
+              <div style={{ marginTop: '20px' }}>
+                <Typography fontSize={14}>Referral code</Typography>
+                <input
+                  id="referralCode"
+                  type="text"
+                  value={referralCode}
+                  onChange={handleReferralCodeChange}
+                  placeholder="Enter referral code"
+                  style={{
+                    padding: '10px',
+                    width: '100%',
+                    maxWidth: '300px',
+                    marginTop: '10px',
+                    borderRadius: '4px',
+                    border: '1px solid #ccc',
+                  }}
+                />
+              </div>
+
               <Button
                 disabled={isNotEnough || disabled}
                 variant="primary"
@@ -618,6 +645,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
             </DialogContent>
           </>
         )}
+        {/* END TOKEN PAYMENT */}
       </Dialog>
     </Box>
   );

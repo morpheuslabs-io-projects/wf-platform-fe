@@ -25,12 +25,12 @@ interface IReferralDialog {
 	isOpen?: boolean;
 }
 
-const ReferFriendModal = ({ currentMembership, handleClose, isOpen }): IReferralDialog => {
+const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDialog): JSX.Element | null => {
   const referralCode = currentMembership?.member_id;
   const referralLink = `http://invite.morpheuslabs.io/signup?r=${referralCode}`;
   const [referralData, setReferralData] = useState([]);
 
-  const handleCopy = (text) => {
+  const handleCopy = (text: any) => {
     navigator.clipboard.writeText(text);
   };
 
@@ -69,10 +69,14 @@ const ReferFriendModal = ({ currentMembership, handleClose, isOpen }): IReferral
     // Add more data here
   ];
 
+  const handleModalClose = () => {
+    handleClose();
+  };
+
   return (
     <Modal
-      open={isOpen}
-      onClose={handleClose}
+      open={isOpen || false}
+      onClose={handleModalClose}
       aria-labelledby="refer-friend-modal-title"
       aria-describedby="refer-friend-modal-description"
     >
@@ -100,7 +104,7 @@ const ReferFriendModal = ({ currentMembership, handleClose, isOpen }): IReferral
             />
             My Referral Info
           </Typography>
-          <IconButton onClick={handleClose}>
+          <IconButton onClick={() => handleClose(false)}>
             <CloseIcon />
           </IconButton>
         </Box>
@@ -238,7 +242,7 @@ const ReferFriendModal = ({ currentMembership, handleClose, isOpen }): IReferral
               </tr>
             </thead>
             <tbody>
-              {referralData.map((referral, index) => (
+              {referralData.map((referral: IReferral, index) => (
                 <tr key={index}>
                   <td>{referral.registerDate}</td>
                   <td>{referral.userId}</td>
@@ -254,4 +258,11 @@ const ReferFriendModal = ({ currentMembership, handleClose, isOpen }): IReferral
   );
 };
 
-export default ReferFriendModal;
+export default ReferralModal;
+
+interface IReferral {
+  userId: string;
+  registerDate: string;
+  subscription: string;
+  earned: string;
+}

@@ -1,10 +1,7 @@
-import { IMembership, IUpgradeMembershipCardBody } from "@/types";
+import { IMembership } from "@/types";
 import { loadStripe } from "@stripe/stripe-js";
 import {
-  PaymentElement,
   Elements,
-  useStripe,
-  useElements,
 } from "@stripe/react-stripe-js";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -14,7 +11,6 @@ import { useState } from "react";
 import {
   Backdrop,
   Box,
-  Button,
   DialogContent,
   DialogTitle,
   IconButton,

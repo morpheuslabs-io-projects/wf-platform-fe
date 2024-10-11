@@ -52,28 +52,12 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
           setReferralData(data);
         }
       } catch (error) {
-        setReferralData(referralMockData);
         console.error('Error fetching referral data:', error);
       }
     };
 
     getReferralData();
   }, [currentMembership]);
-
-  const referralMockData: IReferral[] = [
-    { date: '23/01 13:19:04', id: '@morpheus93', token: 'MIND', amount: '2,200' },
-    { date: '24/01 12:15:10', id: '@user42', token: 'MIND', amount: '500' },
-    { date: '25/01 09:45:55', id: '@cooluser', token: 'MIND', amount: '1,500' },
-    { date: '23/01 13:19:04', id: '@morpheus93', token: 'MIND', amount: '2,200' },
-    { date: '24/01 12:15:10', id: '@user42', token: 'USDT', amount: '500' },
-    { date: '25/01 09:45:55', id: '@cooluser', token: 'USDT', amount: '1,500' },
-    { date: '23/01 13:19:04', id: '@morpheus93', token: 'USDT', amount: '2,200' },
-    { date: '24/01 12:15:10', id: '@user42', token: 'USDT', amount: '500' },
-    { date: '25/01 09:45:55', id: '@cooluser', token: 'MIND', amount: '1,500' },
-    { date: '23/01 13:19:04', id: '@morpheus93', token: 'USDT', amount: '2,200' },
-    { date: '24/01 12:15:10', id: '@user42', token: 'MIND', amount: '500' },
-    { date: '25/01 09:45:55', id: '@cooluser', token: 'USDT', amount: '1,500' },
-  ];
 
   const handleModalClose = () => {
     handleClose();

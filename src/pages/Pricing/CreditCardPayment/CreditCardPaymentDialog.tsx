@@ -134,17 +134,6 @@ function CreditCardPaymentDialog(
             </b>
           </Typography>
         </Box>
-        <Elements
-          stripe={stripePromise}
-          options={{ ...options, mode: "payment" }}
-        >
-          <CheckoutForm
-            selected={selected}
-            onClose={onClose}
-            durationPeriod={durationPeriod}
-            referralCode={referralCode}
-          />
-        </Elements>
         
         <div style={{ marginTop: '20px' }}>
           <Typography fontSize={14}>Referral code</Typography>
@@ -164,6 +153,18 @@ function CreditCardPaymentDialog(
             }}
           />
         </div>
+
+        <Elements
+          stripe={stripePromise}
+          options={{ ...options, mode: "payment" }}
+        >
+          <CheckoutForm
+            selected={selected}
+            onClose={onClose}
+            durationPeriod={durationPeriod}
+            referralCode={referralCode}
+          />
+        </Elements>
 
       </DialogContent>
     </>

@@ -35,7 +35,7 @@ interface IReferral {
 const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDialog): JSX.Element | null => {
   const referralCode = currentMembership?.member_id;
   const referralLink = `http://invite.morpheuslabs.io/signup?r=${referralCode}`;
-  const [referralData, setReferralData] = useState([]);
+  const [referralData, setReferralData] = useState<IReferral[]>([]);
 
   const handleCopy = (text: any) => {
     navigator.clipboard.writeText(text);

@@ -11,6 +11,7 @@ export class MembershipService {
   };
   public static getCurrentMembership = async () => {
     const response = await authClient.getRequest("memberships/current");
+    console.log('wf-platform-fe MembershipService getCurrentMembership: ', response)
     return response.data as IMembership;
   };
 }

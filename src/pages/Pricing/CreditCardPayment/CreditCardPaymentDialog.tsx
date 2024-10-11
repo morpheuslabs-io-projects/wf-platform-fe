@@ -135,7 +135,7 @@ function CreditCardPaymentDialog(
           </Typography>
         </Box>
         
-        <div style={{ marginTop: '20px' }}>
+        <div style={{ marginTop: '20px', marginBottom: '20px' }}>
           <Typography fontSize={14}>Referral code</Typography>
           <input
             id="referralCode"

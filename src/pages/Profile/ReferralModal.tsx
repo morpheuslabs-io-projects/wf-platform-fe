@@ -25,6 +25,13 @@ interface IReferralDialog {
 	isOpen?: boolean;
 }
 
+interface IReferral {
+  id: string;
+  date: string;
+  token: string;
+  amount: string;
+}
+
 const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDialog): JSX.Element | null => {
   const referralCode = currentMembership?.member_id;
   const referralLink = `http://invite.morpheuslabs.io/signup?r=${referralCode}`;
@@ -41,11 +48,11 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
     console.log('getReferralData ');
       try {
         if (currentMembership?.member_id) {
-          let data = await fetchReferralData(); // Use the service function
-          data = data || referralMockData;
+          const data = await fetchReferralData(); 
           setReferralData(data);
         }
       } catch (error) {
+        setReferralData(referralMockData);
         console.error('Error fetching referral data:', error);
       }
     };
@@ -53,20 +60,19 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
     getReferralData();
   }, [currentMembership]);
 
-  const referralMockData = [
-    { registerDate: '23.01; 13:19:04', userId: '@morpheus93', subscription: 'Premium', earned: '+2,200 MIND' },
-    { registerDate: '24.01; 12:15:10', userId: '@user42', subscription: 'Basic', earned: '+500 MIND' },
-    { registerDate: '25.01; 09:45:55', userId: '@cooluser', subscription: 'Pro', earned: '+1,500 MIND' },
-    { registerDate: '23.01; 13:19:04', userId: '@morpheus93', subscription: 'Premium', earned: '+2,200 MIND' },
-    { registerDate: '24.01; 12:15:10', userId: '@user42', subscription: 'Basic', earned: '+500 MIND' },
-    { registerDate: '25.01; 09:45:55', userId: '@cooluser', subscription: 'Pro', earned: '+1,500 MIND' },
-    { registerDate: '23.01; 13:19:04', userId: '@morpheus93', subscription: 'Premium', earned: '+2,200 MIND' },
-    { registerDate: '24.01; 12:15:10', userId: '@user42', subscription: 'Basic', earned: '+500 MIND' },
-    { registerDate: '25.01; 09:45:55', userId: '@cooluser', subscription: 'Pro', earned: '+1,500 MIND' },
-    { registerDate: '23.01; 13:19:04', userId: '@morpheus93', subscription: 'Premium', earned: '+2,200 MIND' },
-    { registerDate: '24.01; 12:15:10', userId: '@user42', subscription: 'Basic', earned: '+500 MIND' },
-    { registerDate: '25.01; 09:45:55', userId: '@cooluser', subscription: 'Pro', earned: '+1,500 MIND' },
-    // Add more data here
+  const referralMockData: IReferral[] = [
+    { date: '23/01 13:19:04', id: '@morpheus93', token: 'MIND', amount: '2,200' },
+    { date: '24/01 12:15:10', id: '@user42', token: 'MIND', amount: '500' },
+    { date: '25/01 09:45:55', id: '@cooluser', token: 'MIND', amount: '1,500' },
+    { date: '23/01 13:19:04', id: '@morpheus93', token: 'MIND', amount: '2,200' },
+    { date: '24/01 12:15:10', id: '@user42', token: 'USDT', amount: '500' },
+    { date: '25/01 09:45:55', id: '@cooluser', token: 'USDT', amount: '1,500' },
+    { date: '23/01 13:19:04', id: '@morpheus93', token: 'USDT', amount: '2,200' },
+    { date: '24/01 12:15:10', id: '@user42', token: 'USDT', amount: '500' },
+    { date: '25/01 09:45:55', id: '@cooluser', token: 'MIND', amount: '1,500' },
+    { date: '23/01 13:19:04', id: '@morpheus93', token: 'USDT', amount: '2,200' },
+    { date: '24/01 12:15:10', id: '@user42', token: 'MIND', amount: '500' },
+    { date: '25/01 09:45:55', id: '@cooluser', token: 'USDT', amount: '1,500' },
   ];
 
   const handleModalClose = () => {
@@ -235,19 +241,19 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
           <table id={'table-my-referral'} style={{ width: '100%', marginTop: '10px', textAlign: 'left' }}>
             <thead>
               <tr>
-                <th>Register Date</th>
-                <th>User ID</th>
-                <th>Current Subscription</th>
-                <th>Earned</th>
+                <th>Date</th>
+                <th>Id</th>
+                <th>Token</th>
+                <th>Amount</th>
               </tr>
             </thead>
             <tbody>
               {referralData.map((referral: IReferral, index) => (
                 <tr key={index}>
-                  <td>{referral.registerDate}</td>
-                  <td>{referral.userId}</td>
-                  <td>{referral.subscription}</td>
-                  <td>{referral.earned}</td>
+                  <td>{referral.date}</td>
+                  <td>{referral.id}</td>
+                  <td>{referral.token}</td>
+                  <td>{referral.amount}</td>
                 </tr>
               ))}
             </tbody>
@@ -259,10 +265,3 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
 };
 
 export default ReferralModal;
-
-interface IReferral {
-  userId: string;
-  registerDate: string;
-  subscription: string;
-  earned: string;
-}

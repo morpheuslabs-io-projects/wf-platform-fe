@@ -31,7 +31,6 @@ export const getDetailsSampleSolution = async (id: string): Promise<any> => {
 
 export const fetchReferralData = async () => {
   try {
-    console.log(`url: /api-platform/organization/referral`)
     const response = await axiosWfAdminEndPoint.get(`/api-platform/organization/referral`);
     return response.data;
   } catch (error) {

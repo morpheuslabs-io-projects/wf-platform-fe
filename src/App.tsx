@@ -1,4 +1,5 @@
 import {
+  ROUTE_PATH,
   VITE_SEED_AUTH_URL,
   VITE_SEED_CLIENT_ID,
   VITE_SEED_REALM,
@@ -7,7 +8,7 @@ import { useAuthentication } from "@/store/authentication";
 import { ThemeProvider } from "@emotion/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider, useLocation, useNavigate } from "react-router-dom";
 import { Copyrights } from "./components/atoms/Copyrights";
 import WhitelistModal from "./components/atoms/WhitelistModal";
 import { CookiesHelper } from "./helper/cookies";
@@ -31,6 +32,8 @@ function App() {
   const { initAuthentication, user, setCurrentMembership, logout } =
     useAuthentication();
   const [whitelisted, setWhitelisted] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const continueSession = async () => {
@@ -81,6 +84,19 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const referralCode = searchParams.get('referralBy');
+    console.log('Referral code set in cookie: ', referralCode);
+
+    if (referralCode) {
+      // Set the referral code into the cookie
+      CookiesHelper.set('referralBy', referralCode);
+      console.log('saved: ', referralCode);
+    }
+    navigate(ROUTE_PATH.SIGN_IN(), { replace: true });
+  }, [location, navigate]);
 
   return (
     <ReactKeycloakProvider

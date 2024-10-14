@@ -60,9 +60,6 @@ const Pricing = () => {
   const [selected, setSelected] = useState<IMembership | null>(null);
   const { success } = useNotification();
 
-  console.log('Pricing wagmiConfig', wagmiConfig)
-  console.log('Pricing networks', networks)
-
   const currentTierIndex = memberships.findIndex(
     ({ id }) => id === currentMembership?.id
   );

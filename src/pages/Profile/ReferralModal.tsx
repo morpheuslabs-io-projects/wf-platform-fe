@@ -42,10 +42,7 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
   };
 
   useEffect(() => {
-    console.log('useEffect ');
-
     const getReferralData = async () => {
-    console.log('getReferralData ');
       try {
         if (currentMembership?.member_id) {
           MembershipService.fetchReferralData(+currentMembership?.member_id)

@@ -14,4 +14,15 @@ export class MembershipService {
     console.log('wf-platform-fe MembershipService getCurrentMembership: ', response)
     return response.data as IMembership;
   };
+
+  public static fetchReferralData = async () => {
+    try {
+      const response = await authClient.getRequest(`/memberships/referral`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching referral data:', error);
+      throw error;
+    }
+  };
+  
 }

@@ -28,13 +28,3 @@ export const getListSampleSolution = async (): Promise<any> => {
 export const getDetailsSampleSolution = async (id: string): Promise<any> => {
   return axiosWfAdminEndPoint.get(`/solution/${id}`);
 };
-
-export const fetchReferralData = async () => {
-  try {
-    const response = await axiosWfAdminEndPoint.get(`/api-platform/organization/referral`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching referral data:', error);
-    throw error;
-  }
-};

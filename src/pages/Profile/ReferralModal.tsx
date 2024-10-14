@@ -48,7 +48,7 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
     console.log('getReferralData ');
       try {
         if (currentMembership?.member_id) {
-          MembershipService.fetchReferralData(currentMembership?.member_id)
+          MembershipService.fetchReferralData(+currentMembership?.member_id)
           .then((res) => setReferralData(res))
           .catch((error) => console.log(error));
         }

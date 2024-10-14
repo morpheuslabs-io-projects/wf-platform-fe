@@ -4,7 +4,7 @@ import { IMembership } from '@/types';
 import "./referralModal.css";
 import GiftIcon from '@/assets/icons/Gift.png';
 import { useEffect, useState } from 'react';
-import { fetchReferralData } from '@/services/wfAdmin.service';
+import { MembershipService } from '@/services/membership.service';
 
 const style = {
   position: 'absolute',
@@ -48,8 +48,9 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
     console.log('getReferralData ');
       try {
         if (currentMembership?.member_id) {
-          const data = await fetchReferralData(); 
-          setReferralData(data);
+          MembershipService.fetchReferralData()
+          .then((res) => setReferralData(res))
+          .catch((error) => console.log(error));
         }
       } catch (error) {
         console.error('Error fetching referral data:', error);

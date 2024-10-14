@@ -15,9 +15,9 @@ export class MembershipService {
     return response.data as IMembership;
   };
 
-  public static fetchReferralData = async () => {
+  public static fetchReferralData = async (memberId: number) => {
     try {
-      const response = await authClient.getRequest(`memberships/referral`);
+      const response = await authClient.getRequest(`memberships/referral/${memberId}`);
       console.log('wf-platform-fe MembershipService fetchReferralData: ', response)
       return response.data;
     } catch (error) {

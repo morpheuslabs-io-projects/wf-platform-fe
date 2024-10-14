@@ -8,6 +8,7 @@ import AuthRouter from "./PrivateRoutes";
 import PublicGuard from "./PublicGuard";
 import { Logout } from "@/pages/Logout";
 import SupportCenterPage from "@/pages/SupportCenter";
+import ReferralCapture from "@/pages/ReferralCapture";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const authLoader = (_: unknown) => {
@@ -31,7 +32,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <MorpheusLandingPage />,
+        element: (
+          <ReferralCapture>
+            <MorpheusLandingPage />
+          </ReferralCapture>
+        ),
       },
       {
         path: "/",

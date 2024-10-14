@@ -17,7 +17,8 @@ export class MembershipService {
 
   public static fetchReferralData = async () => {
     try {
-      const response = await authClient.getRequest(`/memberships/referral`);
+      const response = await authClient.getRequest(`memberships/referral`);
+      console.log('wf-platform-fe MembershipService fetchReferralData: ', response)
       return response.data;
     } catch (error) {
       console.error('Error fetching referral data:', error);

@@ -500,6 +500,26 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                   </Box>
                 </Box>
               )}
+        
+              <div style={{ marginTop: '20px' }}>
+                <Typography fontSize={14}>Referral code</Typography>
+                <input
+                  id="referralCode"
+                  type="text"
+                  value={referralCode}
+                  onChange={handleReferralCodeChange}
+                  placeholder="Enter referral code"
+                  style={{
+                    padding: '10px',
+                    width: '100%',
+                    maxWidth: '300px',
+                    marginTop: '10px',
+                    borderRadius: '4px',
+                    border: '1px solid #ccc',
+                  }}
+                />
+              </div>
+
               <Typography fontSize={14} mb={1}>
                 Payment description:
               </Typography>
@@ -608,25 +628,6 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                   Cannot get Price conversion
                 </Typography>
               )}
-        
-              <div style={{ marginTop: '20px' }}>
-                <Typography fontSize={14}>Referral code</Typography>
-                <input
-                  id="referralCode"
-                  type="text"
-                  value={referralCode}
-                  onChange={handleReferralCodeChange}
-                  placeholder="Enter referral code"
-                  style={{
-                    padding: '10px',
-                    width: '100%',
-                    maxWidth: '300px',
-                    marginTop: '10px',
-                    borderRadius: '4px',
-                    border: '1px solid #ccc',
-                  }}
-                />
-              </div>
 
               <Button
                 disabled={isNotEnough || disabled}

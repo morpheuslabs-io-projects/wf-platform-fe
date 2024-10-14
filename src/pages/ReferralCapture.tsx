@@ -14,7 +14,7 @@ const ReferralCapture = ({ children }: { children: JSX.Element }) => {
     if (referralCode) {
       Cookies.set('ReferralBy', referralCode, { domain: '.morpheuslabs.io' });
       console.log('Referral code saved: ', referralCode);
-      navigate(ROUTE_PATH.SIGN_IN(), { replace: true });
+      window.open(`${ROUTE_PATH.SIGN_IN()}`, "_self");
     }
   }, [location, navigate]);
 

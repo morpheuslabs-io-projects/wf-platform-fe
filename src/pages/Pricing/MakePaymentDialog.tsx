@@ -477,7 +477,11 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                   {!rates ? (
                     <CircularProgress size={20} />
                   ) : (
-                    <Typography variant="h5" fontWeight="normal">
+                    <Typography sx={{
+                      fontWeight: '400',
+                      lineHeight: '48px',
+                      fontSize: '36px'
+                    }}>
                       {new Intl.NumberFormat("en", {
                         maximumFractionDigits: 2,
                       }).format(
@@ -492,10 +496,15 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                       component="img"
                       src={tokenSelected.logo}
                       alt=""
-                      width={18}
-                      height={18}
+                      width={36}
+                      height={36}
                     />
-                    <Typography variant="h5" fontWeight="normal">
+                    <Typography sx={{
+                      fontWeight: '400',
+                      lineHeight: '48px',
+                      fontSize: '36px'
+                      }}
+                    >
                       {tokenSelected.name.toUpperCase()}
                     </Typography>
                   </Box>
@@ -514,7 +523,6 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                     padding: '10px',
                     width: '100%',
                     maxWidth: '300px',
-                    marginTop: '10px',
                     borderRadius: '4px',
                     border: '1px solid #ccc',
                   }}

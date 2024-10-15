@@ -139,17 +139,6 @@ function CreditCardPaymentDialog(
             </Typography>
           </Typography>
         </Box>
-
-        <Typography fontSize={14} mb={1}>
-          Payment description:
-        </Typography>
-        <Typography fontWeight={700} mb={3}>
-          {currentMembership?.id === selected?.id
-            ? "Extending "
-            : "Upgrading to "}
-          {selected?.tier_name} tier for a duration of {durationPeriod}{" "}
-          month{durationPeriod > 1 ? "s" : ""}
-        </Typography>
         
         <div style={{marginBottom: '20px' }}>
           <Typography fontSize={14}>Referral code</Typography>
@@ -163,12 +152,22 @@ function CreditCardPaymentDialog(
               padding: '10px',
               width: '100%',
               maxWidth: '300px',
-              marginTop: '10px',
               borderRadius: '4px',
               border: '1px solid #ccc',
             }}
           />
         </div>
+
+        <Typography fontSize={14}>
+          Payment description:
+        </Typography>
+        <Typography fontWeight={700} mb={3}>
+          {currentMembership?.id === selected?.id
+            ? "Extending "
+            : "Upgrading to "}
+          {selected?.tier_name} tier for a duration of {durationPeriod}{" "}
+          month{durationPeriod > 1 ? "s" : ""}
+        </Typography>
 
         <Elements
           stripe={stripePromise}

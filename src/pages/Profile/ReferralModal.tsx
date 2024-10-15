@@ -27,6 +27,20 @@ interface IReferralDialog {
 
 interface IReferral {
   id: string;
+  subscriptions: IReferralSubscriptions[];
+}
+
+interface IReferralSubscriptions {
+  id: string;
+  date: string;
+  token: string;
+  amount: string;
+  name: string;
+}
+
+interface IReferralFlatMap {
+  orgId: string;
+  subId: string;
   date: string;
   token: string;
   amount: string;
@@ -62,22 +76,28 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
     handleClose();
   };
 
-  const referralDate = (referralDate: string) => {
+  const referralDataFlatMap = (): IReferralFlatMap[] => {
+    return referralData.flatMap((org) =>
+      org.subscriptions.map((sub: any) => ({
+        orgId: org.id.toString(),
+        subId: sub.id.toString(),
+        date: convertTimestampToDate(sub.date),
+        token: sub.token,
+        amount: sub.amount,
+        name: sub.name,
+      }))
+    );
+  };
 
-    // Convert it to milliseconds
-    const date = new Date(+referralDate * 1000);
-
-    // Format the date as 'dd.MM; HH:mm:ss'
-    const formattedDate = date.toLocaleString('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false // 24-hour format
-    }).replace(',', ';');
-    return formattedDate;
-  }
+  const convertTimestampToDate = (timestamp: number): string => {
+    const date = new Date(timestamp * 1000); // Convert to milliseconds
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${day}.${month}; ${hours}:${minutes}:${seconds}`;
+  };
 
   return (
     <Modal
@@ -248,10 +268,10 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
               </tr>
             </thead>
             <tbody>
-              {referralData.map((referral: IReferral, index) => (
+              {referralDataFlatMap().map((referral: IReferralFlatMap, index: number) => (
                 <tr key={index}>
-                  <td>{referralDate(referral.date)}</td>
-                  <td>{referral.id}</td>
+                  <td>{referral.date}</td>
+                  <td>@{referral.orgId}</td>
                   <td>{referral.name}</td>
                   <td>{referral.amount} {referral.token}</td>
                 </tr>

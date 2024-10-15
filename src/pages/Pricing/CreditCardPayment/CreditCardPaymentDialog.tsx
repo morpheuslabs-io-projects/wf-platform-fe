@@ -24,12 +24,13 @@ interface IMakePaymentDialog {
   selected: IMembership | null;
   onClose: (result?: boolean) => void;
   loading?: boolean;
+  currentMembership: IMembership | null;
 }
 
 function CreditCardPaymentDialog(
   props: IMakePaymentDialog & { durations: number[] }
 ) {
-  const { selected, onClose, loading, durations } = props;
+  const { selected, onClose, loading, durations, currentMembership } = props;
   const stripePromise = loadStripe(VITE_STRIPE_CLIENT_ID);
   const [duration, setDuration] = useState(durations[0]);
   const durationPeriod = Math.floor(duration / 30);
@@ -101,7 +102,7 @@ function CreditCardPaymentDialog(
           sx={{
             height: "40px",
             width: "100%",
-            m: "12px 0",
+            marginBottom: "20px",
             border: "none",
             background: "white",
             borderRadius: 0,
@@ -128,14 +129,29 @@ function CreditCardPaymentDialog(
         </Select>
         <Box>
           <Typography fontSize={14} mb={1}>
-            You have to pay:{" "}
-            <b>
-              {selected?.price ? `${selected.price * durationPeriod} USD` : ""}
-            </b>
+            You have to pay:{" "} <br/>
+            <Typography sx={{
+              fontWeight: '400',
+              lineHeight: '48px',
+              fontSize: '36px'
+            }}>
+              {selected?.price ? `${selected.price * durationPeriod} $USD` : ""}
+            </Typography>
           </Typography>
         </Box>
+
+        <Typography fontSize={14} mb={1}>
+          Payment description:
+        </Typography>
+        <Typography fontWeight={700} mb={3}>
+          {currentMembership?.id === selected?.id
+            ? "Extending "
+            : "Upgrading to "}
+          {selected?.tier_name} tier for a duration of {durationPeriod}{" "}
+          month{durationPeriod > 1 ? "s" : ""}
+        </Typography>
         
-        <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+        <div style={{marginBottom: '20px' }}>
           <Typography fontSize={14}>Referral code</Typography>
           <input
             id="referralCode"

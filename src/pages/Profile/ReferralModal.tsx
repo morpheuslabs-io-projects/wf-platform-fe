@@ -30,6 +30,7 @@ interface IReferral {
   date: string;
   token: string;
   amount: string;
+  name: string;
 }
 
 const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDialog): JSX.Element | null => {
@@ -45,7 +46,7 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
     const getReferralData = async () => {
       try {
         if (currentMembership?.member_id) {
-          MembershipService.fetchReferralData(+currentMembership?.member_id)
+          MembershipService.fetchReferralData()
           .then((res) => setReferralData(res))
           .catch((error) => console.log(error));
         }
@@ -60,6 +61,23 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
   const handleModalClose = () => {
     handleClose();
   };
+
+  const referralDate = (referralDate: string) => {
+
+    // Convert it to milliseconds
+    const date = new Date(+referralDate * 1000);
+
+    // Format the date as 'dd.MM; HH:mm:ss'
+    const formattedDate = date.toLocaleString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false // 24-hour format
+    }).replace(',', ';');
+    return formattedDate;
+  }
 
   return (
     <Modal
@@ -232,10 +250,10 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
             <tbody>
               {referralData.map((referral: IReferral, index) => (
                 <tr key={index}>
-                  <td>{referral.date}</td>
+                  <td>{referralDate(referral.date)}</td>
                   <td>{referral.id}</td>
-                  <td>{referral.token}</td>
-                  <td>{referral.amount}</td>
+                  <td>{referral.name}</td>
+                  <td>{referral.amount} {referral.token}</td>
                 </tr>
               ))}
             </tbody>

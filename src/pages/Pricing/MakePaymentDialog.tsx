@@ -320,6 +320,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
             selected={selected}
             onClose={handleOnCloseModal}
             durations={durations}
+            currentMembership={currentMembership}
           />
         )}
 
@@ -374,7 +375,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                 sx={{
                   height: "40px",
                   width: "100%",
-                  m: "16px 0 24px",
+                  m: "0px 0 20px",
                   border: "none",
                   background: "white",
                   borderRadius: 0,
@@ -398,7 +399,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                 sx={{
                   height: "40px",
                   width: "100%",
-                  m: "16px 0 24px",
+                  m: "0px 0 20px",
                   border: "none",
                   background: "white",
                   borderRadius: 0,
@@ -443,7 +444,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                 sx={{
                   height: "40px",
                   width: "100%",
-                  m: "16px 0 24px",
+                  m: "0px 0 20px",
                   border: "none",
                   background: "white",
                   borderRadius: 0,
@@ -501,7 +502,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                 </Box>
               )}
         
-              <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+              <div style={{ marginBottom: '20px' }}>
                 <Typography fontSize={14}>Referral code</Typography>
                 <input
                   id="referralCode"

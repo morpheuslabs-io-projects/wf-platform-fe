@@ -67,7 +67,7 @@ function CreditCardPaymentDialog(
         </Typography>
       </Backdrop>
 
-      <DialogTitle sx={{ background: "#F1F5FA", paddingBottom: 0, position: 'relative' }}>
+      <DialogTitle sx={{ background: "#F1F5FA", paddingBottom: 0, position: 'relative', minHeight: '50px' }}>
         <Typography
           variant="header_3"
           fontSize={24}
@@ -78,6 +78,7 @@ function CreditCardPaymentDialog(
             left: 0,
             top: '50%',
             transform: 'translateY(-50%)',
+                  minHeight: '50px'
           }}
         >
           Final step, make the payment.
@@ -85,7 +86,7 @@ function CreditCardPaymentDialog(
         <IconButton
           aria-label="delete"
           size="small"
-          sx={{ position: 'absolute', right: 8, top: 8 }}
+          sx={{ position: 'absolute', right: 8, top: 15 }}
         >
           <CloseIcon onClick={() => onClose()} sx={{ cursor: "pointer" }} />
         </IconButton>

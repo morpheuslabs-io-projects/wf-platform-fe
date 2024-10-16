@@ -96,7 +96,7 @@ const CheckoutForm = ({
         disabled={!stripe || !elements}
         sx={{ marginTop: "20px" }}
       >
-        Pay <img src={NextIcon} alt="" />
+        Pay <img style={{marginLeft: '10px'}} src={NextIcon} alt="" />
       </Button>
       {/* Show error message to your customers */}
       {errorMessage && <div>{errorMessage}</div>}

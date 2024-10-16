@@ -44,3 +44,8 @@ export const PATHS = {
   PROFILE: "/profile",
   PRICING: "/pricing-plan",
 };
+
+export const TEXT = {
+  REFERRAL_BY: "referralBy",
+  MORPHEUSLABS_IO: "morpheuslabs.io",
+}

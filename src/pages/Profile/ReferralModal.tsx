@@ -2,7 +2,7 @@ import { Modal, Box, Typography, Button, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { IMembership } from '@/types';
 import "./referralModal.css";
-import GiftIcon from '@/assets/icons/Gift.png';
+import { ReactComponent as GiftIcon } from '@/assets/icons/gift.svg';
 import { useEffect, useState } from 'react';
 import { MembershipService } from '@/services/membership.service';
 import { ROUTE_PATH, TEXT } from '@/constants/AppConfig';
@@ -115,7 +115,7 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
             }}
           >
             {/* Set the fill color explicitly */}
-            <Box
+            {/* <Box
               component="img"
               src={GiftIcon}
               alt=""
@@ -124,8 +124,8 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
                 height: '32px',
                 marginRight: '10px'
                }}
-            />
-            My Referral Info
+            /> */}
+            <GiftIcon style={{ fill: '#252525' }}/> My Referral Info
           </Typography>
           <IconButton onClick={() => handleClose(false)}>
             <CloseIcon />

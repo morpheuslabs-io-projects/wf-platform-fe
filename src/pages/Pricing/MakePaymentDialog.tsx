@@ -341,28 +341,28 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
               </Typography>
             </Backdrop>
 
-            <DialogTitle sx={{ background: "#F1F5FA", paddingBottom: 0 }}>
-              <Box
+            <DialogTitle sx={{ background: "#F1F5FA", paddingBottom: 0, position: 'relative' }}>
+              <Typography
+                variant="header_3"
+                fontSize={24}
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
+                  textAlign: 'center',
+                  width: '100%',
+                  position: 'absolute',
+                  left: 0,
+                  top: '50%',
+                  transform: 'translateY(-50%)',
                 }}
               >
-                <Typography variant="header_3" fontSize={24} sx={{
-                    display: 'flex',
-                    justifyContent: 'center'
-                  }}
-                >
-                  Final step, make the payment.
-                </Typography>
-                <IconButton aria-label="delete" size="small">
-                  <CloseIcon
-                    onClick={() => handleOnCloseModal()}
-                    sx={{ cursor: "pointer" }}
-                  />
-                </IconButton>
-              </Box>
+                Final step, make the payment.
+              </Typography>
+              <IconButton
+                aria-label="delete"
+                size="small"
+                sx={{ position: 'absolute', right: 8, top: 8 }}
+              >
+                <CloseIcon onClick={() => onClose()} sx={{ cursor: "pointer" }} />
+              </IconButton>
             </DialogTitle>
 
             <DialogContent

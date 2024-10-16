@@ -59,14 +59,10 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
 
   useEffect(() => {
     const getReferralData = async () => {
-      try {
-        if (currentMembership?.member_id) {
-          MembershipService.fetchReferralData()
-          .then((res) => setReferralData(res))
-          .catch((error) => console.log(error));
-        }
-      } catch (error) {
-        console.error('Error fetching referral data:', error);
+      if (currentMembership?.member_id) {
+        MembershipService.getReferralData()
+        .then((res) => setReferralData(res))
+        .catch((error) => console.log(error));
       }
     };
 
@@ -264,7 +260,7 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
               <tr>
                 <th>Date</th>
                 <th>Id</th>
-                <th>Token</th>
+                <th>Plan</th>
                 <th>Amount</th>
               </tr>
             </thead>

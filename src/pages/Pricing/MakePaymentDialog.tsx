@@ -1,5 +1,4 @@
 import NextIcon from "@/assets/icons/next.svg";
-
 import MetamaskIconSmall from "@/assets/images/metamaskIconSmall.svg";
 import WalletconnectIconSmall from "@/assets/images/walletconnectIconSmall.svg";
 import useApproveToken from "@/hooks/useApproveToken";
@@ -350,7 +349,11 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                   justifyContent: "space-between",
                 }}
               >
-                <Typography variant="header_3" fontSize={24}>
+                <Typography variant="header_3" fontSize={24} sx={{
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
+                >
                   Final step, make the payment.
                 </Typography>
                 <IconButton aria-label="delete" size="small">
@@ -512,7 +515,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
               )}
         
               <div style={{ marginBottom: '20px' }}>
-                <Typography fontSize={14}>Referral code</Typography>
+                <Typography fontSize={14}>Referral code:</Typography>
                 <input
                   id="referralCode"
                   type="text"
@@ -529,7 +532,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                 />
               </div>
 
-              <Typography fontSize={14} mb={1}>
+              <Typography fontSize={14}>
                 Payment description:
               </Typography>
               <Typography fontWeight={700} mb={3}>

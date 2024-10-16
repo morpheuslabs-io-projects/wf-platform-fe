@@ -52,7 +52,11 @@ function SelectPaymentDialog({
               justifyContent: "space-between",
             }}
           >
-            <Typography variant="header_3" fontSize={24}>
+            <Typography variant="header_3" fontSize={24} sx={{
+                display: 'flex',
+                justifyContent: 'center'
+              }}
+            >
               Select Payment Method
             </Typography>
           </Box>

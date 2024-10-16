@@ -4,9 +4,7 @@ import {
   Elements,
 } from "@stripe/react-stripe-js";
 import CloseIcon from "@mui/icons-material/Close";
-
 import { VITE_STRIPE_CLIENT_ID } from "@/constants/AppConfig";
-
 import { useState } from "react";
 import {
   Backdrop,
@@ -19,6 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import CheckoutForm from "./CheckoutForm";
+import UsdIcon from '@/assets/icons/usd.png';
 
 interface IMakePaymentDialog {
   selected: IMembership | null;
@@ -76,7 +75,11 @@ function CreditCardPaymentDialog(
             justifyContent: "space-between",
           }}
         >
-          <Typography variant="header_3" fontSize={24}>
+          <Typography variant="header_3" fontSize={24} sx={{
+              display: 'flex',
+              justifyContent: 'center'
+            }}
+          >
             Final step, make the payment.
           </Typography>
           <IconButton aria-label="delete" size="small">
@@ -93,10 +96,10 @@ function CreditCardPaymentDialog(
       >
         <Box>
           <Typography fontSize={14} mb={1}>
-            Plan you have selected: <b>{selected?.tier_name || ""}</b>
+            Plan you have selected <b>{selected?.tier_name || ""}</b>
           </Typography>
         </Box>
-        <Typography fontSize={14}>Select duration:</Typography>
+        <Typography fontSize={14}>Select duration</Typography>
         <Select
           value={duration}
           sx={{
@@ -129,13 +132,24 @@ function CreditCardPaymentDialog(
         </Select>
         <Box>
           <Typography fontSize={14} mb={1}>
-            You have to pay:{" "} <br/>
+            You have to pay{" "} <br/>
             <Typography sx={{
               fontWeight: '400',
               lineHeight: '48px',
               fontSize: '36px'
             }}>
-              {selected?.price ? `${selected.price * durationPeriod} $USD` : ""}
+              {selected?.price ? `${selected.price * durationPeriod}` : ""}
+                <Box
+                component="img"
+                src={UsdIcon}
+                alt=""
+                sx={{ 
+                  width: '18px',
+                  height: '18px',
+                  marginRight: '10px'
+                }}
+              />
+              USD              
             </Typography>
           </Typography>
         </Box>
@@ -159,7 +173,7 @@ function CreditCardPaymentDialog(
         </div>
 
         <Typography fontSize={14}>
-          Payment description:
+          Payment description
         </Typography>
         <Typography fontWeight={700} mb={3}>
           {currentMembership?.id === selected?.id

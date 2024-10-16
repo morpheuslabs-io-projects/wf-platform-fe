@@ -11,19 +11,12 @@ export class MembershipService {
   };
   public static getCurrentMembership = async () => {
     const response = await authClient.getRequest("memberships/current");
-    console.log('wf-platform-fe MembershipService getCurrentMembership: ', response)
     return response.data as IMembership;
   };
 
-  public static fetchReferralData = async () => {
-    try {
-      const response = await authClient.getRequest(`memberships/referral`);
-      console.log('wf-platform-fe MembershipService fetchReferralData: ', response)
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching referral data:', error);
-      throw error;
-    }
+  public static getReferralData = async () => {
+    const response = await authClient.getRequest(`memberships/referral`);
+    return response.data;
   };
   
 }

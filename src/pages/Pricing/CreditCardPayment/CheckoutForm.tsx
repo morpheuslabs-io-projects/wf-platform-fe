@@ -7,6 +7,7 @@ import { IMembership, IUpgradeMembershipCardBody } from "@/types";
 import { Button } from "@mui/material";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
+import NextIcon from "@/assets/icons/next.svg";
 
 interface IMakePaymentDialog {
   selected: IMembership | null;
@@ -95,7 +96,7 @@ const CheckoutForm = ({
         disabled={!stripe || !elements}
         sx={{ marginTop: "20px" }}
       >
-        Pay
+        Pay <img src={NextIcon} alt="" />
       </Button>
       {/* Show error message to your customers */}
       {errorMessage && <div>{errorMessage}</div>}

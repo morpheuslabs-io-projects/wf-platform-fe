@@ -5,6 +5,7 @@ import "./referralModal.css";
 import GiftIcon from '@/assets/icons/Gift.png';
 import { useEffect, useState } from 'react';
 import { MembershipService } from '@/services/membership.service';
+import { ROUTE_PATH } from '@/constants/AppConfig';
 
 const style = {
   position: 'absolute',
@@ -49,7 +50,7 @@ interface IReferralFlatMap {
 
 const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDialog): JSX.Element | null => {
   const referralCode = currentMembership?.member_id;
-  const referralLink = `http://invite.morpheuslabs.io/signup?r=${referralCode}`;
+  const referralLink = `${ROUTE_PATH.REFERRAL_URL()}?r=${referralCode}`;
   const [referralData, setReferralData] = useState<IReferral[]>([]);
 
   const handleCopy = (text: any) => {

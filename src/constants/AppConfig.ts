@@ -34,6 +34,9 @@ export const ROUTE_PATH = {
       redirectUrl
     )}`;
   },
+  REFERRAL_URL: () => {
+    return `${VITE_AUTH_APP_ENDPOINT}`;
+  }
 };
 
 export const PATHS = {

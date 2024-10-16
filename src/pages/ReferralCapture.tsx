@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
-import { ROUTE_PATH } from "@/constants/AppConfig";
+import { ROUTE_PATH, VITE_ROOT_DOMAIN } from "@/constants/AppConfig";
 
 const ReferralCapture = ({ children }: { children: JSX.Element }) => {
   const navigate = useNavigate();
@@ -12,8 +12,7 @@ const ReferralCapture = ({ children }: { children: JSX.Element }) => {
     const referralCode = searchParams.get('referralBy');
 
     if (referralCode) {
-      Cookies.set('ReferralBy', referralCode, { domain: '.morpheuslabs.io' });
-      console.log('Referral code saved: ', referralCode);
+      Cookies.set('referralBy', referralCode, { domain: `.${VITE_ROOT_DOMAIN}` });
       window.open(`${ROUTE_PATH.SIGN_IN()}`, "_self");
     }
   }, [location, navigate]);

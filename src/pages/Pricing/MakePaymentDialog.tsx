@@ -361,7 +361,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                 size="small"
                 sx={{ position: 'absolute', right: 8, top: 15 }}
               >
-                <CloseIcon onClick={() => onClose()} sx={{ cursor: "pointer" }} />
+                <CloseIcon onClick={() => handleOnCloseModal()} sx={{ cursor: "pointer" }} />
               </IconButton>
             </DialogTitle>
 

@@ -142,27 +142,28 @@ function CreditCardPaymentDialog(
                 fontWeight: '400',
                 lineHeight: '48px',
                 fontSize: '36px',
+                display: 'flex',
               }}
             >
-              {selected?.price ? `${selected.price * durationPeriod}` : ""}            
-            </Box>
-            <Box sx={{
-                fontWeight: '400',
-                lineHeight: '33px',
-                fontSize: '24px'
-              }}
-            >
-              <Box
-                component="img"
-                src={UsdIcon}
-                alt=""
-                sx={{ 
-                  width: '18px',
-                  height: '18px',
-                  marginRight: '10px'
+              {selected?.price ? `${selected.price * durationPeriod}` : ""}       
+              <Box sx={{
+                  fontWeight: '400',
+                  lineHeight: '33px',
+                  fontSize: '24px'
                 }}
-              />
-              USD
+              >
+                <Box
+                  component="img"
+                  src={UsdIcon}
+                  alt=""
+                  sx={{ 
+                    width: '18px',
+                    height: '18px',
+                    marginRight: '10px'
+                  }}
+                />
+                USD
+              </Box>     
             </Box>
           </Typography>
         </Box>

@@ -149,7 +149,9 @@ function CreditCardPaymentDialog(
               <Box sx={{
                   fontWeight: '400',
                   lineHeight: '33px',
-                  fontSize: '24px'
+                  fontSize: '24px',
+                  display: 'flex',
+                  alignItems: 'center',
                 }}
               >
                 <Box
@@ -157,9 +159,8 @@ function CreditCardPaymentDialog(
                   src={UsdIcon}
                   alt=""
                   sx={{ 
-                    width: '18px',
-                    height: '18px',
-                    marginRight: '10px'
+                    width: '24px',
+                    height: '24px',
                   }}
                 />
                 USD

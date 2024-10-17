@@ -432,8 +432,12 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                           component="img"
                           src={item.logo}
                           alt=""
-                          width={18}
-                          height={18}
+                          width={24}
+                          height={24}
+                          sx={{
+                            width: '24px',
+                            height: '24px',
+                          }}
                         />
                         {item.name.toUpperCase()}
                       </Box>

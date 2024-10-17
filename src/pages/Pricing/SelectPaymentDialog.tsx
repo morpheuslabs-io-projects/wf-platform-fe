@@ -56,7 +56,6 @@ function SelectPaymentDialog({
               left: 0,
               top: '50%',
               transform: 'translateY(-50%)',
-              minHeight: '50px'
             }}
           >
             Select Payment Method

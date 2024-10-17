@@ -341,7 +341,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
               </Typography>
             </Backdrop>
 
-            <DialogTitle sx={{ background: "#F1F5FA", paddingBottom: 0, position: 'relative' }}>
+            <DialogTitle sx={{ background: "#F1F5FA", paddingBottom: 0, position: 'relative', minHeight: '50px' }}>
               <Typography
                 variant="header_3"
                 fontSize={24}
@@ -352,7 +352,6 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                   left: 0,
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  minHeight: '50px'
                 }}
               >
                 Final step, make the payment.
@@ -504,9 +503,9 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                       height={36}
                     />
                     <Typography sx={{
-                      fontWeight: '400',
-                      lineHeight: '48px',
-                      fontSize: '36px'
+                        fontWeight: '400',
+                        lineHeight: '33px',
+                        fontSize: '24px'
                       }}
                     >
                       {tokenSelected.name.toUpperCase()}

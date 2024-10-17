@@ -78,7 +78,6 @@ function CreditCardPaymentDialog(
             left: 0,
             top: '50%',
             transform: 'translateY(-50%)',
-                  minHeight: '50px'
           }}
         >
           Final step, make the payment.
@@ -137,30 +136,34 @@ function CreditCardPaymentDialog(
         <Box>
           <Typography fontSize={14} mb={1}>
             You have to pay{" "} <br/>
-            <Typography sx={{
-              fontWeight: '400',
-              lineHeight: '48px',
-              fontSize: '36px'
-            }}>
+            
+            <Box display="flex" alignItems="center" gap={0.5}
+              sx={{
+                fontWeight: '400',
+                lineHeight: '48px',
+                fontSize: '36px',
+              }}
+            >
               {selected?.price ? `${selected.price * durationPeriod}` : ""}            
-            </Typography>
-            <Typography sx={{
-              fontWeight: '400',
-              lineHeight: '33px',
-              fontSize: '24px'
-            }}>
+            </Box>
+            <Box sx={{
+                fontWeight: '400',
+                lineHeight: '33px',
+                fontSize: '24px'
+              }}
+            >
               <Box
-                  component="img"
-                  src={UsdIcon}
-                  alt=""
-                  sx={{ 
-                    width: '18px',
-                    height: '18px',
-                    marginRight: '10px'
-                  }}
-                />
-                USD
-              </Typography>
+                component="img"
+                src={UsdIcon}
+                alt=""
+                sx={{ 
+                  width: '18px',
+                  height: '18px',
+                  marginRight: '10px'
+                }}
+              />
+              USD
+            </Box>
           </Typography>
         </Box>
         

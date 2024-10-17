@@ -6,6 +6,7 @@ import { ReactComponent as GiftIcon } from '@/assets/icons/gift.svg';
 import { useEffect, useState } from 'react';
 import { MembershipService } from '@/services/membership.service';
 import { ROUTE_PATH, TEXT } from '@/constants/AppConfig';
+import { format } from 'date-fns';
 
 const style = {
   position: 'absolute',
@@ -59,7 +60,7 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
 
   useEffect(() => {
     const getReferralData = async () => {
-      if (currentMembership?.member_id) {
+      if (isOpen && currentMembership?.member_id) {
         MembershipService.getReferralData()
         .then((res) => setReferralData(res))
         .catch((error) => console.log(error));
@@ -67,8 +68,8 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
     };
 
     getReferralData();
-  }, [currentMembership]);
-
+  }, [isOpen, currentMembership]);
+  
   const handleModalClose = () => {
     handleClose();
   };
@@ -87,13 +88,7 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
   };
 
   const convertTimestampToDate = (timestamp: number): string => {
-    const date = new Date(timestamp * 1000); // Convert to milliseconds
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
-    return `${day}.${month}; ${hours}:${minutes}:${seconds}`;
+    return format(new Date(timestamp * 1000), 'dd.MM; HH:mm:ss');
   };
 
   return (
@@ -114,17 +109,6 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
               lineHeight: '33px'
             }}
           >
-            {/* Set the fill color explicitly */}
-            {/* <Box
-              component="img"
-              src={GiftIcon}
-              alt=""
-              sx={{ 
-                width: '32px',
-                height: '32px',
-                marginRight: '10px'
-               }}
-            /> */}
             <GiftIcon style={{ fill: '#252525' }}/> My Referral Info
           </Typography>
           <IconButton onClick={() => handleClose(false)}>

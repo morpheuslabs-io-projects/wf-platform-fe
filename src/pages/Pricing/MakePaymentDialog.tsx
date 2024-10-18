@@ -35,7 +35,7 @@ import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { parseUnits } from "viem";
 import { useAccount, useChainId, useDisconnect, useSwitchChain } from "wagmi";
 import SelectPaymentDialog from "./SelectPaymentDialog";
-import CreditCardPaymentDialog from "./CreditCardPayment/CreditCardPaymentDialog";
+import CreditCardPaymentDialog from "./CreditCardPaymentDialog";
 
 interface IMakePaymentDialog {
   selected: IMembership | null;

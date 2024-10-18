@@ -123,7 +123,7 @@ const CheckoutForm = ({
 function CreditCardPaymentDialog(
   props: IMakePaymentDialog & { durations: number[] }
 ) {
-  const { selected, onClose, loading, durations, currentMembership, hasReferralData } = props;
+  const { selected, onClose, loading, durations, currentMembership } = props;
   const stripePromise = loadStripe(VITE_STRIPE_CLIENT_ID);
   const [duration, setDuration] = useState(durations[0]);
   const durationPeriod = Math.floor(duration / 30);
@@ -263,7 +263,7 @@ function CreditCardPaymentDialog(
           </Typography>
         </Box>
         
-        {hasReferralData && (
+        {!!currentMembership?.referralBy && (
           <>
             <div style={{marginBottom: '20px' }}>
               <Typography fontSize={14}>Referral code</Typography>

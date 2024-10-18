@@ -69,6 +69,7 @@ export interface IMembership {
   updated_at: string;
   most_popular?: boolean;
   member_id: string;
+  referralBy?: string;
 }
 
 export interface IUserToken {

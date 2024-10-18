@@ -36,6 +36,7 @@ import { parseUnits } from "viem";
 import { useAccount, useChainId, useDisconnect, useSwitchChain } from "wagmi";
 import SelectPaymentDialog from "./SelectPaymentDialog";
 import CreditCardPaymentDialog from "./CreditCardPaymentDialog";
+import { MembershipService } from "@/services/membership.service";
 
 interface IMakePaymentDialog {
   selected: IMembership | null;
@@ -129,6 +130,18 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
   );
 
   const { subscribe } = useSubscribe(wagmiConfig);
+  const [hasReferralData, setHasReferralData] = useState<boolean>(true);
+
+  useEffect(() => {
+    const hasReferralData = async () => {
+      MembershipService.hasReferralCode()
+      .then((res) => setHasReferralData(res))
+      .catch((error) => console.log(error));
+    };
+
+    hasReferralData();
+  }, [hasReferralData]);
+
 
   const handleSelectNetwork = async (event: SelectChangeEvent<number>) => {
     const value = Number(event.target.value);
@@ -320,6 +333,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
             onClose={handleOnCloseModal}
             durations={durations}
             currentMembership={currentMembership}
+            hasReferralData={hasReferralData}
           />
         )}
 
@@ -517,24 +531,28 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                   </Box>
                 </Box>
               )}
-        
-              <div style={{ marginBottom: '20px' }}>
-                <Typography fontSize={14}>Referral code</Typography>
-                <input
-                  id="referralCode"
-                  type="text"
-                  value={referralCode}
-                  onChange={handleReferralCodeChange}
-                  placeholder="Enter referral code"
-                  style={{
-                    padding: '10px',
-                    width: '100%',
-                    maxWidth: '300px',
-                    borderRadius: '4px',
-                    border: '1px solid #ccc',
-                  }}
-                />
-              </div>
+
+              {hasReferralData && (
+                <>
+                  <div style={{ marginBottom: '20px' }}>
+                    <Typography fontSize={14}>Referral code</Typography>
+                    <input
+                      id="referralCode"
+                      type="text"
+                      value={referralCode}
+                      onChange={handleReferralCodeChange}
+                      placeholder="Enter referral code"
+                      style={{
+                        padding: '10px',
+                        width: '100%',
+                        maxWidth: '300px',
+                        borderRadius: '4px',
+                        border: '1px solid #ccc',
+                      }}
+                    />
+                  </div>
+                </>
+              )}
 
               <Typography fontSize={14}>
                 Payment description

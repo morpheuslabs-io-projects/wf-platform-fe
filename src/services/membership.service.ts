@@ -18,5 +18,10 @@ export class MembershipService {
     const response = await authClient.getRequest(`memberships/referral`);
     return response.data;
   };
-  
+
+  public static hasReferralCode = async () => {
+    const response = await authClient.getRequest(`memberships/has-referral-code`);
+    return response.data;
+  };
+
 }

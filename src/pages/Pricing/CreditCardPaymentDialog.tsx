@@ -28,6 +28,7 @@ interface IMakePaymentDialog {
   onClose: (result?: boolean) => void;
   loading?: boolean;
   currentMembership: IMembership | null;
+  hasReferralData?: boolean;
 }
 
 const CheckoutForm = ({
@@ -122,7 +123,7 @@ const CheckoutForm = ({
 function CreditCardPaymentDialog(
   props: IMakePaymentDialog & { durations: number[] }
 ) {
-  const { selected, onClose, loading, durations, currentMembership } = props;
+  const { selected, onClose, loading, durations, currentMembership, hasReferralData } = props;
   const stripePromise = loadStripe(VITE_STRIPE_CLIENT_ID);
   const [duration, setDuration] = useState(durations[0]);
   const durationPeriod = Math.floor(duration / 30);
@@ -262,23 +263,27 @@ function CreditCardPaymentDialog(
           </Typography>
         </Box>
         
-        <div style={{marginBottom: '20px' }}>
-          <Typography fontSize={14}>Referral code</Typography>
-          <input
-            id="referralCode"
-            type="text"
-            value={referralCode}
-            onChange={handleReferralCodeChange}
-            placeholder="Enter referral code"
-            style={{
-              padding: '10px',
-              width: '100%',
-              maxWidth: '300px',
-              borderRadius: '4px',
-              border: '1px solid #ccc',
-            }}
-          />
-        </div>
+        {hasReferralData && (
+          <>
+            <div style={{marginBottom: '20px' }}>
+              <Typography fontSize={14}>Referral code</Typography>
+              <input
+                id="referralCode"
+                type="text"
+                value={referralCode}
+                onChange={handleReferralCodeChange}
+                placeholder="Enter referral code"
+                style={{
+                  padding: '10px',
+                  width: '100%',
+                  maxWidth: '300px',
+                  borderRadius: '4px',
+                  border: '1px solid #ccc',
+                }}
+              />
+            </div>
+          </>
+        )}
 
         <Typography fontSize={14}>
           Payment description

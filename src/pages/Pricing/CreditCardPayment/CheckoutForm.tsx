@@ -26,6 +26,7 @@ const CheckoutForm = ({
   const { success } = useNotification();
   const { currentMembership } = useAuthentication();
   const [errorMessage, setErrorMessage] = useState<any>(null);
+  const [isPaying, setIsPaying] = useState<boolean>(false);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -33,6 +34,8 @@ const CheckoutForm = ({
     if (elements == null) {
       return;
     }
+    
+    setIsPaying(true);
 
     // Trigger form validation and wallet collection
     const { error: submitError } = await elements.submit();
@@ -53,6 +56,10 @@ const CheckoutForm = ({
         };
         const { client_secret } =
           await PaymentService.createStripePaymentIntent(requestBody);
+        
+        console.log('CheckoutForm client_secret: ', client_secret);
+        console.log('CheckoutForm stripe: ', stripe);
+
         if (stripe) {
           // Confirm the PaymentIntent with the payment method
           const { error } = await stripe.confirmPayment({
@@ -73,8 +80,9 @@ const CheckoutForm = ({
             // details incomplete)
             setErrorMessage(error.message);
           } else {
+            setIsPaying(false);
             success(
-              `Payment submited, we will confirm and ${
+              `Payment submitted, we will confirm and ${
                 currentMembership?.id === selected.id ? "extend" : "upgrade"
               } your membership ${selected.tier_name} soon`
             );
@@ -93,7 +101,7 @@ const CheckoutForm = ({
       <Button
         variant="primary"
         type="submit"
-        disabled={!stripe || !elements}
+        disabled={!stripe || !elements || isPaying}
         sx={{ marginTop: "20px" }}
       >
         Pay <img style={{marginLeft: '10px'}} src={NextIcon} alt="" />

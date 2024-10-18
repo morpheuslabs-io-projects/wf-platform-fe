@@ -36,7 +36,6 @@ import { parseUnits } from "viem";
 import { useAccount, useChainId, useDisconnect, useSwitchChain } from "wagmi";
 import SelectPaymentDialog from "./SelectPaymentDialog";
 import CreditCardPaymentDialog from "./CreditCardPaymentDialog";
-import { MembershipService } from "@/services/membership.service";
 
 interface IMakePaymentDialog {
   selected: IMembership | null;

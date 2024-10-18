@@ -76,6 +76,8 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
   const durationPeriod = Math.floor(duration / 30);
   const [referralCode, setReferralCode] = useState(''); 
 
+  console.log('MakePaymentDialog currentMembership: ', currentMembership)
+
   const {
     decimals,
     isLoading: loadingDecimals,
@@ -189,6 +191,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
     }
   };
 
+  // Handle submit for Crypto payment
   const handleSubmit = async () => {
     if (
       !selected ||

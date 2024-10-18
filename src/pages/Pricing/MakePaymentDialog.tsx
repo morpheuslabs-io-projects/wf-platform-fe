@@ -372,7 +372,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                 marginTop: "0 !important",
               }}
             >
-              <Typography fontSize={14}>Select network:</Typography>
+              <Typography fontSize={14}>Select network</Typography>
               <Select
                 value={chainId}
                 sx={{
@@ -396,7 +396,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                   );
                 })}
               </Select>
-              <Typography fontSize={14}>Select token:</Typography>
+              <Typography fontSize={14}>Select token</Typography>
               <Select
                 value={token}
                 sx={{
@@ -445,7 +445,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                   );
                 })}
               </Select>
-              <Typography fontSize={14}>Select duration:</Typography>
+              <Typography fontSize={14}>Select duration</Typography>
               <Select
                 value={duration}
                 sx={{
@@ -477,7 +477,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                 })}
               </Select>
               <Typography fontSize={14} mb={1}>
-                You have to pay:
+                You have to pay
               </Typography>
               {tokenSelected && (
                 <Box mb={3} display="flex" alignItems="center" gap={1}>
@@ -519,7 +519,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
               )}
         
               <div style={{ marginBottom: '20px' }}>
-                <Typography fontSize={14}>Referral code:</Typography>
+                <Typography fontSize={14}>Referral code</Typography>
                 <input
                   id="referralCode"
                   type="text"
@@ -537,7 +537,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
               </div>
 
               <Typography fontSize={14}>
-                Payment description:
+                Payment description
               </Typography>
               <Typography fontWeight={700} mb={3}>
                 {currentMembership?.id === selected?.id

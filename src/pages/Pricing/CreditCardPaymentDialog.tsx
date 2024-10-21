@@ -86,8 +86,6 @@ const CheckoutForm = ({
             redirect: "if_required", 
           });
 
-          console.log('confirmPayment paymentIntent', paymentIntent);
-
           // Your customer will be redirected to your `return_url`. For some payment
           // methods like iDEAL, your customer will be redirected to an intermediate
           // site first to authorize the payment, then redirected to the `return_url`.
@@ -112,7 +110,7 @@ const CheckoutForm = ({
             setTimeout(() => {
               onClose();
               setIsPaying(false);
-              // window.location.href = `${window.location.origin}/pricing-plan`; // Manually redirect
+              window.location.href = `${window.location.origin}/pricing-plan`; // Manually redirect
             }, 3000); // Wait 3 seconds before redirecting
           }
         }

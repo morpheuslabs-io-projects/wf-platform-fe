@@ -79,19 +79,23 @@ const CheckoutForm = ({
             // confirming the payment. Show error to your customer (for example, payment
             // details incomplete)
             setErrorMessage(error.message);
-          } else {
             setIsPaying(false);
+          } else {
             success(
               `Payment submitted, we will confirm and ${
                 currentMembership?.id === selected.id ? "extend" : "upgrade"
               } your membership ${selected.tier_name} soon`
             );
-            onClose();
+            setTimeout(() => {
+              setIsPaying(false);
+              onClose();
+            }, 3000);
           }
         }
       }
     } catch (error) {
       console.log("Error", error);
+      setIsPaying(false);
     }
   };
 

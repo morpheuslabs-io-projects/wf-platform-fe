@@ -8,6 +8,7 @@ import { Button } from "@mui/material";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import NextIcon from "@/assets/icons/next.svg";
+import { info } from "console";
 
 interface IMakePaymentDialog {
   selected: IMembership | null;
@@ -62,13 +63,15 @@ const CheckoutForm = ({
 
         if (stripe) {
           // Confirm the PaymentIntent with the payment method
-          const { error } = await stripe.confirmPayment({
+          const { error, paymentIntent } = await stripe.confirmPayment({
             //`Elements` instance that was used to create the Payment Element
             elements,
             clientSecret: client_secret,
             confirmParams: {
-              return_url: `${window.location.origin}/pricing-plan`,
+              // return_url: `${window.location.origin}/pricing-plan`,
+              return_url: undefined, 
             },
+            redirect: "if_required",
           });
 
           // Your customer will be redirected to your `return_url`. For some payment
@@ -80,16 +83,20 @@ const CheckoutForm = ({
             // details incomplete)
             setErrorMessage(error.message);
             setIsPaying(false);
-          } else {
+          } else if (paymentIntent?.status === "succeeded") {
             success(
               `Payment submitted, we will confirm and ${
                 currentMembership?.id === selected.id ? "extend" : "upgrade"
               } your membership ${selected.tier_name} soon`
             );
+
+            // Show a message to the user before redirecting
+            info("Redirecting you to the pricing page...");
+
             setTimeout(() => {
               setIsPaying(false);
-              onClose();
-            }, 3000);
+              window.location.href = `${window.location.origin}/pricing-plan`; // Manually redirect
+            }, 3000); // Wait 3 seconds before redirecting
           }
         }
       }

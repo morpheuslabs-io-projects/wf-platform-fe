@@ -42,7 +42,6 @@ const CheckoutForm = ({
   const elements = useElements();
   const { success } = useNotification();
   const [errorMessage, setErrorMessage] = useState<any>(null);
-  const [isPaying, setIsPaying] = useState<boolean>(false);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -51,14 +50,11 @@ const CheckoutForm = ({
       return;
     }
 
-    setIsPaying(true);
-
     // Trigger form validation and wallet collection
     const { error: submitError } = await elements.submit();
     if (submitError) {
       // Show error to your customer
       setErrorMessage(submitError.message);
-      setIsPaying(false);
       return;
     }
 
@@ -75,15 +71,13 @@ const CheckoutForm = ({
           await PaymentService.createStripePaymentIntent(requestBody);
         if (stripe) {
           // Confirm the PaymentIntent with the payment method
-          const { error, paymentIntent } = await stripe.confirmPayment({
+          const { error } = await stripe.confirmPayment({
             //`Elements` instance that was used to create the Payment Element
             elements,
             clientSecret: client_secret,
             confirmParams: {
-              // return_url: `${window.location.origin}/pricing-plan`,
-              return_url: undefined,
+              return_url: `${window.location.origin}/pricing-plan`,
             },
-            redirect: "if_required", 
           });
 
           // Your customer will be redirected to your `return_url`. For some payment
@@ -94,24 +88,13 @@ const CheckoutForm = ({
             // confirming the payment. Show error to your customer (for example, payment
             // details incomplete)
             setErrorMessage(error.message);
-            setIsPaying(false);
-          } else if (paymentIntent?.status === "succeeded") {
-            console.log('confirmPayment succeeded')
+          } else {
             success(
-              `Payment submitted, we will confirm and ${
+              `Payment submited, we will confirm and ${
                 currentMembership?.id === selected.id ? "extend" : "upgrade"
               } your membership ${selected.tier_name} soon`
             );
-
-            // Show a message to the user before redirecting
-            console.log("Redirecting you to the pricing page...");
-
-            // Add a delay before closing the modal and redirecting the user
-            setTimeout(() => {
-              onClose();
-              setIsPaying(false);
-              window.location.href = `${window.location.origin}/pricing-plan`; // Manually redirect
-            }, 3000); // Wait 3 seconds before redirecting
+            onClose();
           }
         }
       }
@@ -126,7 +109,7 @@ const CheckoutForm = ({
       <Button
         variant="primary"
         type="submit"
-        disabled={!stripe || !elements || isPaying}
+        disabled={!stripe || !elements}
         sx={{ marginTop: "20px" }}
       >
         Pay <img style={{marginLeft: '10px'}} src={NextIcon} alt="" />

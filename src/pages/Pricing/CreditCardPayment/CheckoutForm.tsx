@@ -95,6 +95,7 @@ const CheckoutForm = ({
 
             setTimeout(() => {
               setIsPaying(false);
+              onClose();
               window.location.href = `${window.location.origin}/pricing-plan`; // Manually redirect
             }, 3000); // Wait 3 seconds before redirecting
           }

@@ -78,12 +78,14 @@ const CheckoutForm = ({
           // methods like iDEAL, your customer will be redirected to an intermediate
           // site first to authorize the payment, then redirected to the `return_url`.
           if (error) {
+            console.log('confirmPayment error')
             // This point will only be reached if there is an immediate error when
             // confirming the payment. Show error to your customer (for example, payment
             // details incomplete)
             setErrorMessage(error.message);
             setIsPaying(false);
           } else if (paymentIntent?.status === "succeeded") {
+            console.log('confirmPayment succeeded')
             success(
               `Payment submitted, we will confirm and ${
                 currentMembership?.id === selected.id ? "extend" : "upgrade"
@@ -96,7 +98,9 @@ const CheckoutForm = ({
             setTimeout(() => {
               setIsPaying(false);
               onClose();
-              window.location.href = `${window.location.origin}/pricing-plan`; // Manually redirect
+
+              console.log('confirmPayment onClose')
+              // window.location.href = `${window.location.origin}/pricing-plan`; // Manually redirect
             }, 3000); // Wait 3 seconds before redirecting
           }
         }

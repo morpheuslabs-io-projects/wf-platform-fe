@@ -69,16 +69,22 @@ const CheckoutForm = ({
         };
         const { client_secret } =
           await PaymentService.createStripePaymentIntent(requestBody);
+
+        console.log('CheckoutForm client_secret', client_secret);
         if (stripe) {
           // Confirm the PaymentIntent with the payment method
-          const { error } = await stripe.confirmPayment({
+          const { error, paymentIntent } = await stripe.confirmPayment({
             //`Elements` instance that was used to create the Payment Element
             elements,
             clientSecret: client_secret,
             confirmParams: {
-              return_url: `${window.location.origin}/pricing-plan`,
+              return_url: undefined //`${window.location.origin}/pricing-plan`,
             },
+            redirect: "if_required",
           });
+
+          console.log('CheckoutForm error', error);
+          console.log('CheckoutForm paymentIntent', paymentIntent);
 
           // Your customer will be redirected to your `return_url`. For some payment
           // methods like iDEAL, your customer will be redirected to an intermediate
@@ -90,7 +96,7 @@ const CheckoutForm = ({
             setErrorMessage(error.message);
           } else {
             success(
-              `Payment submited, we will confirm and ${
+              `Payment submitted, we will confirm and ${
                 currentMembership?.id === selected.id ? "extend" : "upgrade"
               } your membership ${selected.tier_name} soon`
             );

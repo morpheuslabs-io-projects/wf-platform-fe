@@ -1,4 +1,3 @@
-import CoreComponent from "@/components/core/Core";
 import { CookiesHelper } from "@/helper/cookies";
 import MorpheusLandingPage from "@/pages/MorpheusLandingPage";
 import { createBrowserRouter } from "react-router-dom";
@@ -26,9 +25,7 @@ const router = createBrowserRouter([
     path: "*",
     element: <NotFound />,
   },
-
   {
-    element: <CoreComponent />,
     children: [
       {
         path: "/",

@@ -18,6 +18,7 @@ import { MembershipService } from "./services/membership.service";
 import theme from "./theme";
 import { refreshSession } from "./helper/axios";
 import { AxiosError } from "axios";
+import CoreComponent from "./components/core/Core";
 
 const queryClient = new QueryClient();
 
@@ -91,7 +92,8 @@ function App() {
     >
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
-          <RouterProvider router={router} />
+            <CoreComponent/>
+            <RouterProvider router={router} />
           <Copyrights />
           {whitelisted && <WhitelistModal />}
         </ThemeProvider>

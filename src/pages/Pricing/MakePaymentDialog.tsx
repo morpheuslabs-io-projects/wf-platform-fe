@@ -250,7 +250,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
       if (hash) await waitForTransactionReceipt(wagmiConfig, { hash });
       await refetchAllowance();
       success(
-        `Payment submited, we will confirm and ${
+        `Payment submitted, we will confirm and ${
           currentMembership?.id === selected.id ? "extend" : "upgrade"
         } your membership ${selected.tier_name} soon`
       );

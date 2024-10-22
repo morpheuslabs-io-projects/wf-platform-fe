@@ -102,8 +102,6 @@ const CheckoutForm = ({
                 currentMembership?.id === selected.id ? "extend" : "upgrade"
               } your membership ${selected.tier_name} soon`
             );
-
-            return;
           
             // Manual redirection instead of Stripe's auto redirection
             // setTimeout(() => {

@@ -5,8 +5,6 @@ import { Outlet } from "react-router-dom";
 export default function AppAlert() {
   const { open, message, severity, handleClose } = useNotification();
 
-  console.log('AppAlert message: ', message)
-
   return (
     <>
       <Snackbar

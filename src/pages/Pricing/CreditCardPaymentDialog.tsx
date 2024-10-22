@@ -53,6 +53,8 @@ const CheckoutForm = ({
 
     setIsPaying(true);
 
+    console.log('manual redirect 1')
+
     const { error: submitError } = await elements.submit();
     if (submitError) {
       setErrorMessage(submitError.message);
@@ -73,7 +75,7 @@ const CheckoutForm = ({
           await PaymentService.createStripePaymentIntent(requestBody);
 
         if (stripe) {
-          const { error } = await stripe.confirmPayment({
+          const result = await stripe.confirmPayment({
             elements,
             clientSecret: client_secret,
             confirmParams: {
@@ -84,11 +86,11 @@ const CheckoutForm = ({
           // Your customer will be redirected to your `return_url`. For some payment
           // methods like iDEAL, your customer will be redirected to an intermediate
           // site first to authorize the payment, then redirected to the `return_url`.
-          if (error) {
+          if (result.error) {
             // This point will only be reached if there is an immediate error when
             // confirming the payment. Show error to your customer (for example, payment
             // details incomplete)
-            setErrorMessage(error.message);
+            setErrorMessage(result.error.message);
             setIsPaying(false);
           } else {
             success(
@@ -96,9 +98,11 @@ const CheckoutForm = ({
                 currentMembership?.id === selected.id ? "extend" : "upgrade"
               } your membership ${selected.tier_name} soon`
             );
-
-            // Delay the redirection to ensure the success message is shown
-            await new Promise((resolve) => setTimeout(resolve, 5000));
+          
+            // Manual redirection instead of Stripe's auto redirection
+            // setTimeout(() => {
+            //   window.location.href = returnUrl;
+            // }, 4000); // delay for showing the message
 
             onClose();
           }

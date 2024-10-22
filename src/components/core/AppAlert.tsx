@@ -1,9 +1,9 @@
-import { useAlert } from "@/store/alert";
+import { useNotification } from "@/store/notification";
 import { Alert, Snackbar } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
 export default function AppAlert() {
-  const { open, message, severity, handleClose } = useAlert();
+  const { open, message, severity, handleClose } = useNotification();
 
   return (
     <>

@@ -21,6 +21,7 @@ export const useNotification = create<INotificationStore>((set) => ({
   },
 
   success: (message: string) => {
+    console.log('notification success')
     set({ open: true, message, severity: "success" });
   },
 

@@ -96,7 +96,7 @@ const CheckoutForm = ({
             setErrorMessage(error.message);
             setIsPaying(false);
           } else {
-            console.log('paymentIntent: ', paymentIntent);
+            console.log('paymentIntent: ', paymentIntent.status);
             success(
               `Payment submitted, we will confirm and ${
                 currentMembership?.id === selected.id ? "extend" : "upgrade"

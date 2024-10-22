@@ -26,39 +26,35 @@ const router = createBrowserRouter([
     element: <NotFound />,
   },
   {
+    path: "/",
+    element: (
+      <ReferralCapture>
+        <MorpheusLandingPage />
+      </ReferralCapture>
+    ),
+  },
+  {
+    path: "/",
+    element: <PublicGuard />,
     children: [
       {
-        path: "/",
-        element: (
-          <ReferralCapture>
-            <MorpheusLandingPage />
-          </ReferralCapture>
-        ),
-      },
-      {
-        path: "/",
-        element: <PublicGuard />,
-        children: [
-          {
-            path: "/sign-in",
-            element: <SignIn />,
-          },
-        ],
-      },
-      {
-        path: "/logout",
-        element: <Logout />,
-      },
-      {
-        path: "/support-center",
-        element: <SupportCenterPage />,
-      },
-      {
-        path: "/",
-        loader: authLoader,
-        children: [...AuthRouter],
+        path: "/sign-in",
+        element: <SignIn />,
       },
     ],
+  },
+  {
+    path: "/logout",
+    element: <Logout />,
+  },
+  {
+    path: "/support-center",
+    element: <SupportCenterPage />,
+  },
+  {
+    path: "/",
+    loader: authLoader,
+    children: [...AuthRouter],
   },
 ]);
 

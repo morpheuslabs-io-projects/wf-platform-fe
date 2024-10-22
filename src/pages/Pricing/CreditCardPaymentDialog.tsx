@@ -42,6 +42,7 @@ const CheckoutForm = ({
   const elements = useElements();
   const { success } = useNotification();
   const [errorMessage, setErrorMessage] = useState<any>(null);
+  const [isPaying, setIsPaying] = useState<boolean>(false);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -50,41 +51,40 @@ const CheckoutForm = ({
       return;
     }
 
+    setIsPaying(true);
+
     // Trigger form validation and wallet collection
     const { error: submitError } = await elements.submit();
     if (submitError) {
       // Show error to your customer
       setErrorMessage(submitError.message);
+      setIsPaying(false);
       return;
     }
 
     // Create the PaymentIntent and obtain clientSecret from your server endpoint
     try {
       if (selected) {
+        const returnUrl = `${window.location.origin}/pricing-plan`;
         const requestBody: IUpgradeMembershipCardBody = {
           membership_id: selected.id,
-          return_url: `${window.location.origin}/pricing-plan`,
+          return_url: returnUrl,
           duration_period: durationPeriod,
           referral_code: referralCode,
         };
         const { client_secret } =
           await PaymentService.createStripePaymentIntent(requestBody);
 
-        console.log('CheckoutForm client_secret', client_secret);
         if (stripe) {
           // Confirm the PaymentIntent with the payment method
-          const { error, paymentIntent } = await stripe.confirmPayment({
+          const { error } = await stripe.confirmPayment({
             //`Elements` instance that was used to create the Payment Element
             elements,
             clientSecret: client_secret,
             confirmParams: {
-              return_url: undefined //`${window.location.origin}/pricing-plan`,
+              return_url: returnUrl,
             },
-            redirect: "if_required",
           });
-
-          console.log('CheckoutForm error', error);
-          console.log('CheckoutForm paymentIntent', paymentIntent);
 
           // Your customer will be redirected to your `return_url`. For some payment
           // methods like iDEAL, your customer will be redirected to an intermediate
@@ -94,6 +94,7 @@ const CheckoutForm = ({
             // confirming the payment. Show error to your customer (for example, payment
             // details incomplete)
             setErrorMessage(error.message);
+            setIsPaying(false);
           } else {
             success(
               `Payment submitted, we will confirm and ${
@@ -106,6 +107,7 @@ const CheckoutForm = ({
       }
     } catch (error) {
       console.log("Error", error);
+      setIsPaying(false);
     }
   };
 
@@ -115,7 +117,7 @@ const CheckoutForm = ({
       <Button
         variant="primary"
         type="submit"
-        disabled={!stripe || !elements}
+        disabled={!stripe || !elements || isPaying}
         sx={{ marginTop: "20px" }}
       >
         Pay <img style={{marginLeft: '10px'}} src={NextIcon} alt="" />

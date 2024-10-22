@@ -53,16 +53,13 @@ const CheckoutForm = ({
 
     setIsPaying(true);
 
-    // Trigger form validation and wallet collection
     const { error: submitError } = await elements.submit();
     if (submitError) {
-      // Show error to your customer
       setErrorMessage(submitError.message);
       setIsPaying(false);
       return;
     }
 
-    // Create the PaymentIntent and obtain clientSecret from your server endpoint
     try {
       if (selected) {
         const returnUrl = `${window.location.origin}/pricing-plan`;
@@ -76,9 +73,7 @@ const CheckoutForm = ({
           await PaymentService.createStripePaymentIntent(requestBody);
 
         if (stripe) {
-          // Confirm the PaymentIntent with the payment method
           const { error } = await stripe.confirmPayment({
-            //`Elements` instance that was used to create the Payment Element
             elements,
             clientSecret: client_secret,
             confirmParams: {
@@ -101,6 +96,10 @@ const CheckoutForm = ({
                 currentMembership?.id === selected.id ? "extend" : "upgrade"
               } your membership ${selected.tier_name} soon`
             );
+
+            // Delay the redirection to ensure the success message is shown
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+
             onClose();
           }
         }

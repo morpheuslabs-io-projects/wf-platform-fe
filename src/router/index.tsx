@@ -1,3 +1,4 @@
+import CoreComponent from "@/components/core/Core";
 import { CookiesHelper } from "@/helper/cookies";
 import MorpheusLandingPage from "@/pages/MorpheusLandingPage";
 import { createBrowserRouter } from "react-router-dom";
@@ -26,35 +27,40 @@ const router = createBrowserRouter([
     element: <NotFound />,
   },
   {
-    path: "/",
-    element: (
-      <ReferralCapture>
-        <MorpheusLandingPage />
-      </ReferralCapture>
-    ),
-  },
-  {
-    path: "/",
-    element: <PublicGuard />,
+    element: <CoreComponent />,
     children: [
       {
-        path: "/sign-in",
-        element: <SignIn />,
+        path: "/",
+        element: (
+          <ReferralCapture>
+            <MorpheusLandingPage />
+          </ReferralCapture>
+        ),
+      },
+      {
+        path: "/",
+        element: <PublicGuard />,
+        children: [
+          {
+            path: "/sign-in",
+            element: <SignIn />,
+          },
+        ],
+      },
+      {
+        path: "/logout",
+        element: <Logout />,
+      },
+      {
+        path: "/support-center",
+        element: <SupportCenterPage />,
+      },
+      {
+        path: "/",
+        loader: authLoader,
+        children: [...AuthRouter],
       },
     ],
-  },
-  {
-    path: "/logout",
-    element: <Logout />,
-  },
-  {
-    path: "/support-center",
-    element: <SupportCenterPage />,
-  },
-  {
-    path: "/",
-    loader: authLoader,
-    children: [...AuthRouter],
   },
 ]);
 

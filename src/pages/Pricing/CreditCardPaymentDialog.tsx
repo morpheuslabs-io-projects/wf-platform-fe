@@ -17,11 +17,11 @@ import {
 } from "@mui/material";
 import UsdIcon from '@/assets/icons/usd.png';
 import { PaymentService } from "@/services/payments.service";
-import { useNotification } from "@/store/notification";
 import { IMembership, IUpgradeMembershipCardBody } from "@/types";
 import { Button } from "@mui/material";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 import NextIcon from "@/assets/icons/next.svg";
+import PaymentSuccessDialog from "./PaymentSuccessDialog";
 
 interface IMakePaymentDialog {
   selected: IMembership | null;
@@ -40,9 +40,10 @@ const CheckoutForm = ({
 }: IMakePaymentDialog & { durationPeriod: number, referralCode: string }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const { success } = useNotification();
   const [errorMessage, setErrorMessage] = useState<any>(null);
   const [isPaying, setIsPaying] = useState<boolean>(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -81,22 +82,17 @@ const CheckoutForm = ({
             },
           });
 
-          // Your customer will be redirected to your `return_url`. For some payment
-          // methods like iDEAL, your customer will be redirected to an intermediate
-          // site first to authorize the payment, then redirected to the `return_url`.
           if (error) {
-            // This point will only be reached if there is an immediate error when
-            // confirming the payment. Show error to your customer (for example, payment
-            // details incomplete)
             setErrorMessage(error.message);
             setIsPaying(false);
           } else {
-            success(
-              `Payment submitted, we will confirm and ${
-                currentMembership?.id === selected.id ? "extend" : "upgrade"
-              } your membership ${selected.tier_name} soon`
-            );
+            const successMessage = `Payment submitted, we will confirm and ${
+              currentMembership?.id === selected.id ? "extend" : "upgrade"
+            } your membership ${selected.tier_name} soon`;
+            setSuccessMessage(successMessage);
+            setShowSuccessDialog(true);
             onClose();
+            handleCloseDialog();
           }
         }
       }
@@ -104,6 +100,11 @@ const CheckoutForm = ({
       console.log("Error", error);
       setIsPaying(false);
     }
+  };
+
+  const handleCloseDialog = () => {
+    setShowSuccessDialog(false);
+    onClose(); // Optionally close the parent component after the dialog is closed
   };
 
   return (
@@ -119,6 +120,12 @@ const CheckoutForm = ({
       </Button>
       {/* Show error message to your customers */}
       {errorMessage && <div>{errorMessage}</div>}
+
+      <PaymentSuccessDialog
+        open={showSuccessDialog}
+        onClose={handleCloseDialog}
+        message={successMessage} // Pass the success message
+      />
     </form>
   );
 };

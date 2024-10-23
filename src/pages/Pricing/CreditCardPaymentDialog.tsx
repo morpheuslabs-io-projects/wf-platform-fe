@@ -80,6 +80,7 @@ const CheckoutForm = ({
             confirmParams: {
               return_url: returnUrl,
             },
+            redirect: "if_required"
           });
 
           if (error) {
@@ -92,7 +93,12 @@ const CheckoutForm = ({
             setSuccessMessage(successMessage);
             setShowSuccessDialog(true);
             onClose();
-            handleCloseDialog();
+
+            // Manual redirection instead of Stripe's auto redirection
+            setTimeout(() => {
+              window.location.href = returnUrl;
+            }, 4000); 
+
           }
         }
       }

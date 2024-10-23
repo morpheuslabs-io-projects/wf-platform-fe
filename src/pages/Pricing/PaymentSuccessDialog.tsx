@@ -10,6 +10,7 @@ interface PaymentSuccessDialogProps {
 const PaymentSuccessDialog: React.FC<PaymentSuccessDialogProps> = ({ open, onClose, message }) => {
 
   console.log('PaymentSuccessDialog open: ', open)
+  console.log('PaymentSuccessDialog message: ', message)
 
   return (
     <Dialog open={open} onClose={onClose}>

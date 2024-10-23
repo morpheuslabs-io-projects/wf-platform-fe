@@ -79,7 +79,6 @@ const CheckoutForm = ({
             confirmParams: {
               return_url: returnUrl,
             },
-            redirect: "if_required"
           });
 
           // Your customer will be redirected to your `return_url`. For some payment
@@ -97,7 +96,6 @@ const CheckoutForm = ({
                 currentMembership?.id === selected.id ? "extend" : "upgrade"
               } your membership ${selected.tier_name} soon`
             );
-
             onClose();
           }
         }

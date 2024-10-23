@@ -94,7 +94,6 @@ const CheckoutForm = ({
             setShowSuccessDialog(true);
             onClose();
 
-            // Manual redirection instead of Stripe's auto redirection
             setTimeout(() => {
               window.location.href = returnUrl;
             }, 4000); 
@@ -110,7 +109,7 @@ const CheckoutForm = ({
 
   const handleCloseDialog = () => {
     setShowSuccessDialog(false);
-    onClose(); // Optionally close the parent component after the dialog is closed
+    onClose(); 
   };
 
   return (
@@ -124,13 +123,12 @@ const CheckoutForm = ({
       >
         Pay <img style={{marginLeft: '10px'}} src={NextIcon} alt="" />
       </Button>
-      {/* Show error message to your customers */}
       {errorMessage && <div>{errorMessage}</div>}
 
       <PaymentSuccessDialog
         open={showSuccessDialog}
         onClose={handleCloseDialog}
-        message={successMessage} // Pass the success message
+        message={successMessage} 
       />
     </form>
   );
@@ -150,10 +148,7 @@ function CreditCardPaymentDialog(
     amount: (selected?.price || 0) * durationPeriod,
     currency: "usd",
     confirmation_method: "automatic",
-    // Fully customizable with appearance API.
-    appearance: {
-      /*...*/
-    },
+    appearance: { },
   };
 
   const handleReferralCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {

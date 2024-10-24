@@ -2,6 +2,9 @@ name: Build - Test - Push
 
 on:
   push:
+    branches:
+      - production
+      - stagging
     branches-ignore:
       - experiment
 
@@ -12,7 +15,6 @@ env:
 
 jobs:
   build_test_push:
-    if: github.ref_name == 'production' || github.ref_name == 'stagging'
     runs-on: ubuntu-latest
 
     steps:
@@ -52,7 +54,6 @@ jobs:
 
   deploy:
     needs: [build_test_push]
-    if: github.ref_name == 'production' || github.ref_name == 'stagging'
     runs-on: ubuntu-latest
     steps:      
       - name: Prepare values for dispatch

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, Box } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box } from '@mui/material';
 import UsdIcon from '@/assets/icons/usd.png';
+import CheckMarkIcon from "@/assets/icons/checkmark.svg";
 
 interface PaymentSuccessDialogProps {
   open: boolean;
@@ -17,48 +18,73 @@ const PaymentSuccessDialog: React.FC<PaymentSuccessDialogProps> = ({ open, onClo
       sx={{ pt: 12 }}
       open={open} onClose={onClose}
     >
-      <DialogTitle sx={{ background: "#F1F5FA", paddingBottom: 0, position: 'relative', minHeight: '50px' }}>
-        Payment Successful
+      <DialogTitle sx={{ 
+          paddingBottom: 0, 
+          position: 'relative', 
+          minHeight: '50px', 
+          fontWeight: '700', 
+          fontSize: '24px',
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+        }}
+      >
+        <img src={CheckMarkIcon} sx={{ width: '24px', height: '24px', }} />
+        <Box 
+          sx={{
+            fontWeight: '700',
+            lineHeight: '48px',
+            fontSize: '36px',
+          }}
+        >
+          Payment Successful
+        </Box>
       </DialogTitle>
-      <DialogContent>
-        <Typography variant="body1">
-          You have paid <br/>
-          <Box display="flex" alignItems="center" gap={0.5}
-            sx={{
+      <DialogContent sx={{ 
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+          marginBottom: '30px'
+        }}
+      >
+        <Box>
+         You have paid 
+        </Box>
+        <Box display="flex" alignItems="center" gap={0.5}
+          sx={{
+            fontWeight: '400',
+            lineHeight: '48px',
+            fontSize: '36px',
+            display: 'flex',
+          }}
+        >
+          {paymentAmount}
+          <Box sx={{
               fontWeight: '400',
-              lineHeight: '48px',
-              fontSize: '36px',
+              lineHeight: '33px',
+              fontSize: '24px',
               display: 'flex',
+              alignItems: 'center',
             }}
           >
-            {paymentAmount}
-            <Box sx={{
-                fontWeight: '400',
-                lineHeight: '33px',
-                fontSize: '24px',
-                display: 'flex',
-                alignItems: 'center',
+            <Box
+              component="img"
+              src={UsdIcon}
+              alt=""
+              sx={{ 
+                width: '24px',
+                height: '24px',
               }}
-            >
-              <Box
-                component="img"
-                src={UsdIcon}
-                alt=""
-                sx={{ 
-                  width: '24px',
-                  height: '24px',
-                }}
-              />
-              USD
-            </Box>
+            />
+            USD
           </Box>
-        </Typography>
+        </Box>
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
         <Button onClick={onClose} 
           variant="primary"
           type="submit"
-          sx={{ marginTop: "20px" }}
+          sx={{ marginTop: "20px", marginBottom: '20px', padding: '8px 42px', radius: '4px' }}
         >
           Ok
         </Button>

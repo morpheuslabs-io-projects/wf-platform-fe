@@ -67,7 +67,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
   const { switchChain } = useSwitchChain();
   const networkChainId = useChainId();
   const { disconnect } = useDisconnect();
-  const { success, error } = useNotification();
+  const { error } = useNotification();
   const { currentMembership } = useAuthentication();
   const [isCreditCardSelected, setIsCreditCardSelected] = useState(false);
   const [isTokenSelected, setIsTokenSelected] = useState(false);

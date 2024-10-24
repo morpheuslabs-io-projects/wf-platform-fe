@@ -89,6 +89,7 @@ const CheckoutForm = ({
             setShowSuccessDialog(true);
             setIsPaying(false);
 
+            return;
             // Delay to show message dialog in 4s
             setTimeout(() => {
               window.location.href = returnUrl;

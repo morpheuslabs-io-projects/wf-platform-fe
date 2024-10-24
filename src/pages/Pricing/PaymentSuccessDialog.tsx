@@ -22,26 +22,35 @@ const PaymentSuccessDialog: React.FC<PaymentSuccessDialogProps> = ({ open, onClo
       </DialogTitle>
       <DialogContent>
         <Typography variant="body1">
-          You have paid          
-          {paymentAmount}
-          <Box sx={{
+          You have paid <br/>
+          <Box display="flex" alignItems="center" gap={0.5}
+            sx={{
               fontWeight: '400',
-              lineHeight: '33px',
-              fontSize: '24px',
+              lineHeight: '48px',
+              fontSize: '36px',
               display: 'flex',
-              alignItems: 'center',
             }}
           >
-            <Box
-              component="img"
-              src={UsdIcon}
-              alt=""
-              sx={{ 
-                width: '24px',
-                height: '24px',
+            {paymentAmount}
+            <Box sx={{
+                fontWeight: '400',
+                lineHeight: '33px',
+                fontSize: '24px',
+                display: 'flex',
+                alignItems: 'center',
               }}
-            />
-            USD
+            >
+              <Box
+                component="img"
+                src={UsdIcon}
+                alt=""
+                sx={{ 
+                  width: '24px',
+                  height: '24px',
+                }}
+              />
+              USD
+            </Box>
           </Box>
         </Typography>
       </DialogContent>

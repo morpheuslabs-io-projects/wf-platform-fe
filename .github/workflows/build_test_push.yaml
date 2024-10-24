@@ -51,6 +51,7 @@ jobs:
           docker image ls
 
   deploy:
+    needs: [build_test_push]
     if: github.ref_name == 'production' || github.ref_name == 'stagging'
     runs-on: ubuntu-latest
     steps:      

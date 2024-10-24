@@ -61,9 +61,9 @@ const PaymentSuccessDialog: React.FC<PaymentSuccessDialogProps> = ({ open, onClo
             marginTop: '15px'
           }}
         >
-          {paymentAmount}
           {!tokenSelected ? (
             <>
+            {paymentAmount}
               <Box sx={{
                   fontWeight: '400',
                   lineHeight: '33px',

@@ -48,9 +48,7 @@ const CheckoutForm = ({
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    if (elements == null) {
-      return;
-    }
+    if (!stripe || !elements || !selected) return;
 
     setIsPaying(true);
 
@@ -92,7 +90,7 @@ const CheckoutForm = ({
             } your membership ${selected.tier_name} soon`;
             setSuccessMessage(successMessage);
             setShowSuccessDialog(true);
-            onClose();
+            setIsPaying(false);
 
             setTimeout(() => {
               window.location.href = returnUrl;

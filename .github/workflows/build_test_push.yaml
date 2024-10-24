@@ -63,10 +63,11 @@ jobs:
           echo "repository=morpheuslabs-io/argocd-apps" >> $GITHUB_OUTPUT
           echo "event-type=deploy-dev" >> $GITHUB_OUTPUT
           if [[ "${{ github.ref_name }}" == "production" ]]; then
-            echo "tag_file=value-prod.yaml" >> $GITHUB_OUTPUT
+            tag_file='values-prod.yaml'
           elif [[ "${{ github.ref_name }}" == "stagging" ]]; then
-            echo "tag_file=value-test.yaml" >> $GITHUB_OUTPUT
+            tag_file='values-test.yaml'
           fi
+          echo "tag_file=$tag_file" >> $GITHUB_OUTPUT
           # trigger
 
       - name: Deploy dispatch

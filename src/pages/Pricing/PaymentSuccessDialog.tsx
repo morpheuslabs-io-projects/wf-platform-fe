@@ -29,7 +29,7 @@ const PaymentSuccessDialog: React.FC<PaymentSuccessDialogProps> = ({ open, onClo
           flexDirection: 'column',
         }}
       >
-        <img src={CheckMarkIcon} sx={{ width: '24px', height: '24px', }} />
+        <img src={CheckMarkIcon} width={64} height={64}/>
         <Box 
           sx={{
             fontWeight: '700',

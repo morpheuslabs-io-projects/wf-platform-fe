@@ -56,6 +56,7 @@ const PaymentSuccessDialog: React.FC<PaymentSuccessDialogProps> = ({ open, onClo
             lineHeight: '48px',
             fontSize: '36px',
             display: 'flex',
+            marginTop: '15px'
           }}
         >
           {paymentAmount}

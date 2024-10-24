@@ -36,6 +36,7 @@ import { parseUnits } from "viem";
 import { useAccount, useChainId, useDisconnect, useSwitchChain } from "wagmi";
 import SelectPaymentDialog from "./SelectPaymentDialog";
 import CreditCardPaymentDialog from "./CreditCardPaymentDialog";
+import PaymentSuccessDialog from "./PaymentSuccessDialog";
 
 interface IMakePaymentDialog {
   selected: IMembership | null;
@@ -75,8 +76,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
   const [duration, setDuration] = useState(durations[0]);
   const durationPeriod = Math.floor(duration / 30);
   const [referralCode, setReferralCode] = useState(''); 
-
-  console.log('MakePaymentDialog currentMembership: ', currentMembership)
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
 
   const {
     decimals,
@@ -202,6 +202,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
     )
       return;
     setLoading(true);
+    setShowSuccessDialog(false);
     try {
       const { address, name } = tokenSelected;
       const body: IUpgradeMembershipBody = {
@@ -249,14 +250,19 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
       }
       if (hash) await waitForTransactionReceipt(wagmiConfig, { hash });
       await refetchAllowance();
-      success(
-        `Payment submitted, we will confirm and ${
-          currentMembership?.id === selected.id ? "extend" : "upgrade"
-        } your membership ${selected.tier_name} soon`
-      );
-      handleOnCloseModal();
+      // success(
+      //   `Payment submitted, we will confirm and ${
+      //     currentMembership?.id === selected.id ? "extend" : "upgrade"
+      //   } your membership ${selected.tier_name} soon`
+      // );
+      setShowSuccessDialog(true);
+
+      setTimeout(() => {
+        handleOnCloseModal();
+      }, 4000); 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
+      setShowSuccessDialog(false);
       console.log(err);
       if (err?.cause?.cause?.code === 4001) error("Transaction Reject");
       else error("Transaction Error");
@@ -667,6 +673,13 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                 <img src={NextIcon} alt="" />
               </Button>
             </DialogContent>
+
+            <PaymentSuccessDialog
+              open={showSuccessDialog}
+              onClose={handleOnCloseModal}
+              paymentAmount={Number((Math.ceil((tokenPrice || 0) * 100) / 100).toFixed(2))}
+              tokenSelected={tokenSelected}
+            />
           </>
         )}
         {/* END TOKEN PAYMENT */}

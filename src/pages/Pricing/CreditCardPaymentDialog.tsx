@@ -53,6 +53,7 @@ const CheckoutForm = ({
     }
 
     setIsPaying(true);
+    setShowSuccessDialog(false);
 
     const { error: submitError } = await elements.submit();
     if (submitError) {
@@ -92,7 +93,7 @@ const CheckoutForm = ({
             } your membership ${selected.tier_name} soon`;
             setSuccessMessage(successMessage);
             setShowSuccessDialog(true);
-            onClose();
+            console.log('set flag and message');
 
             setTimeout(() => {
               window.location.href = returnUrl;
@@ -109,7 +110,8 @@ const CheckoutForm = ({
 
   const handleCloseDialog = () => {
     setShowSuccessDialog(false);
-    onClose(); 
+    onClose();
+    window.location.href = `${window.location.origin}/pricing-plan`;
   };
 
   return (

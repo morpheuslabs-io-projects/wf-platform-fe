@@ -92,7 +92,6 @@ const CheckoutForm = ({
             setSuccessMessage(successMessage);
             setShowSuccessDialog(true);
             setIsPaying(false);
-            onClose();
 
             // Delay to show message dialog in 4s
             setTimeout(() => {

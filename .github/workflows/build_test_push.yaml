@@ -11,8 +11,8 @@ env:
   AWS_DEFAULT_REGION: ap-southeast-1
 
 jobs:
-  build_test_push_deploy:
-    if: github.ref == 'refs/heads/main'
+  build_test_push:
+    if: github.ref_name == 'production' || github.ref_name == 'stagging'
     runs-on: ubuntu-latest
 
     steps:
@@ -49,7 +49,11 @@ jobs:
           echo "🍏 This job's status is ${{ job.status }}."
           echo "Run number - ${{ github.run_number }} "
           docker image ls
-      
+
+  deploy:
+    if: github.ref_name == 'production' || github.ref_name == 'stagging'
+    runs-on: ubuntu-latest
+    steps:      
       - name: Prepare values for dispatch
         id: prepare
         run: |
@@ -58,6 +62,11 @@ jobs:
           echo "image_tag=${{ github.run_number }}" >> $GITHUB_OUTPUT
           echo "repository=morpheuslabs-io/argocd-apps" >> $GITHUB_OUTPUT
           echo "event-type=deploy-dev" >> $GITHUB_OUTPUT
+          if [[ "${{ github.ref_name }}" == "production" ]]; then
+            echo "tag_file=value-prod.yaml" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref_name }}" == "stagging" ]]; then
+            echo "tag_file=value-test.yaml" >> $GITHUB_OUTPUT
+          fi
           # trigger
 
       - name: Deploy dispatch
@@ -70,5 +79,6 @@ jobs:
             {
             "repo": "${{ steps.prepare.outputs.repo }}",
             "service": "${{ steps.prepare.outputs.service }}",
-            "image_tag": "${{ steps.prepare.outputs.image_tag }}"
+            "image_tag": "${{ steps.prepare.outputs.image_tag }}",
+            "tag_file": "${{ steps.prepare.outputs.tag_file }}"
             }

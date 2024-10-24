@@ -29,6 +29,7 @@ interface IMakePaymentDialog {
   loading?: boolean;
   currentMembership: IMembership | null;
   hasReferralData?: boolean;
+  paymentAmount?: number;
 }
 
 const CheckoutForm = ({
@@ -36,14 +37,13 @@ const CheckoutForm = ({
   onClose,
   durationPeriod,
   referralCode,
-  currentMembership,
-}: IMakePaymentDialog & { durationPeriod: number, referralCode: string }) => {
+  paymentAmount,
+}: IMakePaymentDialog & { durationPeriod: number, referralCode: string, paymentAmount: number }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<any>(null);
   const [isPaying, setIsPaying] = useState<boolean>(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -86,10 +86,6 @@ const CheckoutForm = ({
             setErrorMessage(error.message);
             setIsPaying(false);
           } else {
-            const successMessage = `Payment submitted, we will confirm and ${
-              currentMembership?.id === selected.id ? "extend" : "upgrade"
-            } your membership ${selected.tier_name} soon`;
-            setSuccessMessage(successMessage);
             setShowSuccessDialog(true);
             setIsPaying(false);
 
@@ -128,7 +124,7 @@ const CheckoutForm = ({
       <PaymentSuccessDialog
         open={showSuccessDialog}
         onClose={handleCloseDialog}
-        message={successMessage} 
+        paymentAmount={paymentAmount}
       />
     </form>
   );
@@ -269,7 +265,7 @@ function CreditCardPaymentDialog(
                   }}
                 />
                 USD
-              </Box>     
+              </Box>
             </Box>
           </Typography>
         </Box>
@@ -317,6 +313,7 @@ function CreditCardPaymentDialog(
             durationPeriod={durationPeriod}
             referralCode={referralCode}
             currentMembership={currentMembership}
+            paymentAmount={options.amount}
           />
         </Elements>
 

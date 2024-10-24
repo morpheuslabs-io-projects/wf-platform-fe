@@ -41,10 +41,11 @@ const PaymentSuccessDialog: React.FC<PaymentSuccessDialogProps> = ({ open, onClo
         </Box>
       </DialogTitle>
       <DialogContent sx={{ 
+          display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'column',
-          marginBottom: '30px'
+          marginTop: '30px'
         }}
       >
         <Box>
@@ -85,7 +86,7 @@ const PaymentSuccessDialog: React.FC<PaymentSuccessDialogProps> = ({ open, onClo
         <Button onClick={onClose} 
           variant="primary"
           type="submit"
-          sx={{ marginTop: "20px", marginBottom: '20px', padding: '8px 42px', radius: '4px' }}
+          sx={{ marginTop: "20px", marginBottom: '20px', padding: '8px 70px', radius: '4px' }}
         >
           Ok
         </Button>

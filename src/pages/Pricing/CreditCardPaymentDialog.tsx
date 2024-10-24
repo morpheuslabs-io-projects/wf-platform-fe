@@ -92,12 +92,12 @@ const CheckoutForm = ({
             setSuccessMessage(successMessage);
             setShowSuccessDialog(true);
             setIsPaying(false);
-            console.log('set flag and message');
+            onClose();
 
+            // Delay to show message dialog in 4s
             setTimeout(() => {
               window.location.href = returnUrl;
             }, 4000); 
-
           }
         }
       }

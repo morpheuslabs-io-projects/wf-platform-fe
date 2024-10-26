@@ -149,6 +149,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
     setIsCreditCardSelected(false);
     setIsTokenSelected(false);
     onClose();
+    window.location.href = `${window.location.origin}/pricing-plan`;
   };
 
   const handleSelectedPaymentMethod = () => {

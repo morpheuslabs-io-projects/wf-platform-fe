@@ -88,11 +88,6 @@ const CheckoutForm = ({
           } else {
             setShowSuccessDialog(true);
             setIsPaying(false);
-
-            // Delay to show message dialog in 4s
-            setTimeout(() => {
-              window.location.href = returnUrl;
-            }, 4000); 
           }
         }
       }

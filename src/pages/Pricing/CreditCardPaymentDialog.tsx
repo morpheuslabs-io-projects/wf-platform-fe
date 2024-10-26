@@ -270,7 +270,7 @@ function CreditCardPaymentDialog(
           </Typography>
         </Box>
         
-        {!!currentMembership?.referralBy && (
+        {!currentMembership?.referralBy && (
           <>
             <div style={{marginBottom: '20px' }}>
               <Typography fontSize={14}>Referral code</Typography>

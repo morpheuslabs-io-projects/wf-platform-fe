@@ -250,17 +250,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
       }
       if (hash) await waitForTransactionReceipt(wagmiConfig, { hash });
       await refetchAllowance();
-      // success(
-      //   `Payment submitted, we will confirm and ${
-      //     currentMembership?.id === selected.id ? "extend" : "upgrade"
-      //   } your membership ${selected.tier_name} soon`
-      // );
       setShowSuccessDialog(true);
-
-      setTimeout(() => {
-        handleOnCloseModal();
-      }, 4000); 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setShowSuccessDialog(false);
       console.log(err);
@@ -527,7 +517,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
                 </Box>
               )}
 
-              {!!currentMembership?.referralBy && (
+              {!currentMembership?.referralBy && (
                 <>
                   <div style={{ marginBottom: '20px' }}>
                     <Typography fontSize={14}>Referral code</Typography>

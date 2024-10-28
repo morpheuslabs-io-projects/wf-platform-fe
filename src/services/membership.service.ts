@@ -19,8 +19,4 @@ export class MembershipService {
     return response.data;
   };
 
-  public static addReferralBy = async (referralBy: string) => {
-    const response = await authClient.getRequest(`memberships/referral-by/${referralBy}`);
-    return response.data;
-  };
 }

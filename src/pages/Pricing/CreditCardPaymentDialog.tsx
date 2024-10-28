@@ -22,7 +22,6 @@ import { Button } from "@mui/material";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 import NextIcon from "@/assets/icons/next.svg";
 import PaymentSuccessDialog from "./PaymentSuccessDialog";
-import { MembershipService } from "@/services/membership.service";
 
 interface IMakePaymentDialog {
   selected: IMembership | null;
@@ -68,22 +67,12 @@ const CheckoutForm = ({
           membership_id: selected.id,
           return_url: returnUrl,
           duration_period: durationPeriod,
+          referral_by: referralCode,
         };
         const paymentIntent = await PaymentService.createStripePaymentIntent(requestBody);
 
         if (stripe) {
-          const { error } = await stripe.confirmPayment({
-            elements,
-            clientSecret: paymentIntent.client_secret,
-            confirmParams: {
-              return_url: returnUrl,
-            },
-            redirect: "if_required"
-          });
-          
-          if (referralCode) await MembershipService.addReferralBy(referralCode);
-
-          await PaymentService.createStripePaymentIntent(requestBody); 
+          const { error } = await PaymentService.confirmStripePayment(paymentIntent.id, requestBody);
 
           if (error) {
             setErrorMessage(error.message);

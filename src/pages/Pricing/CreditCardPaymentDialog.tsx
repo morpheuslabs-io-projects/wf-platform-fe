@@ -67,12 +67,20 @@ const CheckoutForm = ({
           membership_id: selected.id,
           return_url: returnUrl,
           duration_period: durationPeriod,
-          referral_by: referralCode,
+          referral_code: referralCode,
         };
-        const paymentIntent = await PaymentService.createStripePaymentIntent(requestBody);
+        const { client_secret } =
+          await PaymentService.createStripePaymentIntent(requestBody);
 
         if (stripe) {
-          const { error } = await PaymentService.confirmStripePayment(paymentIntent.id, requestBody);
+          const { error } = await stripe.confirmPayment({
+            elements,
+            clientSecret: client_secret,
+            confirmParams: {
+              return_url: returnUrl,
+            },
+            redirect: "if_required"
+          });
 
           if (error) {
             setErrorMessage(error.message);

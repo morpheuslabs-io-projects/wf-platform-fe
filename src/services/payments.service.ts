@@ -34,11 +34,9 @@ export class PaymentService {
     return response.data as IUpgradeMembershipCardResponse;
   };
 
-  public static confirmStripePayment = async (paymentIntentId: string,
-     body?: IUpgradeMembershipCardBody) => {
+  public static confirmStripePayment = async (paymentIntentId: string) => {
     const response = await authClient.postRequest(
-      `payments/stripe/${paymentIntentId}/confirm`,
-      body
+      `payments/stripe/${paymentIntentId}/confirm`
     );
     return response.data;
   };

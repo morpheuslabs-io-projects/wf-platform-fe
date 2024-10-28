@@ -93,7 +93,6 @@ export interface IUpgradeMembershipBody {
   token_address: string;
   chain_id: number;
   token_name: string;
-  referralBy?: string;
 }
 
 export interface IUpgradeMembershipResponse {
@@ -158,7 +157,7 @@ export interface IUpgradeMembershipCardBody {
   return_url: string;
   duration_period: number;
   payment_method_id?: string;
-  referral_by?: string;
+  referral_code?: string;
 }
 
 export interface IUpgradeMembershipCardResponse {

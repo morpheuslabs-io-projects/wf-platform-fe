@@ -158,7 +158,6 @@ export interface IUpgradeMembershipCardBody {
   return_url: string;
   duration_period: number;
   payment_method_id?: string;
-  referral_by?: string;
 }
 
 export interface IUpgradeMembershipCardResponse {

@@ -37,6 +37,7 @@ import { useAccount, useChainId, useDisconnect, useSwitchChain } from "wagmi";
 import SelectPaymentDialog from "./SelectPaymentDialog";
 import CreditCardPaymentDialog from "./CreditCardPaymentDialog";
 import PaymentSuccessDialog from "./PaymentSuccessDialog";
+import { MembershipService } from "@/services/membership.service";
 
 interface IMakePaymentDialog {
   selected: IMembership | null;
@@ -246,6 +247,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
         await PaymentService.putPaymentHash(data.payload.item, {
           paymentGatewayTransactionId: hash,
         });
+        if (referralCode) await MembershipService.addReferralBy(referralCode);
       } catch (error) {
         console.log(error);
       }

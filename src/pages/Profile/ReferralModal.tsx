@@ -254,7 +254,9 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
                   <td>{referral.date}</td>
                   <td>@{referral.orgId}</td>
                   <td>{referral.name}</td>
-                  <td>{referral.amount.toFixed(2)} {referral.token.toUpperCase()}</td>
+                  <td>
+                    {Number.isFinite(referral.amount) ? referral.amount.toFixed(2) : "0.00"} {referral.token?.toUpperCase()}
+                  </td>
                 </tr>
               ))}
             </tbody>

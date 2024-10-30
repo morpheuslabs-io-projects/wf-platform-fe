@@ -45,7 +45,7 @@ interface IReferralFlatMap {
   subId: string;
   date: string;
   token: string;
-  amount: number;
+  amount: string;
   name: string;
 }
 
@@ -255,7 +255,7 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
                   <td>@{referral.orgId}</td>
                   <td>{referral.name}</td>
                   <td>
-                    {Number.isFinite(referral.amount) ? referral.amount.toFixed(2) : "0.00"} {referral.token?.toUpperCase()}
+                  {parseFloat(referral.amount).toFixed(2)} {referral.token?.toUpperCase()}
                   </td>
                 </tr>
               ))}

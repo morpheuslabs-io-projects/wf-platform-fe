@@ -69,20 +69,26 @@ const CheckoutForm = ({
           duration_period: durationPeriod,
           referralBy: referralCode,
         };
-        const paymentIntent = await PaymentService.createStripePaymentIntent(requestBody);
-        console.log('paymentIntent: ', paymentIntent);
+        const { client_secret } =
+          await PaymentService.createStripePaymentIntent(requestBody);
 
         if (stripe) {
-          // const { error } = await PaymentService.confirmStripePayment(paymentIntent.id, returnUrl);
-          // console.log('confirmStripePayment: ', error);
+          const { error } = await stripe.confirmPayment({
+            elements,
+            clientSecret: client_secret,
+            confirmParams: {
+              return_url: returnUrl,
+            },
+            redirect: "if_required"
+          });
 
-          // if (error) {
-          //   setErrorMessage(error.message);
-          //   setIsPaying(false);
-          // } else {
-          //   setShowSuccessDialog(true);
-          //   setIsPaying(false);
-          // }
+          if (error) {
+            setErrorMessage(error.message);
+            setIsPaying(false);
+          } else {
+            setShowSuccessDialog(true);
+            setIsPaying(false);
+          }
         }
       }
     } catch (error) {
@@ -275,7 +281,7 @@ function CreditCardPaymentDialog(
                   maxWidth: '300px',
                   borderRadius: '4px',
                   border: '1px solid #ccc',
-                  fontSize: '16px'
+                  fontSize: '16px',
                 }}
               />
             </div>

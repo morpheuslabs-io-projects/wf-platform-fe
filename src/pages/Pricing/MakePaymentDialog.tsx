@@ -212,6 +212,7 @@ export default function MakePaymentDialog(props: IMakePaymentDialog) {
         token_address: address,
         chain_id: chainId,
         token_name: name.toLowerCase(),
+        referralBy: referralCode,
       };
 
       const postPayment = async () => {

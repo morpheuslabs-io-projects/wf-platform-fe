@@ -67,29 +67,30 @@ const CheckoutForm = ({
           membership_id: selected.id,
           return_url: returnUrl,
           duration_period: durationPeriod,
-          referral_code: referralCode,
+          referralBy: referralCode,
         };
-        const { client_secret } =
-          await PaymentService.createStripePaymentIntent(requestBody);
+        // const { client_secret } =
+        //   await PaymentService.createStripePaymentIntent(requestBody);
+        await PaymentService.createStripePaymentIntent(requestBody);
 
-        if (stripe) {
-          const { error } = await stripe.confirmPayment({
-            elements,
-            clientSecret: client_secret,
-            confirmParams: {
-              return_url: returnUrl,
-            },
-            redirect: "if_required"
-          });
+        // if (stripe) {
+        //   const { error } = await stripe.confirmPayment({
+        //     elements,
+        //     clientSecret: client_secret,
+        //     confirmParams: {
+        //       return_url: returnUrl,
+        //     },
+        //     redirect: "if_required"
+        //   });
 
-          if (error) {
-            setErrorMessage(error.message);
-            setIsPaying(false);
-          } else {
-            setShowSuccessDialog(true);
-            setIsPaying(false);
-          }
-        }
+        //   if (error) {
+        //     setErrorMessage(error.message);
+        //     setIsPaying(false);
+        //   } else {
+        //     setShowSuccessDialog(true);
+        //     setIsPaying(false);
+        //   }
+        // }
       }
     } catch (error) {
       console.log("Error", error);

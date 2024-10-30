@@ -73,7 +73,7 @@ const CheckoutForm = ({
         console.log('paymentIntent: ', paymentIntent);
 
         if (stripe) {
-          const { error } = await PaymentService.confirmStripePayment(paymentIntent.id);
+          const { error } = await PaymentService.confirmStripePayment(paymentIntent.id, returnUrl);
           console.log('confirmStripePayment: ', error);
 
           if (error) {
@@ -275,6 +275,7 @@ function CreditCardPaymentDialog(
                   maxWidth: '300px',
                   borderRadius: '4px',
                   border: '1px solid #ccc',
+                  fontSize: '16px'
                 }}
               />
             </div>

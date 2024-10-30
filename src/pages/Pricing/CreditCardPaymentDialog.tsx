@@ -73,16 +73,16 @@ const CheckoutForm = ({
         console.log('paymentIntent: ', paymentIntent);
 
         if (stripe) {
-          const { error } = await PaymentService.confirmStripePayment(paymentIntent.id, returnUrl);
-          console.log('confirmStripePayment: ', error);
+          // const { error } = await PaymentService.confirmStripePayment(paymentIntent.id, returnUrl);
+          // console.log('confirmStripePayment: ', error);
 
-          if (error) {
-            setErrorMessage(error.message);
-            setIsPaying(false);
-          } else {
-            setShowSuccessDialog(true);
-            setIsPaying(false);
-          }
+          // if (error) {
+          //   setErrorMessage(error.message);
+          //   setIsPaying(false);
+          // } else {
+          //   setShowSuccessDialog(true);
+          //   setIsPaying(false);
+          // }
         }
       }
     } catch (error) {

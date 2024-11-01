@@ -242,10 +242,10 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
           <table id={'table-my-referral'} style={{ width: '100%', marginTop: '10px', textAlign: 'left' }}>
             <thead>
               <tr>
-                <th style={{ width: '30%' }}>Register Date</th>
-                <th style={{ width: '30%' }}>Id</th>
+                <th style={{ width: '25%' }}>Register Date</th>
+                <th style={{ width: '25%' }}>Id</th>
                 <th style={{ width: '25%' }}>Plan</th>
-                <th style={{ width: '15%' }}>Amount</th>
+                <th style={{ width: '25%' }}>Amount</th>
               </tr>
             </thead>
             <tbody>

@@ -69,7 +69,7 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
 
     getReferralData();
   }, [isOpen, currentMembership]);
-  
+
   const handleModalClose = () => {
     handleClose();
   };
@@ -101,8 +101,8 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
       <Box sx={style}>
         {/* Modal Header */}
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography id="refer-friend-modal-title" variant="h6" component="h2" 
-            sx={{ 
+          <Typography id="refer-friend-modal-title" variant="h6" component="h2"
+            sx={{
               display: 'flex',
               fontSize: '24px',
               fontWeight: '700',
@@ -129,9 +129,9 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
           <Box display="flex" alignItems="center" mt={1}>
             <Box
               component="span"
-              sx={{ 
-                marginRight: '8px', 
-                borderRadius: '32px', 
+              sx={{
+                marginRight: '8px',
+                borderRadius: '32px',
                 width: '140px',
                 backgroundColor: 'white',
                 padding: '8px 12px',
@@ -145,9 +145,9 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
             <Button
               variant="contained"
               onClick={() => handleCopy(referralCode)}
-              sx={{ 
-                borderRadius: '32px', 
-                color: 'white', 
+              sx={{
+                borderRadius: '32px',
+                color: 'white',
                 background: 'rgba(73, 91, 253, 1)',
                 textTransform: 'capitalize'
                }}
@@ -170,8 +170,8 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
           <Box display="flex" alignItems="center" mt={1}>
             <Box
               component="span"
-              sx={{ 
-                marginRight: '8px', 
+              sx={{
+                marginRight: '8px',
                 borderRadius: '32px',
                 backgroundColor: 'white',
                 padding: '8px 24px',
@@ -184,9 +184,9 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
             <Button
               variant="contained"
               onClick={() => handleCopy(referralLink)}
-              sx={{ 
-                borderRadius: '32px', 
-                color: 'white', 
+              sx={{
+                borderRadius: '32px',
+                color: 'white',
                 background: 'rgba(73, 91, 253, 1)',
                 textTransform: 'capitalize'
                }}
@@ -242,10 +242,10 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
           <table id={'table-my-referral'} style={{ width: '100%', marginTop: '10px', textAlign: 'left' }}>
             <thead>
               <tr>
-                <th>Date</th>
-                <th>Id</th>
-                <th>Plan</th>
-                <th>Amount</th>
+                <th style={{ width: '30%' }}>Register Date</th>
+                <th style={{ width: '30%' }}>Id</th>
+                <th style={{ width: '25%' }}>Plan</th>
+                <th style={{ width: '15%' }}>Amount</th>
               </tr>
             </thead>
             <tbody>

@@ -204,7 +204,7 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
           </Typography>
 
           <Typography variant="body2" mt={2}>
-            Read more details <a href="https://morpheuslabs.io/">here</a>
+            Read more details <a href="https://morpheuslabs.io/" target="_blank" rel="noopener noreferrer">here</a>
           </Typography>
         </Box>
 
@@ -220,10 +220,10 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
           <table id={'table-my-referral'} style={{ width: '100%', marginTop: '10px', textAlign: 'left' }}>
             <thead>
               <tr>
-                <th style={{ width: '25%' }}>Register Date</th>
-                <th style={{ width: '25%' }}>Id</th>
-                <th style={{ width: '25%' }}>Plan</th>
-                <th style={{ width: '25%' }}>Amount</th>
+                <th style={{ width: '30%' }}>Register Date</th>
+                <th style={{ width: '20%' }}>User ID</th>
+                <th style={{ width: '25%' }}>Current Subscription</th>
+                <th style={{ width: '15%' }}>Earned</th>
               </tr>
             </thead>
             <tbody>
@@ -233,7 +233,9 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
                   <td>@{referral.orgId}</td>
                   <td>{referral.name}</td>
                   <td>
-                    {parseFloat(referral.amount).toFixed(2)} {parseFloat(referral.amount) !== 0 && referral.token?.toUpperCase()}
+                    +{(parseFloat(referral.amount) !== 0 
+                      ? parseFloat(referral.amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) 
+                      : '0.00')} {parseFloat(referral.amount) !== 0 && referral.token?.toUpperCase()}
                   </td>
                 </tr>
               ))}

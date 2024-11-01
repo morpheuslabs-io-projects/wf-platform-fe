@@ -225,7 +225,7 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
           </ul>
 
           <Typography variant="body2" mt={2}>
-            Read more details <a href="#">here</a>
+            Read more details <a href="https://morpheuslabs.io/">here</a>
           </Typography>
         </Box>
 
@@ -255,12 +255,26 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
                   <td>@{referral.orgId}</td>
                   <td>{referral.name}</td>
                   <td>
-                  {parseFloat(referral.amount).toFixed(2)} {referral.token?.toUpperCase()}
+                    {parseFloat(referral.amount).toFixed(2)} {parseFloat(referral.amount) !== 0 && referral.token?.toUpperCase()}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </Box>
+        <Box sx={{ textAlign: 'left', marginTop: '10px' }}>
+          <Button
+            variant="contained"
+            disabled
+            sx={{ 
+              borderRadius: '32px', 
+              color: 'white', 
+              background: 'rgba(73, 91, 253, 1)',
+              textTransform: 'capitalize'
+            }}
+          >
+            Claim Rewards
+          </Button>
         </Box>
       </Box>
     </Modal>

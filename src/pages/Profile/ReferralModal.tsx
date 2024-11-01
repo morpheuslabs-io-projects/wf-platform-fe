@@ -99,7 +99,6 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
       aria-describedby="refer-friend-modal-description"
     >
       <Box sx={style}>
-        {/* Modal Header */}
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography id="refer-friend-modal-title" variant="h6" component="h2"
             sx={{
@@ -116,7 +115,6 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
           </IconButton>
         </Box>
 
-        {/* Referral Code */}
         <Box mt={2}>
           <Typography variant="body1"
             sx={{
@@ -157,7 +155,6 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
           </Box>
         </Box>
 
-        {/* Referral Link */}
         <Box mt={2}>
           <Typography variant="body1"
             sx={{
@@ -196,7 +193,6 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
           </Box>
         </Box>
 
-        {/* How It Works */}
         <Box mt={4}>
           <Typography variant="body1"
             sx={{
@@ -206,30 +202,12 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
           >
             How it Works
           </Typography>
-          <Typography variant="body2" mt={1}>
-            <b>1. Sign up number and date</b>
-          </Typography>
-          <ul>
-            <li>Below 10 persons signed up per month - Incentive TBC</li>
-            <li>Above 10 and below 30 signed up per month - Incentive TBC</li>
-            <li>Above 30 signed up per month - Incentive TBC</li>
-          </ul>
-
-          <Typography variant="body2" mt={1}>
-            <b>2. Paying user number and Tiered Commission</b>
-          </Typography>
-          <ul>
-            <li>Below US$15,000 sales per month - 5%</li>
-            <li>Above US$15,000 and below US$30,000 per month - 7.5%</li>
-            <li>Above US$30,000 - 10% per month</li>
-          </ul>
 
           <Typography variant="body2" mt={2}>
             Read more details <a href="https://morpheuslabs.io/">here</a>
           </Typography>
         </Box>
 
-        {/* My Referrals */}
         <Box mt={4}>
           <Typography variant="body1"
             sx={{

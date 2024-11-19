@@ -3,8 +3,8 @@ name: Build - Test - Push
 on:
   push:
     branches:
-      - production
-      - stagging
+      - prod
+      - main
 
 env:
   AWS_REPO: 757923541688.dkr.ecr.ap-southeast-1.amazonaws.com
@@ -64,7 +64,7 @@ jobs:
           echo "event-type=deploy-dev" >> $GITHUB_OUTPUT
           if [[ "${{ github.ref_name }}" == "production" ]]; then
             tag_file='values-prod.yaml'
-          elif [[ "${{ github.ref_name }}" == "stagging" ]]; then
+          else
             tag_file='values-test.yaml'
           fi
           echo "tag_file=$tag_file" >> $GITHUB_OUTPUT

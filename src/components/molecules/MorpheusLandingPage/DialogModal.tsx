@@ -2,6 +2,7 @@
 
 import {
   Box,
+  Button,
   Dialog,
   DialogContent,
   Grid,
@@ -11,7 +12,7 @@ import {
 import CloseIcon from "@/assets/icons/close-icon.svg";
 import { useEffect, useState } from "react";
 import { getDetailsSampleSolution } from "@/services/wfAdmin.service";
-import { ReactComponent as GetStarted } from "@/assets/icons/get-started.svg";
+import { ReactComponent as NextIcon } from "@/assets/icons/next.svg";
 import { EWindowSize, useReSize } from "@/hooks/useSize";
 
 interface IDialogModal {
@@ -300,16 +301,23 @@ export const DialogModal = ({
             </>
           )}
           <Box sx={{ textAlign: "left" }}>
-            <IconButton
-              style={{ borderRadius: "0", padding: "20px 0 0" }}
+            <Button
+              variant='primary'
+              sx={{
+                  gap: '8px',
+                  mt: '16px',
+                  px: '55px',
+                  mb: '108px'
+              }}
               onClick={() => {
                 let url = dataSolutionDetails.actionUrl;
                 url = url.match(/^https?:/) ? url : "//" + url;
                 window.open(url, "_blank");
               }}
             >
-              <GetStarted />
-            </IconButton>
+              Talk To Us
+              <NextIcon />
+            </Button>
           </Box>
         </DialogContent>
       </Dialog>

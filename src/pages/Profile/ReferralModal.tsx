@@ -225,7 +225,7 @@ const ReferralModal = ({ currentMembership, handleClose, isOpen }: IReferralDial
           </ul>
 
           <Typography variant="body2" mt={2}>
-            Read more details <a href="#">here</a>
+            Read more details <a href="https://morpheuslabs.io/referral/">here</a>
           </Typography>
         </Box>
 
